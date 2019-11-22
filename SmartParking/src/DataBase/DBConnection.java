@@ -1,6 +1,25 @@
 package DataBase;
 
+import Models.Park;
+
 import java.sql.*;
+import java.util.ArrayList;
+
+/*
+
+Funções por fazer:
+- Buscar informação de todos os pedidos
+- Buscar informação de todos os utilizadores.
+- Buscar os lugares disponíveis de um determinado parque para o dropdown.
+- Modificar o estado de um determinado pedido para Aprovado/Rejeitado.
+- Adicionar o utilizador caso tenho sido aprovado(informação vinda de um pedido), com o lugar de estacionamento vazio.
+- Adicionar um pedido na tabela.
+- Remover utilizador por matricula ou id?.
+- Adicionar lugar de estacionamento ao utilizador por matricula ou id?
+- Adicionar utilizador (manualmente).
+- Modificar dados de um utilizador.
+
+ */
 
 public class DBConnection {
 
@@ -12,7 +31,7 @@ public class DBConnection {
     ResultSet resultSet; //Resultado vindo do script da String SQL
     String sql; //String que contêm o script desejado
 
-    private DBConnection(String ip, String port) {
+    public DBConnection(String ip, String port) {
         try {
             System.out.println("Connecting to Database (" + ip + ":" + port + ")");
             connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + DB_NAME
@@ -23,20 +42,33 @@ public class DBConnection {
         }
     }
 
-    /* Exemplo de um pedido a base de dados
-    public String CreateUser(String name, String username, String password) { //Regista Utilizador
+    public ArrayList<Park> getParkList() { //Buscar a informação de todos os parques para uma lista
+        ArrayList<Park> parks = null;
         try {
-            sql = "INSERT INTO users (Name, UserName, PassWord) VALUES ('" + name + "', '" + username + "', '" + password + "')";
-            statement.executeUpdate(sql);
-            return "SignUpSuccess";
-        } catch (SQLException ex) {
-            System.err.println(ex);
-            return "[DEBUG] ERROR: DataBase Connection";
+            sql = "SELECT * FROM Park";
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) { //Se houver dados
+                parks = new ArrayList<>();
+                while (resultSet.next()) { //Enquanto houver dados
+                    parks.add(new Park(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3)));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
         }
-        return "UsernameAlreadyCreated";
-    }*/
+        return parks;
+    }
 
     public static void main(String[] args) {
         DBConnection dbConnection = new DBConnection("localhost", "3306");
+
+        //Teste getParkList()
+        ArrayList<Park> parks = dbConnection.getParkList();
+        for (Park p : parks) {
+            System.out.println(p.getIdPark());
+            System.out.println(p.getTotalParkingSpace());
+            System.out.println(p.getFreeParkingSpace());
+            System.out.println();
+        }
     }
 }
