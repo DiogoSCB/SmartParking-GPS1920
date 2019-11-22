@@ -1,61 +1,69 @@
 package sample;
+
 /*
  * NOTAS
  * <nota 21/11/2019>
- *     Classe com Setters, Getters e Validações para formulário de Cliente
- *
+ *     Classe com Setters, Getters e Validações para formulário de Cliente *
  *     Fica a faltar:
  *     - Cruzar com BD
  *     - Cruzar com interface gráfica
- *     - Testes de J-UNIT 
- * 
- *      Em caso de se usar JSON, provavelmente validação de matrícula será mais simples.
- * 
+ *     - Testes de J-UNIT
+ *
+ *      Em caso de se usar JSON, provavelmente validação de matrícula será mais simples. *
  *     </nota>
+ *
+ * <nota 22/11/2019>
+        * Aplicadas code conventions (passado de PT para ING)
+        * Função setter e getter de park alterada para arraylist para testes, solicitado por colega
+ </nota>
  */
-public class Controller {
-   private String matricula, nome, parque, email;
 
-    public String getMatricula() {
-        return matricula;
+import java.util.ArrayList;
+
+public class Controller {
+   private String licensePlate, name, email;
+   private ArrayList<String>park;
+
+    public String getLicensePlate() {
+        return licensePlate;
     }
 
-    public void setMatricula(String matricula) {
-        if (validateMatricula(matricula)==false) return;
-        this.matricula = matricula;
+    public void setLicensePlate(String licensePlate) {
+        if (validateLicensePlate(licensePlate)==false) return;
+        this.licensePlate = licensePlate;
     }
 
     //se se usar JSON, altera-se
-    private boolean validateMatricula(String matricula) {
-        if (matricula.isBlank()|| matricula.isEmpty()) return false;
-        if ( matricula.length() != 8) return false; //2nums + 2letras + 2nums + 2"-"
-        int conta =0;
-        for(char c : matricula.toCharArray()) {
+    private boolean validateLicensePlate(String licensePlate) {
+        if (licensePlate.isBlank()|| licensePlate.isEmpty()) return false;
+        if ( licensePlate.length() != 8) return false; //2nums + 2letras + 2nums + 2"-"
+        int count = 0;
+        for(char c : licensePlate.toCharArray()) {
             if(Character.isWhitespace(c)) return false; //salta logo fora
-            conta ++;
-            if(Character.isDigit(c) && (conta ==3 || conta ==4))
+            count ++;
+            if(Character.isDigit(c) && (count == 3 || count == 4))
                 return false;
         }
         return true;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        if (validateNome(nome) == false) return;
-        this.nome = nome;
+    public void setName(String name) {
+        if (validateNome(name) == false) return;
+        this.name = name;
     }
 
-    private boolean validateNome(String nome) {
-        if (nome.isBlank()|| nome.isEmpty()) return false;
+    private boolean validateNome(String name) {
+        if (name.isBlank()|| name.isEmpty()) return false;
 
-        for(char c : nome.toCharArray()) {
+        for(char c : name.toCharArray()) {
             if(Character.isDigit(c)) //se tem número
                 return false;
         }
-        if (nome.length()<3 || nome.length()>40) return false;
+        if (name.length()<3 || name.length()>40) return false;
 
         else
             return true;
@@ -75,12 +83,16 @@ public class Controller {
         return email.matches(regex);
     }
 
-    public String getParque() {
-        return parque;
+    //para teste, solicitado por colega
+    public ArrayList getPark() {
+        //return park;
+        park = new ArrayList<> ();
+        park.add("P02");
+        return park;
     }
 
-    public void setParque(String parque) {
-        this.parque = parque;
+    public void setPark(ArrayList<String> park) {
+        this.park = park;
     }
 
 }
