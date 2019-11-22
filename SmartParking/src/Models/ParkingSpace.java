@@ -2,37 +2,37 @@ package Models;
 
 public class ParkingSpace {
 
-    private int IdParkingSpace;
-    private int Reserved;
-    private int IdPark;
+    private int idParkingSpace;
+    private int reserved;
+    private int idPark;
 
     public ParkingSpace(int idParkingSpace, int reserved, int idPark) {
-        IdParkingSpace = idParkingSpace;
-        Reserved = reserved;
-        IdPark = idPark;
+        idParkingSpace = idParkingSpace;
+        reserved = reserved;
+        idPark = idPark;
     }
 
     public int getIdParkingSpace() {
-        return IdParkingSpace;
+        return idParkingSpace;
     }
 
     public void setIdParkingSpace(int idParkingSpace) {
-        IdParkingSpace = idParkingSpace;
+        idParkingSpace = idParkingSpace;
     }
 
     public int getReserved() {
-        return Reserved;
+        return reserved;
     }
 
     public void setReserved(int reserved) {
-        Reserved = reserved;
+        reserved = reserved;
     }
 
     public int getIdPark() {
-        return IdPark;
+        return idPark;
     }
 
     public void setIdPark(int idPark) {
-        IdPark = idPark;
+        idPark = idPark;
     }
 }

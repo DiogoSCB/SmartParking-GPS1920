@@ -2,38 +2,38 @@ package Models;
 
 public class Park {
 
-        private int IdPark;
-        private int TotalParkingSpace;
-        private int FreeParkingSpace;
+        private int idPark;
+        private int totalParkingSpace;
+        private int freeParkingSpace;
 
     public Park(int idPark, int totalParkingSpace, int freeParkingSpace) {
-        IdPark = idPark;
-        TotalParkingSpace = totalParkingSpace;
-        FreeParkingSpace = freeParkingSpace;
+        idPark = idPark;
+        totalParkingSpace = totalParkingSpace;
+        freeParkingSpace = freeParkingSpace;
     }
 
     public int getIdPark() {
-        return IdPark;
+        return idPark;
     }
 
     public int getTotalParkingSpace() {
-        return TotalParkingSpace;
+        return totalParkingSpace;
     }
 
     public int getFreeParkingSpace() {
-        return FreeParkingSpace;
+        return freeParkingSpace;
     }
 
     public void setIdPark(int idPark) {
-        IdPark = idPark;
+        idPark = idPark;
     }
 
     public void setTotalParkingSpace(int totalParkingSpace) {
-        TotalParkingSpace = totalParkingSpace;
+        totalParkingSpace = totalParkingSpace;
     }
 
     public void setFreeParkingSpace(int freeParkingSpace) {
-        FreeParkingSpace = freeParkingSpace;
+        freeParkingSpace = freeParkingSpace;
     }
 }
 

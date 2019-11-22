@@ -5,21 +5,21 @@ import java.sql.Date;
 public class User {
 
     private String name;
-    private int IdUser;
-    private String LicensePlate;
-    private Date EntryData;
-    private Date DepartureData;
-    private String Email;
-    private int Park;
+    private int idUser;
+    private String licensePlate;
+    private Date entryData;
+    private Date departureData;
+    private String email;
+    private int park;
 
     public User(String name, int idUser, String licensePlate, Date entryData, Date departureData, String email, int park) {
         this.name = name;
-        IdUser = idUser;
-        LicensePlate = licensePlate;
-        EntryData = entryData;
-        DepartureData = departureData;
-        Email = email;
-        Park = park;
+        idUser = idUser;
+        licensePlate = licensePlate;
+        entryData = entryData;
+        departureData = departureData;
+        email = email;
+        park = park;
     }
 
     public String getName() {
@@ -31,50 +31,50 @@ public class User {
     }
 
     public int getIdUser() {
-        return IdUser;
+        return idUser;
     }
 
     public void setIdUser(int idUser) {
-        IdUser = idUser;
+        idUser = idUser;
     }
 
     public String getLicensePlate() {
-        return LicensePlate;
+        return licensePlate;
     }
 
     public void setLicensePlate(String licensePlate) {
-        LicensePlate = licensePlate;
+        licensePlate = licensePlate;
     }
 
     public Date getEntryData() {
-        return EntryData;
+        return entryData;
     }
 
     public void setEntryData(Date entryData) {
-        EntryData = entryData;
+        entryData = entryData;
     }
 
     public Date getDepartureData() {
-        return DepartureData;
+        return departureData;
     }
 
     public void setDepartureData(Date departureData) {
-        DepartureData = departureData;
+        departureData = departureData;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        email = email;
     }
 
     public int getPark() {
-        return Park;
+        return park;
     }
 
     public void setPark(int park) {
-        Park = park;
+        park = park;
     }
 }
