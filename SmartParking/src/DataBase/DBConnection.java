@@ -16,7 +16,7 @@ Funções por fazer:
 - Modificar o estado de um determinado pedido para Aprovado/Rejeitado.
 - Adicionar o utilizador caso tenho sido aprovado(informação vinda de um pedido), com o lugar de estacionamento vazio.
 - Adicionar um pedido na tabela. -->check
-- Remover utilizador por matricula ou id?.
+- Remover utilizador por matricula ou id?.-->check
 - Adicionar lugar de estacionamento ao utilizador por matricula ou id?
 - Adicionar utilizador (manualmente). -->check
 - Modificar dados de um utilizador.
@@ -138,6 +138,22 @@ public class DBConnection {
         }
     }
 
+    public void removeUser(int idUser, String licensePlate) { // remover por utilizador por id ou matricula
+        String sql = "DELETE FROM User WHERE idUser = ? OR licensePlate= ?";
+
+        try (
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(2, idUser);  //correspondente ao parametro que se prentende eliminar
+            stmt.setString(3, licensePlate);
+
+            stmt.executeUpdate(); // executa a remoçao
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         DBConnection dbConnection = new DBConnection("localhost", "3306");
 
@@ -170,5 +186,7 @@ public class DBConnection {
             System.out.println(p.getIdUser());
             System.out.println();
         }
+
+
     }
 }
