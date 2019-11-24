@@ -15,10 +15,10 @@ Funções por fazer:
 - Buscar os lugares disponíveis de um determinado parque para o dropdown.
 - Modificar o estado de um determinado pedido para Aprovado/Rejeitado.
 - Adicionar o utilizador caso tenho sido aprovado(informação vinda de um pedido), com o lugar de estacionamento vazio.
-- Adicionar um pedido na tabela.
+- Adicionar um pedido na tabela. -->check
 - Remover utilizador por matricula ou id?.
 - Adicionar lugar de estacionamento ao utilizador por matricula ou id?
-- Adicionar utilizador (manualmente).
+- Adicionar utilizador (manualmente). -->check
 - Modificar dados de um utilizador.
 
  */
@@ -93,6 +93,49 @@ public class DBConnection {
             System.err.println(e);
         }
         return requests;
+    }
+
+    public void addUser(User users){ //Adicionar utilizador
+
+        String sql = "INSERT INTO User(name,idUser,licensePlate,entryData,departureData,email,park) VALUES(?,?,?,?,?,?,?)";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            stmt.setString(1, users.getName());
+            stmt.setInt(2, users.getIdUser());
+            stmt.setString(3, users.getLicensePlate());
+            stmt.setDate(4, users.getEntryData());
+            stmt.setDate(5, users.getDepartureData());
+            stmt.setString(6, users.getEmail());
+            stmt.setInt(7, users.getPark());
+
+            stmt.execute();
+            stmt.close();
+
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
+    }
+
+    public void addRequest(Request requests){ //Adicionar Pedido
+
+        String sql = "INSERT INTO Request(idRequest,requestDate,state,idUser) VALUES(?,?,?,?)";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            stmt.setInt(1, requests.getIdRequest());
+            stmt.setDate(2, requests.getRequestDate());
+            stmt.setInt(3, requests.getState());
+            stmt.setInt(4, requests.getIdUser());
+
+            stmt.execute();
+            stmt.close();
+
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
     }
 
     public static void main(String[] args) {
