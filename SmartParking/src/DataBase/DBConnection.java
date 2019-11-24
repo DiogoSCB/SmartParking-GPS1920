@@ -13,13 +13,13 @@ Funções por fazer:
 - Buscar informação de todos os pedidos -->check
 - Buscar informação de todos os utilizadores.-->check
 - Buscar os lugares disponíveis de um determinado parque para o dropdown.
-- Modificar o estado de um determinado pedido para Aprovado/Rejeitado.
+- Modificar o estado de um determinado pedido para Aprovado/Rejeitado. -->check
 - Adicionar o utilizador caso tenho sido aprovado(informação vinda de um pedido), com o lugar de estacionamento vazio.
 - Adicionar um pedido na tabela. -->check
 - Remover utilizador por matricula ou id?.-->check
 - Adicionar lugar de estacionamento ao utilizador por matricula ou id?
 - Adicionar utilizador (manualmente). -->check
-- Modificar dados de um utilizador.
+- Modificar dados de um utilizador. --> check(modifica matricula)
 
  */
 
@@ -144,10 +144,40 @@ public class DBConnection {
         try (
              PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            stmt.setInt(2, idUser);  //correspondente ao parametro que se prentende eliminar
+            stmt.setInt(2, idUser);  //correspondente ao parametro que se pretende eliminar
             stmt.setString(3, licensePlate);
 
             stmt.executeUpdate(); // executa a remoçao
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void modifyUser(String licensePlate) { // modificar dados de utilizador, nomeadamente matricula
+        String sql = "UPDATE User SET licensePlate = ? WHERE licensePlate= ?";
+
+        try (
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(3, licensePlate); //correspondente ao parametro que se pretende alterar
+
+            stmt.executeUpdate(); // executa a modificaçao
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void modifyRequest(int state) { // modificar o estado do pedido
+        String sql = "UPDATE Request SET state = 'Aprovado' OR state ='Rejeitado' WHERE state = 'Pendente'";
+
+        try (
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(3, state); //correspondente ao parametro que se pretende alterar
+
+            stmt.executeUpdate(); // executa a modificaçao
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

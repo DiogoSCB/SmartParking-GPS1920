@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Adicionar utilizador e pedido na BDConnection">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Remover Utilizador na BDConnection">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmartParking/DataBase/DBConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmartParking/DataBase/DBConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmartParking/Models/Park.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmartParking/Models/Park.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmartParking/Models/ParkingSpace.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmartParking/Models/ParkingSpace.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmartParking/Models/Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmartParking/Models/Request.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmartParking/Models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmartParking/Models/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SmartParking/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SmartParking/sample/Controller.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DataBase/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBase/DBConnection.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -219,7 +213,7 @@
       <workItem from="1574365229319" duration="613000" />
       <workItem from="1574374094303" duration="2387000" />
       <workItem from="1574420703291" duration="1063000" />
-      <workItem from="1574608005342" duration="5895000" />
+      <workItem from="1574608005342" duration="8034000" />
     </task>
     <task id="LOCAL-00001" summary="Criacao de Classes para BD">
       <created>1574365462042</created>
@@ -242,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574612388647</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Remover Utilizador na BDConnection">
+      <created>1574614612882</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1574614612882</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,6 +268,7 @@
     <MESSAGE value="Criacao de Classes para BD" />
     <MESSAGE value="Funçoes user, request na BDConnection" />
     <MESSAGE value="Adicionar utilizador e pedido na BDConnection" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adicionar utilizador e pedido na BDConnection" />
+    <MESSAGE value="Remover Utilizador na BDConnection" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remover Utilizador na BDConnection" />
   </component>
 </project>
