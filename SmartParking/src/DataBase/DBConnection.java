@@ -74,7 +74,7 @@ public class DBConnection {
                 while (resultSet.next()) { //Enquanto houver dados
                     users.add(new User(resultSet.getString(1), resultSet.getString(2),
                             resultSet.getDate(3), resultSet.getDate(4),
-                            resultSet.getString(5)));
+                            resultSet.getString(5), resultSet.getInt(6)));
                 }
             }
         } catch (SQLException e) {
@@ -102,7 +102,8 @@ public class DBConnection {
     }
 
     public void addUser(User users) { //Adicionar utilizador
-        sql = "INSERT INTO User(name,licensePlate,entryDate,departureDate,email) VALUES(?,?,?,?,?)";
+        sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, IdParkingSpace, IdPark)"
+                + " VALUES(?,?,?,?,?, 0,?)";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -112,6 +113,7 @@ public class DBConnection {
             stmt.setDate(3, users.getEntryData());
             stmt.setDate(4, users.getDepartureData());
             stmt.setString(5, users.getEmail());
+            stmt.setInt(6, users.getIdPark());
 
             stmt.execute();
             stmt.close();
@@ -190,7 +192,7 @@ public class DBConnection {
         ArrayList<Integer> free = null;
 
         try {
-            sql = "SELECT IdParkingSpace FROM ParkingSpace WHERE Park_IdPark = " + parkId + " AND Reserved = " + false;
+            sql = "SELECT IdParkingSpace FROM ParkingSpace WHERE IdPark = " + parkId + " AND Reserved = " + false;
             resultSet = statement.executeQuery(sql);
             if (resultSet.next()) { //Se houver dados
                 free = new ArrayList<>();
@@ -207,15 +209,14 @@ public class DBConnection {
 
     public void addUserParkingSpace(int idUser, String licensePlate, int idParkingSpace) {
         try {
-            sql = "SELECT Park_IdPark FROM ParkingSpace WHERE IdParkingSpace = " + idParkingSpace;
+            sql = "SELECT IdPark FROM ParkingSpace WHERE IdParkingSpace = " + idParkingSpace;
             resultSet = statement.executeQuery(sql);
             if (resultSet.next()) {
                 sql = "UPDATE ParkingSpace SET Reserved = " + true + " WHERE IdParkingSpace = " + idParkingSpace;
                 statement.executeQuery(sql);
 
-                sql = "UPDATE Users SET ParkingSpace_IdParkingSpace = " + idParkingSpace +", ParkingSpace_Park_IdPark = "
-                        + resultSet.getInt(1) + " WHERE IdUser = " + idUser + " AND LicensePlate = "
-                        + licensePlate;
+                sql = "UPDATE Users SET IdParkingSpace = " + idParkingSpace +", IdPark = " + resultSet.getInt(1)
+                        + " WHERE IdUser = " + idUser + " AND LicensePlate = " + licensePlate;
                 statement.executeQuery(sql);
             }
         } catch (SQLException e) {
@@ -227,7 +228,7 @@ public class DBConnection {
         DBConnection dbConnection = new DBConnection("localhost", "3306");
 
         dbConnection.addUser(new User("Diogo Branco", "69DB44", null, null,
-                "diogo@gmail.com"));
+                "diogo@gmail.com", 0));
 
         //Teste getParkList()
         ArrayList<Park> parks = dbConnection.getParkList();
