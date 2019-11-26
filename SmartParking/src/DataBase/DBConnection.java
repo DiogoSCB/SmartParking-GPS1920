@@ -12,20 +12,19 @@ import java.util.ArrayList;
 Funções por fazer:
 - Buscar informação de todos os pedidos -->check
 - Buscar informação de todos os utilizadores.-->check
-- Buscar os lugares disponíveis de um determinado parque para o dropdown.
+- Buscar os lugares disponíveis de um determiado parque para o dropdown. -->check
 - Modificar o estado de um determinado pedido para Aprovado/Rejeitado. -->check
-- Adicionar o utilizador caso tenho sido aprovado(informação vinda de um pedido), com o lugar de estacionamento vazio.
 - Adicionar um pedido na tabela. -->check
 - Remover utilizador por matricula ou id?.-->check
-- Adicionar lugar de estacionamento ao utilizador por matricula ou id?
+- Adicionar lugar de estacionamento ao utilizador por matricula ou id? -->check
 - Adicionar utilizador (manualmente). -->check
-- Modificar dados de um utilizador. --> check(modifica matricula)
+- Modificar dados de um utilizador. --> check
 
  */
 
 public class DBConnection {
 
-    final String DB_NAME = "SmartParkingDB";
+    final String DB_NAME = "smartparking";
     final String USER = "root";
     final String PASS = "123456";
     Connection connection; //Objeto para a ligação com a base de dados
@@ -39,6 +38,8 @@ public class DBConnection {
             connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + DB_NAME
                     + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT", USER, PASS);
             System.out.println("Connection Established!");
+
+            statement = connection.createStatement();
         } catch (SQLException e) {
             System.err.println(e);
         }
@@ -69,7 +70,9 @@ public class DBConnection {
             if (resultSet.next()) { //Se houver dados
                 users = new ArrayList<>();
                 while (resultSet.next()) { //Enquanto houver dados
-                    users.add(new User(resultSet.getString(1), resultSet.getInt(2), resultSet.getString(3),resultSet.getDate(4),resultSet.getDate(5),resultSet.getString(6),resultSet.getInt(7)));
+                    users.add(new User(resultSet.getString(1), resultSet.getInt(2),
+                            resultSet.getString(3), resultSet.getDate(4), resultSet.getDate(5),
+                            resultSet.getString(6), resultSet.getInt(7)));
                 }
             }
         } catch (SQLException e) {
@@ -86,7 +89,8 @@ public class DBConnection {
             if (resultSet.next()) { //Se houver dados
                 requests = new ArrayList<>();
                 while (resultSet.next()) { //Enquanto houver dados
-                    requests.add(new Request(resultSet.getInt(1), resultSet.getDate(2), resultSet.getInt(3),resultSet.getInt(4)));
+                    requests.add(new Request(resultSet.getInt(1), resultSet.getDate(2),
+                            resultSet.getInt(3), resultSet.getInt(4)));
                 }
             }
         } catch (SQLException e) {
@@ -95,9 +99,8 @@ public class DBConnection {
         return requests;
     }
 
-    public void addUser(User users){ //Adicionar utilizador
-
-        String sql = "INSERT INTO User(name,idUser,licensePlate,entryData,departureData,email,park) VALUES(?,?,?,?,?,?,?)";
+    public void addUser(User users) { //Adicionar utilizador
+        sql = "INSERT INTO User(name,idUser,licensePlate,entryData,departureData,email,park) VALUES(?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -118,9 +121,8 @@ public class DBConnection {
         }
     }
 
-    public void addRequest(Request requests){ //Adicionar Pedido
-
-        String sql = "INSERT INTO Request(idRequest,requestDate,state,idUser) VALUES(?,?,?,?)";
+    public void addRequest(Request requests) { //Adicionar Pedido
+        sql = "INSERT INTO Request(idRequest,requestDate,state,idUser) VALUES(?,?,?,?)";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -139,10 +141,10 @@ public class DBConnection {
     }
 
     public void removeUser(int idUser, String licensePlate) { // remover por utilizador por id ou matricula
-        String sql = "DELETE FROM User WHERE idUser = ? OR licensePlate= ?";
+        sql = "DELETE FROM User WHERE idUser = ? OR licensePlate= ?";
 
-        try (
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
 
             stmt.setInt(2, idUser);  //correspondente ao parametro que se pretende eliminar
             stmt.setString(3, licensePlate);
@@ -154,13 +156,13 @@ public class DBConnection {
         }
     }
 
-    public void modifyUser(String licensePlate) { // modificar dados de utilizador, nomeadamente matricula
-        String sql = "UPDATE User SET licensePlate = ? WHERE licensePlate= ?";
+    public void modifyUser(User user) { //TODO modificar dados de utilizador
+        sql = "UPDATE User SET licensePlate = ? WHERE IdUser = ?";
 
-        try (
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
 
-            stmt.setString(3, licensePlate); //correspondente ao parametro que se pretende alterar
+            stmt.setString(3, user.getLicensePlate()); //correspondente ao parametro que se pretende alterar
 
             stmt.executeUpdate(); // executa a modificaçao
 
@@ -170,10 +172,10 @@ public class DBConnection {
     }
 
     public void modifyRequest(int state) { // modificar o estado do pedido
-        String sql = "UPDATE Request SET state = 'Aprovado' OR state ='Rejeitado' WHERE state = 'Pendente'";
+        sql = "UPDATE Request SET state = 'Aprovado' OR state ='Rejeitado' WHERE state = 'Pendente'";
 
-        try (
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
 
             stmt.setInt(3, state); //correspondente ao parametro que se pretende alterar
 
@@ -184,39 +186,73 @@ public class DBConnection {
         }
     }
 
+    public ArrayList<Integer> getFreeParkingSpaces(int parkId) {
+        ArrayList<Integer> free = null;
+
+        try {
+            sql = "SELECT IdParkingSpace FROM ParkingSpace WHERE Park_IdPark = " + parkId + " AND Reserved = " + false;
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) { //Se houver dados
+                free = new ArrayList<>();
+                while (resultSet.next()) { //Enquanto houver dados
+                    free.add(resultSet.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+
+        return free;
+    }
+
+    public void addUserParkingSpace(int idUser, String licensePlate, int idParkingSpace) {
+        try {
+            sql = "SELECT Park_IdPark FROM ParkingSpace WHERE IdParkingSpace = " + idParkingSpace;
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) {
+                sql = "UPDATE ParkingSpace SET Reserved = " + true + " WHERE IdParkingSpace = " + idParkingSpace;
+                statement.executeQuery(sql);
+
+                sql = "UPDATE Users SET ParkingSpace_IdParkingSpace = " + idParkingSpace +", ParkingSpace_Park_IdPark = "
+                        + resultSet.getInt(1) + " WHERE IdUser = " + idUser + " AND LicensePlate = "
+                        + licensePlate;
+                statement.executeQuery(sql);
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+    }
+
     public static void main(String[] args) {
         DBConnection dbConnection = new DBConnection("localhost", "3306");
 
         //Teste getParkList()
         ArrayList<Park> parks = dbConnection.getParkList();
         for (Park p : parks) {
-            System.out.println(p.getIdPark());
-            System.out.println(p.getTotalParkingSpace());
-            System.out.println(p.getFreeParkingSpace());
+            System.out.print(p.getIdPark() + " ");
+            System.out.print(p.getTotalParkingSpace() + " ");
+            System.out.print(p.getFreeParkingSpace() + " ");
             System.out.println();
         }
-
         //Teste getUserList()
-        ArrayList<User> users = dbConnection.getUserList();
+        /*ArrayList<User> users = dbConnection.getUserList();
         for (User p : users) {
-            System.out.println(p.getIdUser());
-            System.out.println(p.getLicensePlate());
-            System.out.println(p.getEntryData());
-            System.out.println(p.getDepartureData());
-            System.out.println(p.getEmail());
-            System.out.println(p.getPark());
+            System.out.print(p.getIdUser() + " ");
+            System.out.print(p.getLicensePlate() + " ");
+            System.out.print(p.getEntryData() + " ");
+            System.out.print(p.getDepartureData() + " ");
+            System.out.print(p.getEmail() + " ");
+            System.out.print(p.getPark() + " ");
             System.out.println();
         }
         //Teste getRequestList()
         ArrayList<Request> requests = dbConnection.getRequestList();
         for (Request p : requests) {
-            System.out.println(p.getIdRequest());
-            System.out.println(p.getRequestDate());
-            System.out.println(p.getState());
-            System.out.println(p.getIdUser());
+            System.out.print(p.getIdRequest() + " ");
+            System.out.print(p.getRequestDate() + " ");
+            System.out.print(p.getState() + " ");
+            System.out.print(p.getIdUser() + " ");
             System.out.println();
-        }
-
-
+        }*/
     }
 }
