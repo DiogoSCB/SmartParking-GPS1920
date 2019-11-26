@@ -36,7 +36,8 @@ public class DBConnection {
         try {
             System.out.println("Connecting to Database (" + ip + ":" + port + ")");
             connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + DB_NAME
-                    + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT", USER, PASS);
+                    + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT",
+                    USER, PASS);
             System.out.println("Connection Established!");
 
             statement = connection.createStatement();
@@ -53,7 +54,8 @@ public class DBConnection {
             if (resultSet.next()) { //Se houver dados
                 parks = new ArrayList<>();
                 while (resultSet.next()) { //Enquanto houver dados
-                    parks.add(new Park(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3)));
+                    parks.add(new Park(resultSet.getInt(1), resultSet.getInt(2),
+                            resultSet.getInt(3)));
                 }
             }
         } catch (SQLException e) {
@@ -70,9 +72,9 @@ public class DBConnection {
             if (resultSet.next()) { //Se houver dados
                 users = new ArrayList<>();
                 while (resultSet.next()) { //Enquanto houver dados
-                    users.add(new User(resultSet.getString(1), resultSet.getInt(2),
-                            resultSet.getString(3), resultSet.getDate(4), resultSet.getDate(5),
-                            resultSet.getString(6), resultSet.getInt(7)));
+                    users.add(new User(resultSet.getString(1), resultSet.getString(2),
+                            resultSet.getDate(3), resultSet.getDate(4),
+                            resultSet.getString(5)));
                 }
             }
         } catch (SQLException e) {
@@ -100,18 +102,16 @@ public class DBConnection {
     }
 
     public void addUser(User users) { //Adicionar utilizador
-        sql = "INSERT INTO User(name,idUser,licensePlate,entryData,departureData,email,park) VALUES(?,?,?,?,?,?,?)";
+        sql = "INSERT INTO User(name,licensePlate,entryDate,departureDate,email) VALUES(?,?,?,?,?)";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
 
             stmt.setString(1, users.getName());
-            stmt.setInt(2, users.getIdUser());
-            stmt.setString(3, users.getLicensePlate());
-            stmt.setDate(4, users.getEntryData());
-            stmt.setDate(5, users.getDepartureData());
-            stmt.setString(6, users.getEmail());
-            stmt.setInt(7, users.getPark());
+            stmt.setString(2, users.getLicensePlate());
+            stmt.setDate(3, users.getEntryData());
+            stmt.setDate(4, users.getDepartureData());
+            stmt.setString(5, users.getEmail());
 
             stmt.execute();
             stmt.close();
@@ -225,6 +225,9 @@ public class DBConnection {
 
     public static void main(String[] args) {
         DBConnection dbConnection = new DBConnection("localhost", "3306");
+
+        dbConnection.addUser(new User("Diogo Branco", "69DB44", null, null,
+                "diogo@gmail.com"));
 
         //Teste getParkList()
         ArrayList<Park> parks = dbConnection.getParkList();

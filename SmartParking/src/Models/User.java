@@ -5,21 +5,17 @@ import java.sql.Date;
 public class User {
 
     private String name;
-    private int idUser;
     private String licensePlate;
     private Date entryData;
     private Date departureData;
     private String email;
-    private int park;
 
-    public User(String name, int idUser, String licensePlate, Date entryData, Date departureData, String email, int park) {
+    public User(String name, String licensePlate, Date entryData, Date departureData, String email) {
         this.name = name;
-        idUser = idUser;
-        licensePlate = licensePlate;
-        entryData = entryData;
-        departureData = departureData;
-        email = email;
-        park = park;
+        this.licensePlate = licensePlate;
+        this.entryData = entryData;
+        this.departureData = departureData;
+        this.email = email;
     }
 
     public String getName() {
@@ -28,14 +24,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        idUser = idUser;
     }
 
     public String getLicensePlate() {
@@ -68,13 +56,5 @@ public class User {
 
     public void setEmail(String email) {
         email = email;
-    }
-
-    public int getPark() {
-        return park;
-    }
-
-    public void setPark(int park) {
-        park = park;
     }
 }
