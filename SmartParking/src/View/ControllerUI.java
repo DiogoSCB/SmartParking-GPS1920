@@ -1,5 +1,6 @@
 package View;
 
+import Models.Data;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
@@ -7,7 +8,19 @@ import javafx.scene.control.TableView;
 
 public class ControllerUI
 {
-    // Buttons
+    public void setData(Data data)
+    {
+        this.data = data;
+    }
+
+    private Data data;
+
+    public ControllerUI()
+    {
+        System.out.println("CONSTRUTOR");
+    }
+
+    /* Buttons */
     @FXML
     private Button aceitarBtn;
     @FXML
@@ -17,7 +30,7 @@ public class ControllerUI
     @FXML
     private Button sairBtn;
 
-    // Tabs
+    /* Tabs */
     @FXML
     private Tab condutoresTab;
     @FXML
@@ -25,16 +38,14 @@ public class ControllerUI
     @FXML
     private Tab estatisticasTab;
 
-    // Tables
+    /* Tables */
     @FXML
     private TableView condutoresTable;
 
 
+    /* Callbacks */
 
-
-    // Callbacks
-
-    // Buttons
+    /* Buttons */
     @FXML
     public void aceitarBtnClicked()
     {
@@ -64,41 +75,41 @@ public class ControllerUI
 
     }
 
-    // Tabs
+    /* Tab Selection */
     @FXML
     public void condutoresTabSelected()
     {
         System.out.println("Condutores tab selected.");
 
-        // Hide aceitar e rejeitar
+        /* Hide aceitar e rejeitar */
         aceitarBtn.setVisible(false);
         rejeitarBtn.setVisible(false);
 
-        // Show gravar
+        /* Show gravar */
         gravarBtn.setVisible(true);
 
     }
     @FXML
     public void pedidosTabSelected()
     {
-        System.out.println("Condutores tab selected.");
-        // Hide gravar
+        System.out.println("Pedidos tab selected.");
+        /* Hide gravar */
         gravarBtn.setVisible(false);
 
-        // Show aceitar e rejeitar
+        /* Show aceitar e rejeitar */
         aceitarBtn.setVisible(true);
         rejeitarBtn.setVisible(true);
     }
     @FXML
     public void estatisticasTabSelected()
     {
-        System.out.println("Condutores tab selected.");
-        // Hide aceitar, rejeitar, gravar
+        System.out.println("Estatísticas tab selected.");
+        /* Hide aceitar, rejeitar, gravar */
         aceitarBtn.setVisible(false);
         rejeitarBtn.setVisible(false);
         gravarBtn.setVisible(false);
 
-        // Show sair
+        /* Show sair */
         sairBtn.setVisible(true);
     }
 }

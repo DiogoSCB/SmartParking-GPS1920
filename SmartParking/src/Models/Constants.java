@@ -1,6 +1,6 @@
-package View;
+package Models;
 
-public interface UIConstants
+public interface Constants
 {
     // FXML settings
     String fxmlFileName = "ui.fxml";
@@ -10,4 +10,8 @@ public interface UIConstants
 
     int windowWidth = 1024;
     int windowHeight = 768;
+
+    // Database settings
+    String ip = "127.0.0.1";
+    String port = "4321";
 }
