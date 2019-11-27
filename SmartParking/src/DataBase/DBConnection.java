@@ -1,6 +1,7 @@
 package DataBase;
 
 import Models.Park;
+import Models.ParkingSpace;
 import Models.Request;
 import Models.User;
 
@@ -21,7 +22,6 @@ Funções por fazer:
 - Modificar dados de um utilizador. --> check
 
  */
-
 public class DBConnection {
 
     final String DB_NAME = "smartparking";
@@ -36,7 +36,7 @@ public class DBConnection {
         try {
             System.out.println("Connecting to Database (" + ip + ":" + port + ")");
             connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + DB_NAME
-                    + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT",
+                            + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT",
                     USER, PASS);
             System.out.println("Connection Established!");
 
@@ -45,6 +45,7 @@ public class DBConnection {
             System.err.println(e);
         }
     }
+
 
     public ArrayList<Park> getParkList() { //Buscar a informação de todos os parques para uma lista
         ArrayList<Park> parks = null;
@@ -207,6 +208,26 @@ public class DBConnection {
         return free;
     }
 
+    public ArrayList<ParkingSpace> getParkingSpaces(int parkId) {
+        ArrayList<ParkingSpace> ps = null;
+
+        try {
+            sql = "SELECT * FROM ParkingSpace WHERE IdPark = " + parkId;
+            resultSet = statement.executeQuery(sql);
+            if (resultSet.next()) { //Se houver dados
+                ps = new ArrayList<>();
+                while (resultSet.next()) { //Enquanto houver dados
+                    ps.add(new ParkingSpace(resultSet.getInt(1), resultSet.getInt(2),
+                            resultSet.getInt(3)));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+
+        return ps;
+    }
+
     public void addUserParkingSpace(int idUser, String licensePlate, int idParkingSpace) {
         try {
             sql = "SELECT IdPark FROM ParkingSpace WHERE IdParkingSpace = " + idParkingSpace;
@@ -215,7 +236,7 @@ public class DBConnection {
                 sql = "UPDATE ParkingSpace SET Reserved = " + true + " WHERE IdParkingSpace = " + idParkingSpace;
                 statement.executeQuery(sql);
 
-                sql = "UPDATE Users SET IdParkingSpace = " + idParkingSpace +", IdPark = " + resultSet.getInt(1)
+                sql = "UPDATE Users SET IdParkingSpace = " + idParkingSpace + ", IdPark = " + resultSet.getInt(1)
                         + " WHERE IdUser = " + idUser + " AND LicensePlate = " + licensePlate;
                 statement.executeQuery(sql);
             }
@@ -226,8 +247,6 @@ public class DBConnection {
 
     public static void main(String[] args) {
         DBConnection dbConnection = new DBConnection("localhost", "3306");
-
-        //dbConnection.addUser(new User("Diogo Branco", "69DB44", null, null, "diogo@gmail.com", 0));
 
         //Teste getParkList()
         ArrayList<Park> parks = dbConnection.getParkList();

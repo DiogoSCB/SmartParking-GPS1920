@@ -6,17 +6,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 
-public class ControllerUI
-{
-    public void setData(Data data)
-    {
+public class ControllerUI {
+    public void setData(Data data) {
         this.data = data;
     }
 
     private Data data;
 
-    public ControllerUI()
-    {
+    public ControllerUI() {
         System.out.println("CONSTRUTOR");
     }
 
@@ -47,29 +44,28 @@ public class ControllerUI
 
     /* Buttons */
     @FXML
-    public void aceitarBtnClicked()
-    {
+    public void aceitarBtnClicked() {
         System.out.println("Aceitar Button clicked.");
 
 
     }
+
     @FXML
-    public void rejeitarBtnClicked()
-    {
+    public void rejeitarBtnClicked() {
         System.out.println("Rejeitar Button clicked.");
 
 
     }
+
     @FXML
-    public void gravarBtnClicked()
-    {
+    public void gravarBtnClicked() {
         System.out.println("Gravar Button clicked.");
 
 
     }
+
     @FXML
-    public void sairBtnClicked()
-    {
+    public void sairBtnClicked() {
         System.out.println("Sair Button clicked.");
 
 
@@ -77,8 +73,7 @@ public class ControllerUI
 
     /* Tab Selection */
     @FXML
-    public void condutoresTabSelected()
-    {
+    public void condutoresTabSelected() {
         System.out.println("Condutores tab selected.");
 
         /* Hide aceitar e rejeitar */
@@ -89,9 +84,9 @@ public class ControllerUI
         gravarBtn.setVisible(true);
 
     }
+
     @FXML
-    public void pedidosTabSelected()
-    {
+    public void pedidosTabSelected() {
         System.out.println("Pedidos tab selected.");
         /* Hide gravar */
         gravarBtn.setVisible(false);
@@ -100,9 +95,9 @@ public class ControllerUI
         aceitarBtn.setVisible(true);
         rejeitarBtn.setVisible(true);
     }
+
     @FXML
-    public void estatisticasTabSelected()
-    {
+    public void estatisticasTabSelected() {
         System.out.println("Estatísticas tab selected.");
         /* Hide aceitar, rejeitar, gravar */
         aceitarBtn.setVisible(false);
