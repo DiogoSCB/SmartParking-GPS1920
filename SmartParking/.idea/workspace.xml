@@ -116,7 +116,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.MainUI">
+  <component name="RunManager" selected="Application.DBConnection">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -149,26 +149,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="sample.Main" />
-      <module name="SmartParking" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Diogo Santos\Downloads\javafx-sdk-13.0.1\lib&quot; --add-modules=javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Controllers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="MainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="View.MainUI" />
       <module name="SmartParking" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Diogo Santos\Downloads\javafx-sdk-13.0.1\lib&quot; --add-modules=javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-13.0.1\lib&quot; --add-modules=javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="View.*" />
@@ -208,14 +192,13 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
       <item itemvalue="Application.DBConnection" />
       <item itemvalue="Application.MainUI" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MainUI" />
         <item itemvalue="Application.DBConnection" />
+        <item itemvalue="Application.MainUI" />
       </list>
     </recent_temporary>
   </component>
