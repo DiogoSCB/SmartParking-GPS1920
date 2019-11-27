@@ -103,7 +103,7 @@ public class DBConnection {
 
     public void addUser(User users) { //Adicionar utilizador
         sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, IdParkingSpace, IdPark)"
-                + " VALUES(?,?,?,?,?, 0,?)";
+                + " VALUES(?,?,?,?,?, null,?)";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -227,8 +227,7 @@ public class DBConnection {
     public static void main(String[] args) {
         DBConnection dbConnection = new DBConnection("localhost", "3306");
 
-        dbConnection.addUser(new User("Diogo Branco", "69DB44", null, null,
-                "diogo@gmail.com", 0));
+        //dbConnection.addUser(new User("Diogo Branco", "69DB44", null, null, "diogo@gmail.com", 0));
 
         //Teste getParkList()
         ArrayList<Park> parks = dbConnection.getParkList();
