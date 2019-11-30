@@ -1,6 +1,6 @@
-package Models;
+package models;
 
-import DataBase.DBConnection;
+import database.DBConnection;
 
 import java.util.ArrayList;
 import java.util.HashMap;

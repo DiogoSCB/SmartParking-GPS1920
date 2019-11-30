@@ -1,7 +1,7 @@
-package View;
+package views;
 
-import Models.Constants;
-import Models.Data;
+import models.Constants;
+import models.Data;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

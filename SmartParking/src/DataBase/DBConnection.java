@@ -1,9 +1,9 @@
-package DataBase;
+package database;
 
-import Models.Park;
-import Models.ParkingSpace;
-import Models.Request;
-import Models.User;
+import models.Park;
+import models.ParkingSpace;
+import models.Request;
+import models.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -57,31 +57,6 @@ public class DBConnection {
                             resultSet.getInt(3)));
                 }
             }
-        } catch (SQLException e) {
-            System.err.println(e);
-        }
-        return parks;
-    }*/
-
-    public ArrayList<Park> getParkList() { //Buscar a informação de todos os parques para uma lista
-        ArrayList<Park> parks = null;
-
-        try {
-            sql = "SELECT * FROM Park";
-            resultSet = statement.executeQuery(sql);
-            //Se houver dados
-
-            if (resultSet.next()){
-                parks = new ArrayList<>();
-
-
-            while (resultSet.next()) { //Enquanto houver dados
-                int idPark = resultSet.getInt("IdPark");
-                int totalParkingSpaces = resultSet.getInt("TotalParkingSpaces");
-                int freeParkingSpaces = resultSet.getInt("FreeParkingSpaces");
-            }
-            }
-            resultSet.close();
         } catch (SQLException e) {
             System.err.println(e);
         }

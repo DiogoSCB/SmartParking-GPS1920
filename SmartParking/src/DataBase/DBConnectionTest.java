@@ -1,15 +1,11 @@
-package DataBase;
+package database;
 
-import Models.Park;
-import Models.Request;
-import Models.User;
+import models.Park;
+import models.Request;
+import models.User;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DBConnectionTest {
     DBConnection dbConnection;
@@ -17,7 +13,7 @@ class DBConnectionTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-         dbConnection = new DBConnection("localhost", "3306");
+        dbConnection = new DBConnection("localhost", "3306");
     }
 
     @org.junit.jupiter.api.AfterEach
@@ -26,7 +22,7 @@ class DBConnectionTest {
 
     @org.junit.jupiter.api.Test
     void getParkList() {
-          ArrayList<Park> parks = dbConnection.getParkList();
+        ArrayList<Park> parks = dbConnection.getParkList();
         for (Park p : parks) {
             System.out.print(p.getIdPark() + " ");
             System.out.print(p.getTotalParkingSpace() + " ");
@@ -63,21 +59,14 @@ class DBConnectionTest {
 
     @Test
     void addUser(User users) {
-
-   
-    users = dbConnection.addUser();
-
-
-            System.out.print(users.getName() + "Bush ");
-            System.out.print(users.getLicensePlate() + "20wi20 ");
-            System.out.print(users.getEntryData() + "null");
-            System.out.print(users.getDepartureData() + "null ");
-            System.out.print(users.getEmail() + "bush.l@yahoo.com ");
-            System.out.print(users.getIdParkingSpace() + "null ");
-            System.out.print(users.getIdPark() + "null ");
-            System.out.println();
-
-
+        System.out.print(users.getName() + "Bush ");
+        System.out.print(users.getLicensePlate() + "20wi20 ");
+        System.out.print(users.getEntryData() + "null");
+        System.out.print(users.getDepartureData() + "null ");
+        System.out.print(users.getEmail() + "bush.l@yahoo.com ");
+        System.out.print(users.getIdParkingSpace() + "null ");
+        System.out.print(users.getIdPark() + "null ");
+        System.out.println();
     }
 
 

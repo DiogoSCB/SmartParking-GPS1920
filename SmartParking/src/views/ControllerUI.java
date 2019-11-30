@@ -1,6 +1,6 @@
-package View;
+package views;
 
-import Models.Data;
+import models.Data;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
