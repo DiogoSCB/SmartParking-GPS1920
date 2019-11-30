@@ -4,85 +4,66 @@ import java.sql.Date;
 
 public class User {
 
+    private Integer idUser;
     private String name;
     private String licensePlate;
-    private Date entryData;
-    private Date departureData;
+    private Date entryDate;
+    private Date departureDate;
     private String email;
-    private int idParkingSpace;
-    private int idPark;
-    private int idUser;
+    private Integer idParkingSpace;
+    private Integer idPark;
 
-    public User(String name, String licensePlate, Date entryData, Date departureData, String email, int idPark,int idUser) {
+    public User(Integer idUser, String name, String licensePlate, Date entryDate, Date departureDate, String email, Integer idParkingSpace, Integer idPark) {
+        this.idUser = idUser;
         this.name = name;
         this.licensePlate = licensePlate;
-        this.entryData = entryData;
-        this.departureData = departureData;
+        this.entryDate = entryDate;
+        this.departureDate = departureDate;
         this.email = email;
         this.idParkingSpace = idParkingSpace;
         this.idPark = idPark;
-        this.idUser=idUser;
+    }
+
+    //Construtor sem o Id do Utilizador
+    public User(String name, String licensePlate, Date entryDate, Date departureDate, String email, Integer idParkingSpace, Integer idPark) {
+        this.name = name;
+        this.licensePlate = licensePlate;
+        this.entryDate = entryDate;
+        this.departureDate = departureDate;
+        this.email = email;
+        this.idParkingSpace = idParkingSpace;
+        this.idPark = idPark;
+    }
+
+    public Integer getIdUser() {
+        return idUser;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getLicensePlate() {
         return licensePlate;
     }
 
-    public void setLicensePlate(String licensePlate) {
-        licensePlate = licensePlate;
+    public Date getEntryDate() {
+        return entryDate;
     }
 
-    public Date getEntryData() {
-        return entryData;
-    }
-
-    public void setEntryData(Date entryData) {
-        entryData = entryData;
-    }
-
-    public Date getDepartureData() {
-        return departureData;
-    }
-
-    public void setDepartureData(Date departureData) {
-        departureData = departureData;
+    public Date getDepartureDate() {
+        return departureDate;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        email = email;
-    }
-
-    public int getIdParkingSpace() {
+    public Integer getIdParkingSpace() {
         return idParkingSpace;
     }
 
-    public void setIdParkingSpace(int idParkingSpace) {
-        this.idParkingSpace = idParkingSpace;
-    }
-
-    public int getIdPark() {
+    public Integer getIdPark() {
         return idPark;
     }
-
-    public void setIdPark(int idPark) {
-        this.idPark = idPark;
-    }
-
-    public int getIdUser(){
-        return idUser;
-    }
-
-    public void setIdUser(int idUser){ this.idUser=idUser;}
 }

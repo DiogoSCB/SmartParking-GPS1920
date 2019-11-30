@@ -4,47 +4,31 @@ import java.sql.Date;
 
 public class Request {
 
-    private int idRequest;
+    private Integer idRequest;
     private Date requestDate;
     private int state;
-    private int idUser;
+    private Integer idUser;
 
-    public Request(int idRequest, Date requestDate, int state, int idUser) {
-        idRequest = idRequest;
-        requestDate = requestDate;
-        state = state;
-        idUser = idUser;
+    public Request(Integer idRequest, Date requestDate, int state, Integer idUser) {
+        this.idRequest = idRequest;
+        this.requestDate = requestDate;
+        this.state = state;
+        this.idUser = idUser;
     }
 
-    public int getIdRequest() {
+    public Integer getIdRequest() {
         return idRequest;
-    }
-
-    public void setIdRequest(int idRequest) {
-        idRequest = idRequest;
     }
 
     public Date getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate(Date requestDate) {
-        requestDate = requestDate;
-    }
-
     public int getState() {
         return state;
     }
 
-    public void setState(int state) {
-        state = state;
-    }
-
-    public int getIdUser() {
+    public Integer getIdUser() {
         return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        idUser = idUser;
     }
 }

@@ -2,37 +2,25 @@ package models;
 
 public class ParkingSpace {
 
-    private int idParkingSpace;
+    private Integer idParkingSpace;
     private int reserved;
-    private int idPark;
+    private Integer idPark;
 
-    public ParkingSpace(int idParkingSpace, int reserved, int idPark) {
-        idParkingSpace = idParkingSpace;
-        reserved = reserved;
-        idPark = idPark;
+    public ParkingSpace(Integer idParkingSpace, int reserved, Integer idPark) {
+        this.idParkingSpace = idParkingSpace;
+        this.reserved = reserved;
+        this.idPark = idPark;
     }
 
-    public int getIdParkingSpace() {
+    public Integer getIdParkingSpace() {
         return idParkingSpace;
-    }
-
-    public void setIdParkingSpace(int idParkingSpace) {
-        idParkingSpace = idParkingSpace;
     }
 
     public int getReserved() {
         return reserved;
     }
 
-    public void setReserved(int reserved) {
-        reserved = reserved;
-    }
-
-    public int getIdPark() {
+    public Integer getIdPark() {
         return idPark;
-    }
-
-    public void setIdPark(int idPark) {
-        idPark = idPark;
     }
 }

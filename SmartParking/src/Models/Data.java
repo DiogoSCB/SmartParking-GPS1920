@@ -22,7 +22,7 @@ public class Data implements Constants {
         parks = new HashMap<>();
 
         for (Park p : dbConnection.getParkList()) {
-            ArrayList<ParkingSpace> parkingSpaces = dbConnection.getParkingSpaces(p.getIdPark());
+            ArrayList<ParkingSpace> parkingSpaces = dbConnection.getParkingSpaces(p);
             parks.put(p, parkingSpaces);
         }
 

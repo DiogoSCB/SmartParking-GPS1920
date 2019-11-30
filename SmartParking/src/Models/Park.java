@@ -2,17 +2,17 @@ package models;
 
 public class Park {
 
-        private int idPark;
-        private int totalParkingSpace;
-        private int freeParkingSpace;
+    private Integer idPark;
+    private int totalParkingSpace;
+    private int freeParkingSpace;
 
-    public Park(int idPark, int totalParkingSpace, int freeParkingSpace) {
-        idPark = idPark;
-        totalParkingSpace = totalParkingSpace;
-        freeParkingSpace = freeParkingSpace;
+    public Park(Integer idPark, int totalParkingSpace, int freeParkingSpace) {
+        this.idPark = idPark;
+        this.totalParkingSpace = totalParkingSpace;
+        this.freeParkingSpace = freeParkingSpace;
     }
 
-    public int getIdPark() {
+    public Integer getIdPark() {
         return idPark;
     }
 
@@ -22,18 +22,6 @@ public class Park {
 
     public int getFreeParkingSpace() {
         return freeParkingSpace;
-    }
-
-    public void setIdPark(int idPark) {
-        idPark = idPark;
-    }
-
-    public void setTotalParkingSpace(int totalParkingSpace) {
-        totalParkingSpace = totalParkingSpace;
-    }
-
-    public void setFreeParkingSpace(int freeParkingSpace) {
-        freeParkingSpace = freeParkingSpace;
     }
 }
 
