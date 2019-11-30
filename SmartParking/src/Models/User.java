@@ -9,6 +9,7 @@ public class User {
     private Date entryData;
     private Date departureData;
     private String email;
+    private int idParkingSpace;
     private int idPark;
     private int idUser;
 
@@ -18,6 +19,7 @@ public class User {
         this.entryData = entryData;
         this.departureData = departureData;
         this.email = email;
+        this.idParkingSpace = idParkingSpace;
         this.idPark = idPark;
         this.idUser=idUser;
     }
@@ -60,6 +62,14 @@ public class User {
 
     public void setEmail(String email) {
         email = email;
+    }
+
+    public int getIdParkingSpace() {
+        return idParkingSpace;
+    }
+
+    public void setIdParkingSpace(int idParkingSpace) {
+        this.idParkingSpace = idParkingSpace;
     }
 
     public int getIdPark() {

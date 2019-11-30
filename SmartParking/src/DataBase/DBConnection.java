@@ -47,7 +47,7 @@ public class DBConnection {
     }
 
 
-    public ArrayList<Park> getParkList() { //Buscar a informação de todos os parques para uma lista
+    /*public ArrayList<Park> getParkList() { //Buscar a informação de todos os parques para uma lista
         ArrayList<Park> parks = null;
         try {
             sql = "SELECT * FROM Park";
@@ -63,7 +63,35 @@ public class DBConnection {
             System.err.println(e);
         }
         return parks;
+    }*/
+
+    public ArrayList<Park> getParkList() { //Buscar a informação de todos os parques para uma lista
+        ArrayList<Park> parks = null;
+
+        try {
+            sql = "SELECT * FROM Park";
+            resultSet = statement.executeQuery(sql);
+            //Se houver dados
+
+            if (resultSet.next()){
+                parks = new ArrayList<>();
+
+
+            while (resultSet.next()) { //Enquanto houver dados
+                int idPark = resultSet.getInt("IdPark");
+                int totalParkingSpaces = resultSet.getInt("TotalParkingSpaces");
+                int freeParkingSpaces = resultSet.getInt("FreeParkingSpaces");
+            }
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return parks;
     }
+
+
+
 
     public ArrayList<User> getUserList() { //Buscar a informação de todos os utilizadores
         ArrayList<User> users = null;
@@ -103,8 +131,9 @@ public class DBConnection {
     }
 
     public void addUser(User users) { //Adicionar utilizador
-        sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, IdParkingSpace, IdPark)"
-                + " VALUES(?,?,?,?,?, null,?)";
+
+        sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, idParkingSpace, idPark)"
+                + " VALUES(?,?,?,? ,?, ?,?)";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -114,7 +143,8 @@ public class DBConnection {
             stmt.setDate(3, users.getEntryData());
             stmt.setDate(4, users.getDepartureData());
             stmt.setString(5, users.getEmail());
-            stmt.setInt(6, users.getIdPark());
+            stmt.setInt(6, users.getIdParkingSpace());
+            stmt.setInt(7, users.getIdPark());
 
             stmt.execute();
             stmt.close();
