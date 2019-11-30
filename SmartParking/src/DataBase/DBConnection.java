@@ -8,19 +8,8 @@ import Models.User;
 import java.sql.*;
 import java.util.ArrayList;
 
-/*
-
-Funções por fazer:
-- Buscar informação de todos os pedidos -->check
-- Buscar informação de todos os utilizadores.-->check
-- Buscar os lugares disponíveis de um determiado parque para o dropdown. -->check
-- Modificar o estado de um determinado pedido para Aprovado/Rejeitado. -->check
-- Adicionar um pedido na tabela. -->check
-- Remover utilizador por matricula ou id?.-->check
-- Adicionar lugar de estacionamento ao utilizador por matricula ou id? -->check
-- Adicionar utilizador (manualmente). -->check
-- Modificar dados de um utilizador. --> check
-
+/**
+ * @author Diogo Santos e Carolina Rosa
  */
 public class DBConnection {
 
@@ -32,6 +21,12 @@ public class DBConnection {
     ResultSet resultSet; //Resultado vindo do script da String SQL
     String sql; //String que contêm o script desejado
 
+
+    /**
+     * Construtor da Classe
+     * @param ip é o ip do servidor da base de dados
+     * @param port é o porto do servidor da base de dados
+     */
     public DBConnection(String ip, String port) {
         try {
             System.out.println("Connecting to Database (" + ip + ":" + port + ")");
@@ -46,7 +41,10 @@ public class DBConnection {
         }
     }
 
-
+    /**
+     * Lista de todos os Parques registados na BD
+     * @return ArrayList<Park>
+     */
     public ArrayList<Park> getParkList() { //Buscar a informação de todos os parques para uma lista
         ArrayList<Park> parks = null;
         try {
@@ -65,6 +63,10 @@ public class DBConnection {
         return parks;
     }
 
+    /**
+     * Lista de todos os Utilizadores registados na BD
+     * @return ArrayList<User>
+     */
     public ArrayList<User> getUserList() { //Buscar a informação de todos os utilizadores
         ArrayList<User> users = null;
         try {
@@ -84,6 +86,10 @@ public class DBConnection {
         return users;
     }
 
+    /**
+     * Lista de todos os Pedidos registados na BD
+     * @return ArrayList<Request>
+     */
     public ArrayList<Request> getRequestList() { //Buscar a informação de todos os pedidos
         ArrayList<Request> requests = null;
         try {
@@ -102,6 +108,10 @@ public class DBConnection {
         return requests;
     }
 
+    /**
+     * Adicionar utilizador
+     * @param users é classe que encapsula a informação a registar na BD
+     */
     public void addUser(User users) { //Adicionar utilizador
         sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, IdParkingSpace, IdPark)"
                 + " VALUES(?,?,?,?,?, null,?)";
@@ -123,6 +133,7 @@ public class DBConnection {
             throw new RuntimeException(u);
         }
     }
+
 
     public void addRequest(Request requests) { //Adicionar Pedido
         sql = "INSERT INTO Request(idRequest,requestDate,state,idUser) VALUES(?,?,?,?)";
@@ -244,6 +255,7 @@ public class DBConnection {
             System.err.println(e);
         }
     }
+
 
     public static void main(String[] args) {
         DBConnection dbConnection = new DBConnection("localhost", "3306");
