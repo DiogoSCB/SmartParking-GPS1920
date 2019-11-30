@@ -61,6 +61,31 @@ public class DBConnection {
             System.err.println(e);
         }
         return parks;
+    }*/
+
+    public ArrayList<Park> getParkList() { //Buscar a informação de todos os parques para uma lista
+        ArrayList<Park> parks = null;
+
+        try {
+            sql = "SELECT * FROM Park";
+            resultSet = statement.executeQuery(sql);
+            //Se houver dados
+
+            if (resultSet.next()){
+                parks = new ArrayList<>();
+
+
+            while (resultSet.next()) { //Enquanto houver dados
+                int idPark = resultSet.getInt("IdPark");
+                int totalParkingSpaces = resultSet.getInt("TotalParkingSpaces");
+                int freeParkingSpaces = resultSet.getInt("FreeParkingSpaces");
+            }
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return parks;
     }
 
     /**
@@ -77,7 +102,7 @@ public class DBConnection {
                 while (resultSet.next()) { //Enquanto houver dados
                     users.add(new User(resultSet.getString(1), resultSet.getString(2),
                             resultSet.getDate(3), resultSet.getDate(4),
-                            resultSet.getString(5), resultSet.getInt(6)));
+                            resultSet.getString(5), resultSet.getInt(6), resultSet.getInt(7)));
                 }
             }
         } catch (SQLException e) {
@@ -113,8 +138,9 @@ public class DBConnection {
      * @param users é classe que encapsula a informação a registar na BD
      */
     public void addUser(User users) { //Adicionar utilizador
-        sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, IdParkingSpace, IdPark)"
-                + " VALUES(?,?,?,?,?, null,?)";
+
+        sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, idParkingSpace, idPark)"
+                + " VALUES(?,?,?,? ,?, ?,?)";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -124,7 +150,8 @@ public class DBConnection {
             stmt.setDate(3, users.getEntryData());
             stmt.setDate(4, users.getDepartureData());
             stmt.setString(5, users.getEmail());
-            stmt.setInt(6, users.getIdPark());
+            stmt.setInt(6, users.getIdParkingSpace());
+            stmt.setInt(7, users.getIdPark());
 
             stmt.execute();
             stmt.close();
@@ -160,8 +187,8 @@ public class DBConnection {
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
 
-            stmt.setInt(2, idUser);  //correspondente ao parametro que se pretende eliminar
-            stmt.setString(3, licensePlate);
+            stmt.setInt(1, idUser);  //correspondente ao parametro que se pretende eliminar
+            stmt.setString(2, licensePlate);
 
             stmt.executeUpdate(); // executa a remoçao
 
@@ -176,7 +203,8 @@ public class DBConnection {
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
 
-            stmt.setString(3, user.getLicensePlate()); //correspondente ao parametro que se pretende alterar
+            stmt.setString(1, user.getLicensePlate()); //correspondente ao parametro que se pretende alterar
+            stmt.setInt(2, user.getIdUser()); //correspondente ao parametro que se pretende alterar
 
             stmt.executeUpdate(); // executa a modificaçao
 
@@ -186,12 +214,12 @@ public class DBConnection {
     }
 
     public void modifyRequest(int state) { // modificar o estado do pedido
-        sql = "UPDATE Request SET state = 'Aprovado' OR state ='Rejeitado' WHERE state = 'Pendente'";
+        sql = "UPDATE Request SET state = ? WHERE state = 0";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
 
-            stmt.setInt(3, state); //correspondente ao parametro que se pretende alterar
+            stmt.setInt(1, state); //correspondente ao parametro que se pretende alterar
 
             stmt.executeUpdate(); // executa a modificaçao
 
@@ -257,36 +285,4 @@ public class DBConnection {
     }
 
 
-    public static void main(String[] args) {
-        DBConnection dbConnection = new DBConnection("localhost", "3306");
-
-        //Teste getParkList()
-        ArrayList<Park> parks = dbConnection.getParkList();
-        for (Park p : parks) {
-            System.out.print(p.getIdPark() + " ");
-            System.out.print(p.getTotalParkingSpace() + " ");
-            System.out.print(p.getFreeParkingSpace() + " ");
-            System.out.println();
-        }
-        //Teste getUserList()
-        /*ArrayList<User> users = dbConnection.getUserList();
-        for (User p : users) {
-            System.out.print(p.getIdUser() + " ");
-            System.out.print(p.getLicensePlate() + " ");
-            System.out.print(p.getEntryData() + " ");
-            System.out.print(p.getDepartureData() + " ");
-            System.out.print(p.getEmail() + " ");
-            System.out.print(p.getPark() + " ");
-            System.out.println();
-        }
-        //Teste getRequestList()
-        ArrayList<Request> requests = dbConnection.getRequestList();
-        for (Request p : requests) {
-            System.out.print(p.getIdRequest() + " ");
-            System.out.print(p.getRequestDate() + " ");
-            System.out.print(p.getState() + " ");
-            System.out.print(p.getIdUser() + " ");
-            System.out.println();
-        }*/
-    }
 }
