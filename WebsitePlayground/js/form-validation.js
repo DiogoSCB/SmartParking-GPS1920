@@ -18,6 +18,9 @@ $(function() {
           required: true,
           minlength: 2,
           maxlength: 2,
+		  //type: "text",
+		  //text: true,
+		  pattern: "^[a-zA-Z]*$",
           digits: false
         },
         matricula3: {
