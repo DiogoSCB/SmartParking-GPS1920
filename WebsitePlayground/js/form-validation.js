@@ -1,4 +1,6 @@
 // Wait for the DOM to be ready
+
+
 $(function() {
     // Initialize form validation on the registration form.
     // It has the name attribute "registration"
@@ -14,15 +16,17 @@ $(function() {
           maxlength: 2,
           digits: true
         },
+		
         matricula2: {
           required: true,
           minlength: 2,
           maxlength: 2,
+		  //type: regex,
 		  //type: "text",
 		  //text: true,
-		  pattern: "^[a-zA-Z]*$",
-          digits: false
-        },
+		  pattern: /^[a-zA-Z]/
+         // digits: false
+        },	
         matricula3: {
           required: true,
           minlength: 2,
@@ -51,4 +55,3 @@ $(function() {
       }
     });
   });
-  
