@@ -1,8 +1,9 @@
 package views;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import javafx.event.ActionEvent;
@@ -11,19 +12,14 @@ import javafx.event.EventHandler;
 import javafx.collections.ObservableList;
 
 import models.Data;
-import models.User;
 import models.UserRow;
 
+import java.net.URL;
 import java.sql.Date;
+import java.util.ResourceBundle;
 
-public class ControllerUI {
-
-    private ObservableList<UserRow> usersData;
-
-    public void setData(Data data) {
-        this.data = data;
-    }
-
+public class ControllerUI implements Initializable
+{
     private Data data;
 
     /* Buttons */
@@ -68,105 +64,116 @@ public class ControllerUI {
     @FXML
     private TableColumn columnOpcoes;
 
-
     /* ComboBoxes */
     @FXML
     private ComboBox idParqueCondutores;
 
-    /* Buttons */
-    @FXML
-    public void aceitarBtnClicked() {
-        System.out.println("Aceitar Button clicked.");
+    public ControllerUI(Data data) {
+        this.data = data;
     }
 
-    @FXML
-    public void rejeitarBtnClicked() {
-        System.out.println("Rejeitar Button clicked.");
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
+        updateParkComboBox();
+
+        /* Setup Listeners */
+        idParqueCondutores.setOnAction(new NewParkSelectedCallBack());
+        condutoresTab.setOnSelectionChanged(new TabSelectionChanged());
+        pedidosTab.setOnSelectionChanged(new TabSelectionChanged());
+        estatisticasTab.setOnSelectionChanged(new TabSelectionChanged());
+        aceitarBtn.setOnAction(new ButtonPressed());
+        rejeitarBtn.setOnAction(new ButtonPressed());
+        gravarBtn.setOnAction(new ButtonPressed());
+        sairBtn.setOnAction(new ButtonPressed());
     }
 
-    @FXML
-    public void gravarBtnClicked() {
-        System.out.println("Gravar Button clicked.");
-    }
-
-    @FXML
-    public void sairBtnClicked() {
-        System.out.println("Sair Button clicked.");
-        /* Save everything */
-        Platform.exit();
-    }
-
-    /* Tab Selection */
-    @FXML
-    public void condutoresTabSelected() {
-
-        /* Tabela */
-        condutoresTable.setPlaceholder(new Label("Selecione o ID do Parque."));
 
 
-        /* Atualizar lista dos parques */
+    void updateParkComboBox() {
         idParqueCondutores.getItems().clear();
         idParqueCondutores.setPromptText("ID do Parque");
-
-        //idParqueCondutores.getItems().add(1); // TODO REMOVE
-        //idParqueCondutores.getItems().add(2); // TODO REMOVE
-
-        idParqueCondutores.setOnAction(new NewParkSelectedCallBack());
-
-        // TODO UNCOMMENT WHEN DATABASE IS RUNNING
         for (Integer i : data.getParkIdAsIntegers())
             idParqueCondutores.getItems().add(i);
-
-        System.out.println("Condutores tab selected."); // TODO REMOVE
-
-        /* Hide aceitar e rejeitar */
-        aceitarBtn.setVisible(false);
-        rejeitarBtn.setVisible(false);
-
-        /* Show gravar */
-        gravarBtn.setVisible(true);
-
     }
 
-    @FXML
-    public void pedidosTabSelected() {
-        System.out.println("Pedidos tab selected.");
-        /* Hide gravar */
-        gravarBtn.setVisible(false);
 
-        /* Show aceitar e rejeitar */
+    void setupCondutoresTabLayout() {
+
+        condutoresTable.setPlaceholder(new Label("Selecione o ID do Parque."));
+
+        /* Show/hide corresponding buttons */
+        aceitarBtn.setVisible(false);
+        rejeitarBtn.setVisible(false);
+        gravarBtn.setVisible(true);
+    }
+    void setupPedidosTabLayout() {
+        /* Show/hide corresponding buttons */
+        gravarBtn.setVisible(false);
         aceitarBtn.setVisible(true);
         rejeitarBtn.setVisible(true);
     }
-
-    @FXML
-    public void estatisticasTabSelected() {
-        System.out.println("Estatísticas tab selected.");
-        /* Hide aceitar, rejeitar, gravar */
+    void setupEstatisticasTabLayout() {
+        /* Show/hide corresponding buttons */
         aceitarBtn.setVisible(false);
         rejeitarBtn.setVisible(false);
         gravarBtn.setVisible(false);
-
-        /* Show sair */
         sairBtn.setVisible(true);
     }
 
 
+
     /* CALL BACKS*/
     class NewParkSelectedCallBack implements EventHandler<ActionEvent> {
-        NewParkSelectedCallBack() {
-        }
+        NewParkSelectedCallBack() {}
 
         public void handle(ActionEvent actionEvent) {
-            System.out.println("Parque selecionado: " + idParqueCondutores.getValue()); // TODO REMOVE
-            usersData = data.getUsersByParkID((Integer)idParqueCondutores.getValue()); // TODO UNCOMMENT WHEN DATABASE IS RUNNING
-
-            // User a = new User(1, "joao", "00-AA-00", new Date(0), new Date(500000000), "example@mail.pt", 10, 10);
-            //User b = new User(2, "maria", "00-AA-00", new Date(0), new Date(500000000), "example2@mail.pt", 10, 10);
-
-            //usersData = FXCollections.observableArrayList(new UserRow(a), new UserRow(b)); // TODO REMOVE
-            condutoresTable.setItems(usersData);
+            condutoresTable.setItems(data.getUsersByParkID((Integer)idParqueCondutores.getValue()));
         }
     }
+
+    class ButtonPressed implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            if (actionEvent.getSource().equals(aceitarBtn)) {
+                System.out.println("Aceitar Button Pressed.");
+            }
+            else if (actionEvent.getSource().equals(rejeitarBtn)) {
+                System.out.println("Rejeitar Button Pressed.");
+            }
+            else if (actionEvent.getSource().equals(gravarBtn)) {
+                System.out.println("Gravar Button Pressed.");
+            }
+            else if (actionEvent.getSource().equals(sairBtn)) {
+                System.out.println("Sair Button Pressed.");
+                Platform.exit();
+            }
+        }
+    }
+
+    class TabSelectionChanged implements EventHandler<Event> {
+
+        @Override
+        public void handle(Event event)
+        {
+            if (condutoresTab.isSelected())
+            {
+                System.out.println("Condutores Tab Selected.");
+                setupCondutoresTabLayout();
+                updateParkComboBox();
+            }
+            else if (pedidosTab.isSelected())
+            {
+                System.out.println("Pedidos Tab Selected.");
+                setupPedidosTabLayout();
+            }
+            else if (estatisticasTab.isSelected())
+            {
+                System.out.println("Estatísticas Tab Selected.");
+                setupEstatisticasTabLayout();
+            }
+        }
+    }
+
 
 }

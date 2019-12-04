@@ -4,10 +4,7 @@ import database.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Data implements Constants {
 
@@ -38,7 +35,7 @@ public class Data implements Constants {
         for (Park p : parks.keySet())
             parksIDS.add(p.getIdPark());
 
-
+        Collections.sort(parksIDS);
         return parksIDS;
     }
 

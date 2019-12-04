@@ -11,17 +11,17 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.ControllerUI">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1024.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab fx:id="condutoresTab" onSelectionChanged="#condutoresTabSelected" text="Condutores">
+                <Tab fx:id="condutoresTab" text="Condutores">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -40,47 +40,47 @@
                                             <columns>
                                                 <TableColumn prefWidth="75.0" text="ID Parque">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="idPark"/>
+                                                        <PropertyValueFactory property="idPark" />
                                                     </cellValueFactory>
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="ID Condutor">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="idUser"/>
+                                                        <PropertyValueFactory property="idUser" />
                                                     </cellValueFactory>
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="Nome">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="name"/>
+                                                        <PropertyValueFactory property="name" />
                                                     </cellValueFactory>
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="Matricula">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="licensePlate"/>
+                                                        <PropertyValueFactory property="licensePlate" />
                                                     </cellValueFactory>
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="ID Lugar">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="parkDropdownList"/>
+                                                        <PropertyValueFactory property="parkDropdownList" />
                                                     </cellValueFactory>
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="Data Entrada">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="entryDate"/>
+                                                        <PropertyValueFactory property="entryDate" />
                                                     </cellValueFactory>
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="Data Saida">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="departureDate"/>
+                                                        <PropertyValueFactory property="departureDate" />
                                                     </cellValueFactory>
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="Email">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="email"/>
+                                                        <PropertyValueFactory property="email" />
                                                     </cellValueFactory>
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="Opções">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="options"/>
+                                                        <PropertyValueFactory property="options" />
                                                     </cellValueFactory>
                                                 </TableColumn>
                                             </columns>
@@ -93,7 +93,7 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab fx:id="pedidosTab" onSelectionChanged="#pedidosTabSelected" text="Pedidos">
+                <Tab fx:id="pedidosTab" text="Pedidos">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -123,7 +123,7 @@
                      </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab fx:id="estatisticasTab" onSelectionChanged="#estatisticasTabSelected" text="Estatisticas">
+                <Tab fx:id="estatisticasTab" text="Estatisticas">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -167,19 +167,19 @@
         </TabPane>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
             <children>
-                <Button fx:id="aceitarBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aceitarBtnClicked" text="Aceitar" visible="false">
+                <Button fx:id="aceitarBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Aceitar" visible="false">
                     <font>
                         <Font size="25.0" />
                     </font></Button>
-                <Button fx:id="rejeitarBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#rejeitarBtnClicked" text="Rejeitar" textAlignment="CENTER" visible="false">
+                <Button fx:id="rejeitarBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Rejeitar" textAlignment="CENTER" visible="false">
                     <font>
                         <Font size="25.0" />
                     </font></Button>
-                <Button fx:id="gravarBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#gravarBtnClicked" text="Gravar" textAlignment="CENTER">
+                <Button fx:id="gravarBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Gravar" textAlignment="CENTER">
                     <font>
                         <Font size="25.0" />
                     </font></Button>
-                <Button fx:id="sairBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="134.0" layoutY="10.0" mnemonicParsing="false" onAction="#sairBtnClicked" text="Sair" textAlignment="CENTER">
+                <Button fx:id="sairBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="134.0" layoutY="10.0" mnemonicParsing="false" text="Sair" textAlignment="CENTER">
                     <font>
                         <Font size="25.0" />
                     </font></Button>
