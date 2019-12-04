@@ -92,6 +92,7 @@ public class ControllerUI implements Initializable
 
     void updateParkComboBox() {
         idParqueCondutores.getItems().clear();
+
         idParqueCondutores.setPromptText("ID do Parque");
         for (Integer i : data.getParkIdAsIntegers())
             idParqueCondutores.getItems().add(i);
@@ -100,6 +101,7 @@ public class ControllerUI implements Initializable
 
     void setupCondutoresTabLayout() {
 
+        condutoresTable.setItems(null);
         condutoresTable.setPlaceholder(new Label("Selecione o ID do Parque."));
 
         /* Show/hide corresponding buttons */
@@ -125,10 +127,9 @@ public class ControllerUI implements Initializable
 
     /* CALL BACKS*/
     class NewParkSelectedCallBack implements EventHandler<ActionEvent> {
-        NewParkSelectedCallBack() {}
-
         public void handle(ActionEvent actionEvent) {
-            condutoresTable.setItems(data.getUsersByParkID((Integer)idParqueCondutores.getValue()));
+            if (idParqueCondutores.getValue() != null)
+                condutoresTable.setItems(data.getUsersByParkID((Integer)idParqueCondutores.getValue()));
         }
     }
 
