@@ -22,7 +22,7 @@ public class MainUI extends Application implements Constants
          * porque o contrutor é chamado pelo fxmlLoader e náo dá para lhe passar argumentos.
          */
         ControllerUI controllerUI = fxmlLoader.getController();
-        //controllerUI.setData(new Data()); // TODO UNCOMMENT WHEN DATABASE IS RUNNING
+        controllerUI.setData(new Data()); // TODO UNCOMMENT WHEN DATABASE IS RUNNING
 
         primaryStage.setTitle(windowName);
         primaryStage.setScene(new Scene(root, windowWidth, windowHeight));

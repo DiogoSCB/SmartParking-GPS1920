@@ -108,14 +108,14 @@ public class ControllerUI {
         idParqueCondutores.getItems().clear();
         idParqueCondutores.setPromptText("ID do Parque");
 
-        idParqueCondutores.getItems().add(1); // TODO REMOVE
-        idParqueCondutores.getItems().add(2); // TODO REMOVE
+        //idParqueCondutores.getItems().add(1); // TODO REMOVE
+        //idParqueCondutores.getItems().add(2); // TODO REMOVE
 
         idParqueCondutores.setOnAction(new NewParkSelectedCallBack());
 
         // TODO UNCOMMENT WHEN DATABASE IS RUNNING
-        //for (Integer i : data.getParkIdAsIntegers())
-        //    idParqueCondutores.getItems().add(i);
+        for (Integer i : data.getParkIdAsIntegers())
+            idParqueCondutores.getItems().add(i);
 
         System.out.println("Condutores tab selected."); // TODO REMOVE
 
@@ -154,16 +154,17 @@ public class ControllerUI {
 
     /* CALL BACKS*/
     class NewParkSelectedCallBack implements EventHandler<ActionEvent> {
-        NewParkSelectedCallBack() {}
+        NewParkSelectedCallBack() {
+        }
 
         public void handle(ActionEvent actionEvent) {
             System.out.println("Parque selecionado: " + idParqueCondutores.getValue()); // TODO REMOVE
-            // usersData = data.getUsersByParkID((Integer)idParqueCondutores.getValue()); // TODO UNCOMMENT WHEN DATABASE IS RUNNING
+            usersData = data.getUsersByParkID((Integer)idParqueCondutores.getValue()); // TODO UNCOMMENT WHEN DATABASE IS RUNNING
 
-            User a = new User(1, "joao", "00-AA-00", new Date(0), new Date(500000000), "example@mail.pt", 10, 10);
-            User b = new User(2, "maria", "00-AA-00", new Date(0), new Date(500000000), "example2@mail.pt", 10, 10);
+            // User a = new User(1, "joao", "00-AA-00", new Date(0), new Date(500000000), "example@mail.pt", 10, 10);
+            //User b = new User(2, "maria", "00-AA-00", new Date(0), new Date(500000000), "example2@mail.pt", 10, 10);
 
-            usersData = FXCollections.observableArrayList(new UserRow(a), new UserRow(b)); // TODO REMOVE
+            //usersData = FXCollections.observableArrayList(new UserRow(a), new UserRow(b)); // TODO REMOVE
             condutoresTable.setItems(usersData);
         }
     }

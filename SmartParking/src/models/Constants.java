@@ -13,5 +13,5 @@ public interface Constants
 
     // Database settings
     String ip = "127.0.0.1";
-    String port = "4321";
+    String port = "3306";
 }

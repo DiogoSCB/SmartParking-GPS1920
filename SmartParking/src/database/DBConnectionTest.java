@@ -7,13 +7,16 @@ import models.User;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import static models.Constants.ip;
+import static models.Constants.port;
+
 class DBConnectionTest {
 
     private DBConnection dbConnection;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        dbConnection = new DBConnection("localhost", "3306");
+        dbConnection = new DBConnection(ip, port);
     }
 
     @org.junit.jupiter.api.Test

@@ -38,6 +38,7 @@ public class Data implements Constants {
         for (Park p : parks.keySet())
             parksIDS.add(p.getIdPark());
 
+
         return parksIDS;
     }
 
@@ -49,12 +50,12 @@ public class Data implements Constants {
         return FXCollections.observableArrayList(users);
     }
 
-    public ObservableList<User> getUsersByParkID(int parkID) {
-        ArrayList<User> usersByParkID = new ArrayList<>();
+    public ObservableList<UserRow> getUsersByParkID(int parkID) {
+        ArrayList<UserRow> usersByParkID = new ArrayList<>();
 
         for (User u :users)
             if (u.getIdPark() == parkID)
-                usersByParkID.add(u);
+                usersByParkID.add(new UserRow(u));
 
         return FXCollections.observableArrayList(usersByParkID);
     }

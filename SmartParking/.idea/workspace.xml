@@ -9,7 +9,6 @@
       <change beforePath="$PROJECT_DIR$/src/DataBase/DBConnectionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBase/DBConnectionTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/User.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -124,19 +123,13 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="JUnit.DBConnectionTest.addUser (1)">
+  <component name="RunManager" selected="Application.MainUI">
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -149,8 +142,16 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+    <configuration name="MainUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="views.MainUI" />
+      <module name="SmartParking" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-13.0.1\lib&quot; --add-modules=javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="views.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -212,26 +213,6 @@
       <option name="PACKAGE_NAME" value="DataBase" />
       <option name="MAIN_CLASS_NAME" value="DataBase.DBConnectionTest" />
       <option name="METHOD_NAME" value="addUser" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DBConnectionTest.getParkList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SmartParking" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="database.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="database" />
-      <option name="MAIN_CLASS_NAME" value="database.DBConnectionTest" />
-      <option name="METHOD_NAME" value="getParkList" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
@@ -303,15 +284,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.MainUI" />
+      <item itemvalue="JUnit.DBConnectionTest.addUser" />
+      <item itemvalue="JUnit.DBConnectionTest.addUser (1)" />
+      <item itemvalue="JUnit.DBConnectionTest.getRequestList" />
+      <item itemvalue="JUnit.DBConnectionTest.getUserList" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MainUI" />
         <item itemvalue="JUnit.DBConnectionTest.addUser (1)" />
         <item itemvalue="JUnit.DBConnectionTest.addUser" />
         <item itemvalue="JUnit.DBConnectionTest.getRequestList" />
         <item itemvalue="JUnit.DBConnectionTest.getUserList" />
-        <item itemvalue="JUnit.DBConnectionTest.getParkList" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -394,32 +394,45 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="392" y="88" key="#Plugins/0.0.1600.860@0.0.1600.860" timestamp="1575053318674" />
+    <state x="254" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1575476293911">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="254" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1575476293911" />
     <state x="529" y="293" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1575052482826">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="529" y="293" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1600.860@0.0.1600.860" timestamp="1575052482826" />
+    <state width="1579" height="222" key="GridCell.Tab.0.bottom" timestamp="1575477180261">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1579" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1575477180261" />
+    <state width="1579" height="222" key="GridCell.Tab.0.center" timestamp="1575477180260">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1579" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1575477180260" />
+    <state width="1579" height="222" key="GridCell.Tab.0.left" timestamp="1575477180260">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1579" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1575477180260" />
+    <state width="1579" height="222" key="GridCell.Tab.0.right" timestamp="1575477180261">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1579" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1575477180261" />
     <state x="496" y="253" key="com.intellij.ide.util.TipDialog" timestamp="1575051741560">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="496" y="253" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1575051741560" />
-    <state x="564" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1575053300094">
+    <state x="504" y="323" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1575475997294">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="564" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1600.860@0.0.1600.860" timestamp="1575053300094" />
+    <state x="504" y="323" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1600.860@0.0.1600.860" timestamp="1575475997294" />
+    <state x="564" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1575476022717">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="564" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1600.860@0.0.1600.860" timestamp="1575476022717" />
     <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1575053307447">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1575053307447" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/views/ControllerUI.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
