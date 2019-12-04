@@ -12,12 +12,13 @@ import javafx.collections.ObservableList;
 
 import models.Data;
 import models.User;
+import models.UserRow;
 
 import java.sql.Date;
 
 public class ControllerUI {
 
-    private ObservableList<User> usersData;
+    private ObservableList<UserRow> usersData;
 
     public void setData(Data data) {
         this.data = data;
@@ -159,9 +160,10 @@ public class ControllerUI {
             System.out.println("Parque selecionado: " + idParqueCondutores.getValue()); // TODO REMOVE
             // usersData = data.getUsersByParkID((Integer)idParqueCondutores.getValue()); // TODO UNCOMMENT WHEN DATABASE IS RUNNING
 
-            usersData = FXCollections.observableArrayList(new User(1, "joao", "00-AA-00", new Date(0), new Date(500000000), "example@mail.pt", 10, 10),
-                    new User(2, "maria", "00-AA-00", new Date(0), new Date(500000000), "example2@mail.pt", 10, 10)
-                    ); // TODO REMOVE
+            User a = new User(1, "joao", "00-AA-00", new Date(0), new Date(500000000), "example@mail.pt", 10, 10);
+            User b = new User(2, "maria", "00-AA-00", new Date(0), new Date(500000000), "example2@mail.pt", 10, 10);
+
+            usersData = FXCollections.observableArrayList(new UserRow(a), new UserRow(b)); // TODO REMOVE
             condutoresTable.setItems(usersData);
         }
     }

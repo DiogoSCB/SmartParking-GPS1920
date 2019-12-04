@@ -60,7 +60,7 @@
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="ID Lugar">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property="idParkingSpace"/>
+                                                        <PropertyValueFactory property="parkDropdownList"/>
                                                     </cellValueFactory>
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="Data Entrada">
@@ -80,7 +80,7 @@
                                                 </TableColumn>
                                                 <TableColumn prefWidth="75.0" text="Opções">
                                                     <cellValueFactory>
-                                                        <PropertyValueFactory property=""/>
+                                                        <PropertyValueFactory property="options"/>
                                                     </cellValueFactory>
                                                 </TableColumn>
                                             </columns>
