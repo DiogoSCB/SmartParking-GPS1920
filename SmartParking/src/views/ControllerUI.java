@@ -4,15 +4,16 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-import javafx.collections.ObservableList;
-
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import models.Data;
-import models.UserRow;
+import models.User;
 
 import java.net.URL;
 import java.sql.Date;
@@ -42,27 +43,27 @@ public class ControllerUI implements Initializable
 
     /* Tables */
     @FXML
-    private TableView condutoresTable;
+    private TableView<User> condutoresTable;
 
     // Columns
     @FXML
-    private TableColumn columnIDParque;
+    private TableColumn<User, Integer> columnIDParque;
     @FXML
-    private TableColumn columnIDCondutor;
+    private TableColumn<User, Integer> columnIDCondutor;
     @FXML
-    private TableColumn columnNome;
+    private TableColumn<User, String> columnNome;
     @FXML
-    private TableColumn columnMatricula;
+    private TableColumn<User, String> columnMatricula;
     @FXML
-    private TableColumn columnIDLugar;
+    private TableColumn<User, Integer> columnIDLugar;
     @FXML
-    private TableColumn columnDataEntrada;
+    private TableColumn<User, Date> columnDataEntrada;
     @FXML
-    private TableColumn columnDataSaida;
+    private TableColumn<User, Date> columnDataSaida;
     @FXML
-    private TableColumn columnEmail;
+    private TableColumn<User, String> columnEmail;
     @FXML
-    private TableColumn columnOpcoes;
+    private TableColumn<User, Void> columnOpcoes;
 
     /* ComboBoxes */
     @FXML
@@ -75,7 +76,10 @@ public class ControllerUI implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        initializeColumns();
         updateParkComboBox();
+
+
 
         /* Setup Listeners */
         idParqueCondutores.setOnAction(new NewParkSelectedCallBack());
@@ -88,7 +92,48 @@ public class ControllerUI implements Initializable
         sairBtn.setOnAction(new ButtonPressed());
     }
 
+    public void initializeColumns() {
+        columnIDParque.setCellValueFactory(new PropertyValueFactory<>("idPark"));
+        columnIDCondutor.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+        columnNome.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnMatricula.setCellValueFactory(new PropertyValueFactory<>("licensePlate"));
+        columnIDLugar.setCellValueFactory(new PropertyValueFactory<>("idParkingSpace"));
+        columnDataEntrada.setCellValueFactory(new PropertyValueFactory<>("entryDate"));
+        columnDataSaida.setCellValueFactory(new PropertyValueFactory<>("departureDate"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
+        columnOpcoes.setCellFactory(col -> new TableCell<>() {
+           private final HBox hBox;
+           private final Button editButton;
+           private final Button removeButton;
+
+            {
+                hBox = new HBox();
+                editButton = new Button("Editar");
+                removeButton = new Button("Remover");
+
+                hBox.setAlignment(Pos.CENTER);
+                hBox.getChildren().addAll(editButton, removeButton);
+
+                removeButton.setOnAction(evt -> {
+                    User user = getTableRow().getItem();
+                    removeUser(user);
+                    System.out.println(user);
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : hBox);
+            }
+        });
+
+    }
+
+    public void removeUser(User user) {
+        data.removeUser(user);
+        updateTable();
+    }
 
     void updateParkComboBox() {
         idParqueCondutores.getItems().clear();
@@ -124,12 +169,40 @@ public class ControllerUI implements Initializable
     }
 
 
+    public void updateTable() {
+        condutoresTable.setItems(data.getUsersByParkID((Integer)idParqueCondutores.getValue()));
+    }
 
     /* CALL BACKS*/
     class NewParkSelectedCallBack implements EventHandler<ActionEvent> {
         public void handle(ActionEvent actionEvent) {
             if (idParqueCondutores.getValue() != null)
-                condutoresTable.setItems(data.getUsersByParkID((Integer)idParqueCondutores.getValue()));
+                updateTable();
+        }
+    }
+
+    class EditButtonPressed implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            condutoresTable.setEditable(true);
+
+            System.out.println("Row: " + (condutoresTable.getSelectionModel().selectedItemProperty().get()));
+
+            System.out.println("EditButtonPressed");
+
+            Button btn = (Button)actionEvent.getSource();
+            System.out.println("User ID: " + btn.getId()) ;
+        }
+    }
+
+    class RemoveButtonPressed implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            System.out.println("RemoveButtonPressed");
+            System.out.println(actionEvent.getSource());
         }
     }
 

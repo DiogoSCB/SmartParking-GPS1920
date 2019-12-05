@@ -47,14 +47,19 @@ public class Data implements Constants {
         return FXCollections.observableArrayList(users);
     }
 
-    public ObservableList<UserRow> getUsersByParkID(int parkID) {
-        ArrayList<UserRow> usersByParkID = new ArrayList<>();
+    public ObservableList<User> getUsersByParkID(int parkID) {
+        ArrayList<User> usersByParkID = new ArrayList<>();
 
         for (User u :users)
             if (u.getIdPark() == parkID)
-                usersByParkID.add(new UserRow(u));
+                usersByParkID.add(u);
 
         return FXCollections.observableArrayList(usersByParkID);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+        dbConnection.removeUser(user);
     }
 
 }
