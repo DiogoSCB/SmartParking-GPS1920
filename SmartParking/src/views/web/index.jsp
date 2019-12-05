@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <h2>Pedido</h2>
-        <form action="WebServer" method="post">
+        <form action="request.jsp" method="post">
 
           <label for="matricula">Matricula</label>
           <table>

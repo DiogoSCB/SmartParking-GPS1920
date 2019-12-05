@@ -12,6 +12,6 @@ public interface Constants
     int windowHeight = 768;
 
     // Database settings
-    String ip = "127.0.0.1";
+    String ip = "localhost";
     String port = "3306";
 }

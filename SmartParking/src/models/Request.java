@@ -16,14 +16,11 @@ public class Request {
         this.idUser = idUser;
     }
 
-   //Construtor para o teste addRequest();
+   //Construtor sem IdRequest
     public Request(Date requestDate, int state, Integer idUser) {
         this.requestDate = requestDate;
         this.state = state;
         this.idUser = idUser;
-    }
-
-    public Request() {
     }
 
     public Integer getIdRequest() {

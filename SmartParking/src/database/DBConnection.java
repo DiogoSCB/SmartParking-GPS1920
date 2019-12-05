@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class DBConnection {
 
+    private final String DB_NAME = "smartparking";
     private final String USER = "root";
     private final String PASS = "123456";
     private Connection connection; //Objeto para a ligação com a base de dados
@@ -250,5 +251,18 @@ public class DBConnection {
         } catch (SQLException e) {
             System.err.println(e);
         }
+    }
+
+    public Integer getIdUserByLicensePlate(String licensePlate) {
+        try {
+            sql = "SELECT IdUser FROM User WHERE licensePlate = " + licensePlate;
+            resultSet = statement.executeQuery(sql);
+
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+
+        return null;
     }
 }
