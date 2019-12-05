@@ -35,6 +35,12 @@ public class User {
         this.idPark = idPark;
     }
 
+    public User(String licensePlate, Integer idUser) {
+        this.licensePlate= licensePlate;
+        this.idUser=idUser;
+    }
+
+
     public Integer getIdUser() {
         return idUser;
     }

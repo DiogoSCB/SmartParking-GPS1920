@@ -1,8 +1,10 @@
 package database;
 
 import models.Park;
+import models.ParkingSpace;
 import models.Request;
 import models.User;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -64,31 +66,41 @@ class DBConnectionTest {
     }
 
 
-    @org.junit.jupiter.api.Test
+    @Test
     void addRequest() {
+        dbConnection.addRequest(new Request(Date.valueOf("2019-12-05"),0,3));
     }
 
     @org.junit.jupiter.api.Test
     void removeUser() {
+        dbConnection.removeUser(new User(2,"Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1));
     }
 
     @org.junit.jupiter.api.Test
     void modifyUser() {
+        dbConnection.modifyUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", null, 2));
     }
 
     @org.junit.jupiter.api.Test
     void modifyRequest() {
+        dbConnection.modifyRequest(new Request(2,null,0,2));
     }
 
     @org.junit.jupiter.api.Test
     void getFreeParkingSpaces() {
+        dbConnection.getFreeParkingSpaces(new Park(1,100,50));
     }
 
     @org.junit.jupiter.api.Test
     void getParkingSpaces() {
+        dbConnection.getParkingSpaces(new Park(1,100,50));
     }
 
     @org.junit.jupiter.api.Test
     void addUserParkingSpace() {
+
+        //dbConnection.addUserParkingSpace(new ParkingSpace("12II88",1, 2,2,2));
+       // dbConnection.addUserParkingSpace(new User("12II88",2));
+
     }
 }
