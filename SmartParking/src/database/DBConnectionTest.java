@@ -99,8 +99,8 @@ class DBConnectionTest {
     @org.junit.jupiter.api.Test
     void addUserParkingSpace() {
 
-        //dbConnection.addUserParkingSpace(new ParkingSpace("12II88",1, 2,2,2));
-       // dbConnection.addUserParkingSpace(new User("12II88",2));
+        dbConnection.addUserParkingSpace(new User("21II18",2), new ParkingSpace(2,1,2));
+
 
     }
 }

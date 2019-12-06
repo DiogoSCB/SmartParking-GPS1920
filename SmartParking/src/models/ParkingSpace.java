@@ -16,14 +16,14 @@ public class ParkingSpace {
         this.idPark = idPark;
     }
 
-    public ParkingSpace(String licensePlate,  int reserved, Integer idParkingSpace, Integer idPark, Integer idUser) {
+    /*public ParkingSpace(String licensePlate,  int reserved, Integer idParkingSpace, Integer idPark, Integer idUser) {
         this.licensePlate = licensePlate;
         this.reserved=reserved;
         this.idParkingSpace = idParkingSpace;
         this.idPark = idPark;
         this.idUser=idUser;
     }
-
+*/
 
 
     public Integer getIdParkingSpace() {
