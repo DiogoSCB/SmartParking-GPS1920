@@ -3,25 +3,27 @@ package models;
 public class Park {
 
     private Integer idPark;
-    private int totalParkingSpace;
-    private int freeParkingSpace;
+    private String name;
 
-    public Park(Integer idPark, int totalParkingSpace, int freeParkingSpace) {
+    public Park(Integer idPark, String name) {
         this.idPark = idPark;
-        this.totalParkingSpace = totalParkingSpace;
-        this.freeParkingSpace = freeParkingSpace;
+        this.name = name;
     }
 
     public Integer getIdPark() {
         return idPark;
     }
 
-    public int getTotalParkingSpace() {
-        return totalParkingSpace;
+    public void setIdPark(Integer idPark) {
+        this.idPark = idPark;
     }
 
-    public int getFreeParkingSpace() {
-        return freeParkingSpace;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

@@ -1,7 +1,7 @@
 -- Parques
-insert into park (totalparkingspaces, freeparkingspaces) values (10, 10);
-insert into park (totalparkingspaces, freeparkingspaces) values (8, 8);
-insert into park (totalparkingspaces, freeparkingspaces) values (5, 5);
+insert into park (name) values ("Funcionários");
+insert into park (name) values ("Dirigentes");
+insert into park (name) values ("Clientes");
 
 -- Lugares de estacionamento para cada parque
 insert into parkingspace (reserved, idpark) values (false, 1);

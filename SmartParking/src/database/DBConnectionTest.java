@@ -27,8 +27,7 @@ class DBConnectionTest {
         ArrayList<Park> parks = dbConnection.getParkList();
         for (Park p : parks) {
             System.out.print(p.getIdPark() + " ");
-            System.out.print(p.getTotalParkingSpace() + " ");
-            System.out.print(p.getFreeParkingSpace() + " ");
+            System.out.print(p.getName() + " ");
             System.out.println();
         }
     }
@@ -66,15 +65,14 @@ class DBConnectionTest {
         dbConnection.addUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", null, 2));
     }
 
-
     @Test
     void addRequest() {
-        dbConnection.addRequest(new Request(Date.valueOf(LocalDate.now()),0,3));
+        dbConnection.addRequest(new Request(Date.valueOf(LocalDate.now()), 0, 3));
     }
 
     @org.junit.jupiter.api.Test
     void removeUser() {
-        dbConnection.removeUser(new User(2,"Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1));
+        dbConnection.removeUser(new User(2, "Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1));
     }
 
     @org.junit.jupiter.api.Test
@@ -84,24 +82,24 @@ class DBConnectionTest {
 
     @org.junit.jupiter.api.Test
     void modifyRequest() {
-        dbConnection.modifyRequest(new Request(2,null,0,2));
+        dbConnection.modifyRequest(new Request(2, null, 0, 2));
     }
 
     @org.junit.jupiter.api.Test
     void getFreeParkingSpaces() {
-        dbConnection.getFreeParkingSpaces(new Park(1,100,50));
+        dbConnection.getFreeParkingSpaces(new Park(1, "Clientes"));
     }
 
     @org.junit.jupiter.api.Test
     void getParkingSpaces() {
-        dbConnection.getParkingSpaces(new Park(1,100,50));
+        dbConnection.getParkingSpaces(new Park(1, "Clientes"));
     }
 
     @org.junit.jupiter.api.Test
     void addUserParkingSpace() {
 
         //dbConnection.addUserParkingSpace(new ParkingSpace("12II88",1, 2,2,2));
-       // dbConnection.addUserParkingSpace(new User("12II88",2));
+        // dbConnection.addUserParkingSpace(new User("12II88",2));
 
     }
 }

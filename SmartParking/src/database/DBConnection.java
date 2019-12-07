@@ -6,7 +6,6 @@ import models.Request;
 import models.User;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -55,8 +54,7 @@ public class DBConnection {
             sql = "SELECT * FROM Park";
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) { //Enquanto houver dados
-                parks.add(new Park(resultSet.getInt(1), resultSet.getInt(2),
-                        resultSet.getInt(2)));
+                parks.add(new Park(resultSet.getInt(1), resultSet.getString(2)));
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -131,23 +129,6 @@ public class DBConnection {
         }
     }
 
-
-    public void addRequest(Request requests) { //Adicionar Pedido
-        sql = "INSERT INTO Request(requestDate,state,idUser) VALUES(?,?," + requests.getIdUser() + ")";
-
-        try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
-
-            stmt.setDate(1, requests.getRequestDate());
-            stmt.setInt(2, requests.getState());
-
-            stmt.executeUpdate();
-            stmt.close();
-        } catch (SQLException u) {
-            throw new RuntimeException(u);
-        }
-    }
-
     public void removeUser(User user) { //Remover por utilizador
         sql = "DELETE FROM User WHERE idUser = ? AND licensePlate= ?";
 
@@ -166,7 +147,7 @@ public class DBConnection {
 
     public void modifyUser(User user) {
         sql = "UPDATE User SET name = ?, licensePlate = ?, entryDate = ?, departureDate = ?, email = ?, " +
-                "idParkingSpace = " + user.getIdParkingSpace() + "WHERE IdUser = "+ user.getIdUser()+ ")";
+                "idParkingSpace = " + user.getIdParkingSpace() + "WHERE IdUser = " + user.getIdUser() + ")";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -252,18 +233,5 @@ public class DBConnection {
         } catch (SQLException e) {
             System.err.println(e);
         }
-    }
-
-    public Integer getIdUserByLicensePlate(String licensePlate) {
-        try {
-            sql = "SELECT IdUser FROM User WHERE licensePlate = " + licensePlate;
-            resultSet = statement.executeQuery(sql);
-
-            return resultSet.getInt(1);
-        } catch (SQLException e) {
-            System.err.println(e);
-        }
-
-        return null;
     }
 }
