@@ -6,6 +6,7 @@ import models.Request;
 import models.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -32,7 +33,7 @@ public class DBConnection {
         try {
             System.out.println("Connecting to Database (" + ip + ":" + port + ")");
             String DB_NAME = "smartparking";
-            connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + DB_NAME
+            connection = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + DB_NAME
                             + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT",
                     USER, PASS);
             System.out.println("Connection Established!");

@@ -1,9 +1,7 @@
-// Wait for the DOM to be ready
-
+//05/12/2019 validações em regex funcionais para browsers Opera e Firefox
 
 $(function() {
     // Initialize form validation on the registration form.
-    // It has the name attribute "registration"
     $("form[name='pedido']").validate({
       // Specify validation rules
       rules: {
@@ -21,11 +19,7 @@ $(function() {
           required: true,
           minlength: 2,
           maxlength: 2,
-		  //type: regex,
-		  //type: "text",
-		  //text: true,
 		  pattern: /^[a-zA-Z]/
-         // digits: false
         },	
         matricula3: {
           required: true,
@@ -36,8 +30,9 @@ $(function() {
         nome: "required",
         email: {
           required: true,
-          email: true
-        },
+          email: true,
+		  pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+		  },
         parque: "required"
       },
       // Specify validation error messages

@@ -2,6 +2,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ page import="java.sql.*"%>
+<%@ page import="java.time.LocalDate"%>
 
 <%
 String name = request.getParameter("nome");
@@ -18,7 +19,7 @@ String connectionUrl = "jdbc:mysql://localhost:3306/smartparking" +
 "?useUnicode=true&useJDBCCompliantTimezoneShift=true" +
 "&useLegacyDatetimeCode=false&serverTimezone=GMT";
 String dbName = "smartparking";
-String userId = "root";
+String user = "root";
 String password = "123456";
 
 try {
@@ -29,22 +30,29 @@ try {
 
 Connection connection = null;
 Statement statement = null;
+ResultSet resultSet = null; //Resultado vindo do script da String SQL
 try {
-  connection = DriverManager.getConnection(connectionUrl, userId, password);
-
-  String sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email," +
-  " idParkingSpace, idPark) VALUES(?,?," + null + "," + null + ",?," + null
-  + ", " + park + " )";
+  connection = DriverManager.getConnection(connectionUrl, user, password);
+  statement = connection.createStatement();
+  String sql = null;
 
   try {
-      PreparedStatement stmt = connection.prepareStatement(sql);
+      //Inserir Utilizador
+      sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, " +
+      " email, idParkingSpace, idPark) VALUES(" + name + ", " + licensePlate +
+      "," + null + "," + null + ", " + email + "," + null + ", " + park + " )";
+      statement.executeUpdate(sql);
 
-      stmt.setString(1, name);
-      stmt.setString(2, licensePlate);
-      stmt.setString(3, email);
+      //Buscar o idUser do Utilizador inserido
+      sql = "SELECT IdUser FROM User WHERE licensePlate = " + licensePlate;
+      resultSet = statement.executeQuery(sql);
+      Integer idUser = resultSet.getInt(1);
 
-      stmt.executeUpdate();
-      stmt.close();
+      //Inserir Pedido
+      sql = "INSERT INTO Request(requestDate,state,idUser) VALUES(" +
+      "2019-12-06" + ", " + 0 + "," + idUser + ")";
+      statement.executeUpdate(sql);
+
   } catch (SQLException u) {
       throw new RuntimeException(u);
   }

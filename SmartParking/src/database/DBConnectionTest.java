@@ -7,6 +7,7 @@ import models.User;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static models.Constants.ip;
@@ -68,7 +69,7 @@ class DBConnectionTest {
 
     @Test
     void addRequest() {
-        dbConnection.addRequest(new Request(Date.valueOf("2019-12-05"),0,3));
+        dbConnection.addRequest(new Request(Date.valueOf(LocalDate.now()),0,3));
     }
 
     @org.junit.jupiter.api.Test
