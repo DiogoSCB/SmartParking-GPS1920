@@ -27,7 +27,7 @@ class DBConnectionTest {
         ArrayList<Park> parks = dbConnection.getParkList();
         for (Park p : parks) {
             System.out.print(p.getIdPark() + " ");
-            System.out.print(p.getName() + " ");
+            System.out.print(p.getNamePark() + " ");
             System.out.println();
         }
     }
@@ -61,28 +61,25 @@ class DBConnectionTest {
 
     @org.junit.jupiter.api.Test
     void addUser() {
-        dbConnection.addUser(new User("Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1));
-        dbConnection.addUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", null, 2));
+        dbConnection.addUser(new User("Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1,"Clientes"));
+        dbConnection.addUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", null, 2,"Clientes"));
     }
 
-    @Test
-    void addRequest() {
-        dbConnection.addRequest(new Request(Date.valueOf(LocalDate.now()), 0, 3));
-    }
+
 
     @org.junit.jupiter.api.Test
     void removeUser() {
         dbConnection.removeUser(new User(2, "Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1));
     }
 
-    @org.junit.jupiter.api.Test
+   /* @org.junit.jupiter.api.Test
     void modifyUser() {
-        dbConnection.modifyUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", null, 2));
-    }
+        dbConnection.modifyUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", null, 2,"CoimbraB"));
+    }*/
 
     @org.junit.jupiter.api.Test
     void modifyRequest() {
-        dbConnection.modifyRequest(new Request(2, null, 0, 2));
+        dbConnection.modifyRequest(new Request(0,0));
     }
 
     @org.junit.jupiter.api.Test
@@ -98,8 +95,8 @@ class DBConnectionTest {
     @org.junit.jupiter.api.Test
     void addUserParkingSpace() {
 
-        //dbConnection.addUserParkingSpace(new ParkingSpace("12II88",1, 2,2,2));
-        // dbConnection.addUserParkingSpace(new User("12II88",2));
+        dbConnection.addUserParkingSpace(new User("12II88",2), new ParkingSpace(1,1, 2));
+
 
     }
 }

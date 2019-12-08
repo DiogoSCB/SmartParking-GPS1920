@@ -12,6 +12,8 @@ public class User {
     private String email;
     private Integer idParkingSpace;
     private Integer idPark;
+    private String namePark;
+
 
     public User(Integer idUser, String name, String licensePlate, Date entryDate, Date departureDate, String email, Integer idParkingSpace, Integer idPark) {
         this.idUser = idUser;
@@ -25,7 +27,7 @@ public class User {
     }
 
     //Construtor sem o Id do Utilizador
-    public User(String name, String licensePlate, Date entryDate, Date departureDate, String email, Integer idParkingSpace, Integer idPark) {
+    public User(String name, String licensePlate, Date entryDate, Date departureDate, String email, Integer idParkingSpace, Integer idPark,String namePark) {
         this.name = name;
         this.licensePlate = licensePlate;
         this.entryDate = entryDate;
@@ -33,12 +35,15 @@ public class User {
         this.email = email;
         this.idParkingSpace = idParkingSpace;
         this.idPark = idPark;
+        this.namePark=namePark;
     }
 
     public User(String licensePlate, Integer idUser) {
         this.licensePlate= licensePlate;
         this.idUser=idUser;
     }
+
+
 
 
     public Integer getIdUser() {
@@ -72,4 +77,6 @@ public class User {
     public Integer getIdPark() {
         return idPark;
     }
+
+    public String getNamePark(){ return namePark;}
 }

@@ -73,10 +73,10 @@ public class DBConnection {
             sql = "SELECT * FROM User";
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) { //Enquanto houver dados
-                users.add(new User(resultSet.getInt(1), resultSet.getString(2),
+                users.add(new User(resultSet.getString(2),
                         resultSet.getString(3), resultSet.getDate(4),
                         resultSet.getDate(5), resultSet.getString(6),
-                        resultSet.getInt(7), resultSet.getInt(8)));
+                        resultSet.getInt(7), resultSet.getInt(8),resultSet.getString(9)));
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -147,7 +147,7 @@ public class DBConnection {
 
     public void modifyUser(User user) {
         sql = "UPDATE User SET name = ?, licensePlate = ?, entryDate = ?, departureDate = ?, email = ?, " +
-                "idParkingSpace = " + user.getIdParkingSpace() + "WHERE IdUser = " + user.getIdUser() + ")";
+                "idParkingSpace = " + user.getIdParkingSpace() + "namePark = " + user.getNamePark() + "WHERE IdUser = " + user.getIdUser() + ")";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -158,6 +158,7 @@ public class DBConnection {
             stmt.setDate(3, user.getEntryDate());
             stmt.setDate(4, user.getDepartureDate());
             stmt.setString(5, user.getEmail());
+
 
 
             stmt.executeUpdate(); // executa a modificaçao

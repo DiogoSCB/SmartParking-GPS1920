@@ -9,7 +9,7 @@ public class Request {
     private int state;
     private Integer idUser;
 
-    public Request(Integer idRequest, Date requestDate, int state, Integer idUser) {
+    public Request(Integer idRequest,Date requestDate, int state,int idUser) {
         this.idRequest = idRequest;
         this.requestDate = requestDate;
         this.state = state;
@@ -17,11 +17,12 @@ public class Request {
     }
 
    //Construtor sem IdRequest
-    public Request(Date requestDate, int state, Integer idUser) {
-        this.requestDate = requestDate;
+    public Request( int state, Integer idRequest) {
         this.state = state;
-        this.idUser = idUser;
+        this.idRequest = idRequest;
     }
+
+
 
     public Integer getIdRequest() {
         return idRequest;
@@ -38,4 +39,6 @@ public class Request {
     public Integer getIdUser() {
         return idUser;
     }
+
+
 }
