@@ -1,5 +1,7 @@
 <jsp:directive.include file = "connection.jsp" />
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <%
 String name = request.getParameter("name");
 String licensePlate = request.getParameter("licensePlate1")
@@ -7,8 +9,6 @@ String licensePlate = request.getParameter("licensePlate1")
                     + request.getParameter("licensePlate3");
 String email = request.getParameter("email");
 String park = request.getParameter("park");
-
-out.println(name + " " + licensePlate + " " + email + " " + park);
 
 try {
   connection = DriverManager.getConnection(connectionUrl, user, password);
@@ -59,8 +59,28 @@ try {
 
 } catch (Exception e) {
   out.println(e);
+%>
+
+
+<%
   return;
 }
-
-out.println("O pedido foi enviado ao administrador!");
 %>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <div class="result">
+      <h1>O pedido foi enviado ao administrador!</h1>
+      <h3>Matrícula do Veículo: <% request.getParameter("licensePlate1"); %>
+      -<% request.getParameter("licensePlate2"); %>
+      -<% request.getParameter("licensePlate3"); %></h3>
+      <h3>Nome do Proprietário: <% request.getParameter("name"); %></h3>
+      <h3>Email: <% request.getParameter("email"); %></h3>
+      <h3>Parque: <% request.getParameter("park"); %></h3>
+      <h3>Será enviado um email brevemente a confirmar o seu pedido e qual o lugar
+        de estacionamento que lhe vai ser atribuido</h3>
+    </div>
+</body>
+</html>

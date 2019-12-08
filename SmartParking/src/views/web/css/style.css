@@ -11,6 +11,15 @@ body {
   font-size: 14px;
 }
 
+h1, h2, h3 {
+  text-align: center;
+}
+
+.result {
+  width: 700px;
+  margin: 25px auto;
+}
+
 .container {
   width: 500px;
   margin: 25px auto;
