@@ -1,5 +1,11 @@
+﻿<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
 <jsp:directive.include file = "connection.jsp" />
-
 <%
 String name = request.getParameter("name");
 String licensePlate = request.getParameter("licensePlate1")
@@ -7,8 +13,6 @@ String licensePlate = request.getParameter("licensePlate1")
                     + request.getParameter("licensePlate3");
 String email = request.getParameter("email");
 String park = request.getParameter("park");
-
-out.println(name + " " + licensePlate + " " + email + " " + park);
 
 try {
   connection = DriverManager.getConnection(connectionUrl, user, password);
@@ -53,14 +57,44 @@ try {
       ps.executeUpdate();
       ps.close();
 
-  } catch (SQLException u) {
-      throw new RuntimeException(u);
+  } catch (SQLException e) {
+      throw e;
   }
 
+} catch (SQLIntegrityConstraintViolationException e) {
+%>
+  <h1>A Matrícula inserida já se encontra registada!</h1>
+  <div class="result box">
+    <h3>Matrícula do Veículo: <% out.println(licensePlate.substring(0, 2) + "-"
+      + licensePlate.substring(2, 4) + "-"
+      + licensePlate.substring(4, 6)); %></h3>
+  </div>
+</body>
+</html>
+<%
+  return;
 } catch (Exception e) {
-  out.println(e);
+%>
+  <div class="result box">
+    <h2>Ocorreu um erro ao tentar enviar o pedido ao administrador! Tente mais tarde.</h2>
+  </div>
+</body>
+</html>
+<%
   return;
 }
-
-out.println("O pedido foi enviado ao administrador!");
 %>
+  <h1>O pedido foi enviado ao Administrador!</h1>
+  <div class="result box">
+    <h3>Matrícula do Veículo:
+    <% out.println(licensePlate.substring(0, 2) + "-"
+      + licensePlate.substring(2, 4) + "-"
+      + licensePlate.substring(4, 6)); %></h3>
+    <h3>Nome do Proprietário: <% out.println(name); %></h3>
+    <h3>Email: <% out.println(email); %></h3>
+    <h3>Parque: <% out.println(park); %></h3>
+  </div>
+  <h3>Será enviado um email brevemente a confirmar o seu pedido e qual o lugar
+    de estacionamento que lhe vai ser atribuído.</h3>
+</body>
+</html>
