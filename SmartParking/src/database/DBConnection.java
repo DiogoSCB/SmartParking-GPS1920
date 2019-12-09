@@ -227,7 +227,7 @@ public class DBConnection {
                 statement.executeQuery(sql);
 
                 sql = "UPDATE Users SET IdParkingSpace = " + parkingSpace.getIdParkingSpace() + ", IdPark = "
-                        + resultSet.getInt(1) + " WHERE IdUser = " + user.getIdUser()
+                        + user.getIdPark() + " WHERE IdUser = " + user.getIdUser()
                         + " AND LicensePlate = " + user.getLicensePlate();
                 statement.executeQuery(sql);
             }
