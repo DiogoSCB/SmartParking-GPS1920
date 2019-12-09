@@ -125,7 +125,7 @@ public class DBConnection {
             stmt.executeUpdate();
             stmt.close();
         } catch (SQLException u) {
-            throw new RuntimeException(u);
+
         }
     }
 
