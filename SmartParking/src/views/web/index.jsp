@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-PT">
 <head>
+  <title>SmartParking</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="css/style.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -33,31 +34,30 @@
 %>
 <body>
     <div class="container">
-        <h1>Efetuar Pedido</h1>
+      <h1>Efetuar Pedido</h1>
         <form action="request.jsp" method="post" name="request">
-
           <label for="licensePlate">Matrícula</label>
           <table>
           <tbody>
             <tr>
               <td class="licensePlate">
-                <input type="text" name="licensePlate1" id="licensePlate1" placeholder="00"/>
+                <input type="text" name="licensePlate1" id="licensePlate1" placeholder="00" maxlength="2"/>
               </td>
               <td class="licensePlate">
-                  <input type="text" name="licensePlate2" id="licensePlate2" placeholder="AA"  />
+                  <input type="text" name="licensePlate2" id="licensePlate2" placeholder="AA" maxlength="2"/>
               </td>
               <td class="licensePlate">
-                  <input type="text" name="licensePlate3" id="licensePlate3" placeholder="00"/>
+                  <input type="text" name="licensePlate3" id="licensePlate3" placeholder="00" maxlength="2"/>
               </td>
             </tr>
           </tbody>
           </table>
 
           <label for="name">Nome do Proprietário</label>
-          <input type="text" name="name" id="name" placeholder="Nome"/>
+          <input type="text" name="name" id="name" placeholder="Nome" minlength="3" maxlength="40"/>
 
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="email@email.com"/>
+          <input type="email" name="email" id="email" placeholder="exemplo@email.com"/>
 
           <label for="park">Parque</label>
           <select name="park" id="park">
@@ -66,7 +66,7 @@
             <%}%>
           </select>
 
-          <button type="submit">Enviar</button>
+          <input type="submit" name="submit" id="submit" value="Enviar" onclick ="submetendo_formulario(this.form)" class="button">
 
         </form>
       </div>
