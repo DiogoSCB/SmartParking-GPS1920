@@ -12,10 +12,9 @@ public class User {
     private String email;
     private Integer idParkingSpace;
     private Integer idPark;
-    private String namePark;
 
 
-    public User(Integer idUser, String name, String licensePlate, Date entryDate, Date departureDate, String email, Integer idParkingSpace, Integer idPark) {
+public User(Integer idUser,String name, String licensePlate, Date entryDate, Date departureDate, String email, Integer idParkingSpace, Integer idPark) {
         this.idUser = idUser;
         this.name = name;
         this.licensePlate = licensePlate;
@@ -26,8 +25,9 @@ public class User {
         this.idPark = idPark;
     }
 
+
     //Construtor sem o Id do Utilizador
-    public User(String name, String licensePlate, Date entryDate, Date departureDate, String email, Integer idParkingSpace, Integer idPark,String namePark) {
+    public User(String name, String licensePlate, Date entryDate, Date departureDate, String email, Integer idParkingSpace, Integer idPark) {
         this.name = name;
         this.licensePlate = licensePlate;
         this.entryDate = entryDate;
@@ -35,7 +35,7 @@ public class User {
         this.email = email;
         this.idParkingSpace = idParkingSpace;
         this.idPark = idPark;
-        this.namePark=namePark;
+
     }
 
     public User(String licensePlate, Integer idUser) {
@@ -78,5 +78,5 @@ public class User {
         return idPark;
     }
 
-    public String getNamePark(){ return namePark;}
+
 }

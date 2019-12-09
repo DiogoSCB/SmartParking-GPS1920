@@ -61,8 +61,9 @@ class DBConnectionTest {
 
     @org.junit.jupiter.api.Test
     void addUser() {
-        dbConnection.addUser(new User("Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1,"Clientes"));
-        dbConnection.addUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", null, 2,"Clientes"));
+
+       dbConnection.addUser(new User("Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", 1,2));
+       dbConnection.addUser(new User("Carlos", "12II88",  Date.valueOf("2019-12-01"),null, "carlinho@gmail.com", 2,2));
     }
 
 
@@ -72,14 +73,14 @@ class DBConnectionTest {
         dbConnection.removeUser(new User(2, "Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1));
     }
 
-   /* @org.junit.jupiter.api.Test
+    @org.junit.jupiter.api.Test
     void modifyUser() {
-        dbConnection.modifyUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", null, 2,"CoimbraB"));
-    }*/
+        dbConnection.modifyUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com",2,2));
+    }
 
     @org.junit.jupiter.api.Test
     void modifyRequest() {
-        dbConnection.modifyRequest(new Request(0,0));
+        dbConnection.modifyRequest(new Request(0,1));
     }
 
     @org.junit.jupiter.api.Test

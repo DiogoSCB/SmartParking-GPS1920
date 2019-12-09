@@ -76,7 +76,7 @@ public class DBConnection {
                 users.add(new User(resultSet.getString(2),
                         resultSet.getString(3), resultSet.getDate(4),
                         resultSet.getDate(5), resultSet.getString(6),
-                        resultSet.getInt(7), resultSet.getInt(8),resultSet.getString(9)));
+                        resultSet.getInt(7), resultSet.getInt(8)));
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -111,7 +111,7 @@ public class DBConnection {
      */
     public void addUser(User users) { //Adicionar utilizador
         sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, idParkingSpace, idPark)"
-                + " VALUES(?,?,?,?,?," + users.getIdParkingSpace() + ", " + users.getIdPark() + " )";
+                + " VALUES(?,?,?,?,?," + "idParkingSpace = " + users.getIdParkingSpace() +"idPark ="  + users.getIdPark() + ")";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -147,7 +147,7 @@ public class DBConnection {
 
     public void modifyUser(User user) {
         sql = "UPDATE User SET name = ?, licensePlate = ?, entryDate = ?, departureDate = ?, email = ?, " +
-                "idParkingSpace = " + user.getIdParkingSpace() + "namePark = " + user.getNamePark() + "WHERE IdUser = " + user.getIdUser() + ")";
+                "idParkingSpace = " + user.getIdParkingSpace()  + "WHERE IdUser = " + user.getIdUser() + ")";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
