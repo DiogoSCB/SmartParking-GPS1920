@@ -1,4 +1,3 @@
-@ -0,0 +1,53 @@
 //05/12/2019 validações em regex funcionais para browsers Opera e Firefox
 //07/12/2019 validação em regex do nome e 2º campo da matricula melhorado (estava a aceitar 1 número)
 //08/12/2019 tentativa de colocar botão "Submeter" a aparecer apenas quando todos os campos são válidos
