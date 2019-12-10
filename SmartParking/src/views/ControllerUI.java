@@ -1,22 +1,29 @@
 package views;
 
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.AccessibleAttribute;
 import javafx.scene.control.*;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import models.Data;
 import models.User;
 
 import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ControllerUI implements Initializable
@@ -69,8 +76,12 @@ public class ControllerUI implements Initializable
     @FXML
     private ComboBox idParqueCondutores;
 
+    /* Testing */
+    private ArrayList<Cell> editingCells;
+
     public ControllerUI(Data data) {
         this.data = data;
+        editingCells = new ArrayList<>();
     }
 
     @Override
@@ -90,22 +101,53 @@ public class ControllerUI implements Initializable
         rejeitarBtn.setOnAction(new ButtonPressed());
         gravarBtn.setOnAction(new ButtonPressed());
         sairBtn.setOnAction(new ButtonPressed());
+
+        /* Others */
+
+
+
+        /* Setup editable columns */
+        columnIDParque.setEditable(true);
+        columnIDCondutor.setEditable(true);
+        columnNome.setEditable(true);
+        columnMatricula.setEditable(true);
+        columnIDLugar.setEditable(true);
+        columnDataEntrada.setEditable(true);
+        columnDataSaida.setEditable(true);
+        columnEmail.setEditable(true);
+        columnOpcoes.setEditable(true);
+
+        condutoresTable.getSelectionModel().setCellSelectionEnabled(true);
     }
 
     public void initializeColumns() {
+
+        Callback<TableColumn<User, String>, TableCell<User, String>> cellFactory = tableColumn -> new EditingCell();
+
         columnIDParque.setCellValueFactory(new PropertyValueFactory<>("idPark"));
         columnIDCondutor.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+
+
         columnNome.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnNome.setCellFactory(cellFactory);
+
         columnMatricula.setCellValueFactory(new PropertyValueFactory<>("licensePlate"));
+        columnMatricula.setCellFactory(cellFactory);
+
         columnIDLugar.setCellValueFactory(new PropertyValueFactory<>("idParkingSpace"));
+        // TODO combobox editable
+
         columnDataEntrada.setCellValueFactory(new PropertyValueFactory<>("entryDate"));
+
         columnDataSaida.setCellValueFactory(new PropertyValueFactory<>("departureDate"));
+
         columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        columnEmail.setCellFactory(cellFactory);
 
         columnOpcoes.setCellFactory(col -> new TableCell<>() {
-           private final HBox hBox;
-           private final Button editButton;
-           private final Button removeButton;
+            private final HBox hBox;
+            private final Button editButton;
+            private final Button removeButton;
 
             {
                 hBox = new HBox();
@@ -118,7 +160,17 @@ public class ControllerUI implements Initializable
                 removeButton.setOnAction(evt -> {
                     User user = getTableRow().getItem();
                     removeUser(user);
-                    System.out.println(user);
+                });
+
+                editButton.setOnAction(evt -> {
+                    if (editingCells.size() > 1) return;
+
+                    for (int i = 0; i < 8; ++i) {
+                        Cell c = ((Cell) getTableView().queryAccessibleAttribute(AccessibleAttribute.CELL_AT_ROW_COLUMN, getTableRow().getIndex(), i));
+                        c.startEdit();
+                        editingCells.add(c);
+                    }
+
                 });
             }
             @Override
@@ -217,6 +269,10 @@ public class ControllerUI implements Initializable
             }
             else if (actionEvent.getSource().equals(gravarBtn)) {
                 System.out.println("Gravar Button Pressed.");
+                for (Cell c :
+                        editingCells) {
+                    c.commitEdit(c.getText());
+                }
             }
             else if (actionEvent.getSource().equals(sairBtn)) {
                 System.out.println("Sair Button Pressed.");
@@ -249,5 +305,70 @@ public class ControllerUI implements Initializable
         }
     }
 
+    class EditingCell extends TableCell<User, String> {
 
+        private TextField textField;
+
+        public EditingCell() {
+
+        }
+
+        @Override
+        public void startEdit() {
+            if (!isEmpty()) {
+                super.startEdit();
+                createTextField();
+                setText(null);
+                setGraphic(textField);
+                textField.selectAll();
+            }
+        }
+
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+
+            setText((String) getItem());
+            setGraphic(null);
+        }
+
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty) {
+                setText(item);
+                setGraphic(null);
+            } else {
+                if (isEditing()) {
+                    if (textField != null) {
+                        textField.setText(getString());
+//                        setGraphic(null);
+                    }
+                    setText(null);
+                    setGraphic(textField);
+                } else {
+                    setText(getString());
+                    setGraphic(null);
+                }
+            }
+        }
+
+        private void createTextField() {
+            textField = new TextField(getString());
+            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            textField.setOnAction((e) -> commitEdit(textField.getText()));
+            textField.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+                if (!newValue) {
+                    System.out.println("Commiting " + textField.getText());
+                    commitEdit(textField.getText());
+                    // TODO data.modifyUser()
+                }
+            });
+        }
+
+        private String getString() {
+            return getItem() == null ? "" : getItem();
+        }
+    }
 }
