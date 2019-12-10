@@ -23,8 +23,6 @@ public class MainUI extends Application
          * porque o contrutor é chamado pelo fxmlLoader e náo dá para lhe passar argumentos.
          */
 
-
-
         primaryStage.setTitle(windowName);
         primaryStage.setScene(new Scene(root, windowWidth, windowHeight));
         primaryStage.setResizable(false);

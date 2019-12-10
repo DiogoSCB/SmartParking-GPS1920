@@ -107,6 +107,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
   </component>
@@ -118,7 +119,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DBConnectionTest.addUser (1)">
+  <component name="RunManager" selected="Application.MainUI">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -157,6 +158,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DBConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SmartParking" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="database.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="database" />
+      <option name="MAIN_CLASS_NAME" value="database.DBConnectionTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DBConnectionTest.addUser (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SmartParking" />
       <extension name="coverage">
@@ -177,17 +197,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DBConnectionTest.addUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DBConnectionTest.addUserParkingSpace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SmartParking" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="DataBase.*" />
+          <option name="PATTERN" value="database.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="DataBase" />
-      <option name="MAIN_CLASS_NAME" value="DataBase.DBConnectionTest" />
-      <option name="METHOD_NAME" value="addUser" />
+      <option name="PACKAGE_NAME" value="database" />
+      <option name="MAIN_CLASS_NAME" value="database.DBConnectionTest" />
+      <option name="METHOD_NAME" value="addUserParkingSpace" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DBConnectionTest.removeUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SmartParking" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="database.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="database" />
+      <option name="MAIN_CLASS_NAME" value="database.DBConnectionTest" />
+      <option name="METHOD_NAME" value="removeUser" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
@@ -221,8 +261,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.DBConnectionTest.addUser (1)" />
         <item itemvalue="Application.MainUI" />
+        <item itemvalue="JUnit.DBConnectionTest.removeUser" />
+        <item itemvalue="JUnit.DBConnectionTest.addUserParkingSpace" />
+        <item itemvalue="JUnit.DBConnectionTest" />
+        <item itemvalue="JUnit.DBConnectionTest.addUser (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -329,10 +372,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="254" y="84" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1575643509934" />
-    <state x="765" y="235" key="#com.intellij.ide.util.MemberChooser" timestamp="1575748629906">
+    <state x="765" y="235" key="#com.intellij.ide.util.MemberChooser" timestamp="1575997143437">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="235" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1575748629906" />
+    <state x="765" y="235" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1575997143437" />
     <state x="529" y="293" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1575052482826">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -341,35 +384,51 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="527" y="175" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1575644511151" />
-    <state width="1899" height="281" key="GridCell.Tab.0.bottom" timestamp="1575755321418">
+    <state width="1899" height="281" key="GridCell.Tab.0.bottom" timestamp="1576005184054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1579" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1575643392717" />
-    <state width="1899" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1575755321418" />
-    <state width="1899" height="281" key="GridCell.Tab.0.center" timestamp="1575755321417">
+    <state width="1899" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1576005184054" />
+    <state width="1899" height="281" key="GridCell.Tab.0.center" timestamp="1576005184054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1579" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1575643392716" />
-    <state width="1899" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1575755321417" />
-    <state width="1899" height="281" key="GridCell.Tab.0.left" timestamp="1575755321417">
+    <state width="1899" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1576005184054" />
+    <state width="1899" height="281" key="GridCell.Tab.0.left" timestamp="1576005184053">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1579" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1575643392716" />
-    <state width="1899" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1575755321417" />
-    <state width="1899" height="281" key="GridCell.Tab.0.right" timestamp="1575755321417">
+    <state width="1899" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1576005184053" />
+    <state width="1899" height="281" key="GridCell.Tab.0.right" timestamp="1576005184054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1579" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1575643392717" />
-    <state width="1899" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1575755321417" />
+    <state width="1899" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1576005184054" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1575992969411">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1575992969410" />
+    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1575992969410">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1575992969410" />
+    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1575992969410">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1575992969410" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1575992969410">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1575992969410" />
     <state x="301" y="8" key="SettingsEditor" timestamp="1575644514322">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="301" y="8" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1575644514322" />
-    <state x="595" y="306" key="com.intellij.ide.util.TipDialog" timestamp="1575752585927">
+    <state x="595" y="306" key="com.intellij.ide.util.TipDialog" timestamp="1575992082994">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="496" y="253" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1575641369375" />
-    <state x="595" y="306" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1575752585927" />
+    <state x="595" y="306" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1575992082994" />
     <state x="504" y="323" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1575475997294">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -378,9 +437,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="564" y="132" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1600.860@0.0.1600.860" timestamp="1575476022717" />
-    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1575053307447">
-      <screen x="0" y="0" width="1600" height="860" />
+    <state x="556" y="218" width="807" height="820" key="search.everywhere.popup" timestamp="1576004784616">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1575053307447" />
+    <state x="556" y="218" width="807" height="820" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1576004784616" />
   </component>
 </project>

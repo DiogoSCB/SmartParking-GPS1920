@@ -61,31 +61,30 @@ class DBConnectionTest {
 
     @org.junit.jupiter.api.Test
     void addUser() {
-
-       dbConnection.addUser(new User("Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", 1,2));
-       dbConnection.addUser(new User("Carlos", "12II88",  Date.valueOf("2019-12-01"),null, "carlinho@gmail.com", 2,2));
+        dbConnection.addUser(new User("Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", 1, 2));
     }
-
-
 
     @org.junit.jupiter.api.Test
     void removeUser() {
-        dbConnection.removeUser(new User(2, "Beatriz", "1101PZ", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1));
+        dbConnection.removeUser(new User(1, "Beatriz", "69FC44", Date.valueOf("2019-12-01"), null, "biazinha@gmail.com", null, 1));
     }
 
     @org.junit.jupiter.api.Test
     void modifyUser() {
-        dbConnection.modifyUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com",2,2));
+        dbConnection.modifyUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", 2, 2));
     }
 
     @org.junit.jupiter.api.Test
     void modifyRequest() {
-        dbConnection.modifyRequest(new Request(0,1));
+        dbConnection.modifyRequest(new Request(0, 1));
     }
 
     @org.junit.jupiter.api.Test
     void getFreeParkingSpaces() {
-        dbConnection.getFreeParkingSpaces(new Park(1, "Clientes"));
+        ArrayList<Integer> parkingSpaces = dbConnection.getFreeParkingSpaces(new Park(1, "Clientes"));
+        for (Integer p : parkingSpaces) {
+            System.out.println(p);
+        }
     }
 
     @org.junit.jupiter.api.Test
@@ -95,9 +94,6 @@ class DBConnectionTest {
 
     @org.junit.jupiter.api.Test
     void addUserParkingSpace() {
-
-        dbConnection.addUserParkingSpace(new User("12II88",2), new ParkingSpace(1,1, 2));
-
-
+        dbConnection.addUserParkingSpace(new User("12II88", 2), new ParkingSpace(1, 1, 2));
     }
 }

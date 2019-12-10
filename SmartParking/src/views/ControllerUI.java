@@ -2,20 +2,15 @@ package views;
 
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.AccessibleAttribute;
 import javafx.scene.control.*;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import models.Data;
@@ -26,8 +21,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class ControllerUI implements Initializable
-{
+public class ControllerUI implements Initializable {
     private Data data;
 
     /* Buttons */
@@ -53,8 +47,6 @@ public class ControllerUI implements Initializable
     private TableView<User> condutoresTable;
 
     // Columns
-    @FXML
-    private TableColumn<User, Integer> columnIDParque;
     @FXML
     private TableColumn<User, Integer> columnIDCondutor;
     @FXML
@@ -85,12 +77,9 @@ public class ControllerUI implements Initializable
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeColumns();
         updateParkComboBox();
-
-
 
         /* Setup Listeners */
         idParqueCondutores.setOnAction(new NewParkSelectedCallBack());
@@ -107,7 +96,6 @@ public class ControllerUI implements Initializable
 
 
         /* Setup editable columns */
-        columnIDParque.setEditable(true);
         columnIDCondutor.setEditable(true);
         columnNome.setEditable(true);
         columnMatricula.setEditable(true);
@@ -124,9 +112,7 @@ public class ControllerUI implements Initializable
 
         Callback<TableColumn<User, String>, TableCell<User, String>> cellFactory = tableColumn -> new EditingCell();
 
-        columnIDParque.setCellValueFactory(new PropertyValueFactory<>("idPark"));
         columnIDCondutor.setCellValueFactory(new PropertyValueFactory<>("idUser"));
-
 
         columnNome.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnNome.setCellFactory(cellFactory);
@@ -173,6 +159,7 @@ public class ControllerUI implements Initializable
 
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -189,10 +176,9 @@ public class ControllerUI implements Initializable
 
     void updateParkComboBox() {
         idParqueCondutores.getItems().clear();
-
-        idParqueCondutores.setPromptText("ID do Parque");
-        for (Integer i : data.getParkIdAsIntegers())
-            idParqueCondutores.getItems().add(i);
+        idParqueCondutores.getItems().addAll(data.getParkIdAsIntegers());
+        idParqueCondutores.getSelectionModel().selectFirst();
+        updateTable();
     }
 
 
@@ -206,12 +192,14 @@ public class ControllerUI implements Initializable
         rejeitarBtn.setVisible(false);
         gravarBtn.setVisible(true);
     }
+
     void setupPedidosTabLayout() {
         /* Show/hide corresponding buttons */
         gravarBtn.setVisible(false);
         aceitarBtn.setVisible(true);
         rejeitarBtn.setVisible(true);
     }
+
     void setupEstatisticasTabLayout() {
         /* Show/hide corresponding buttons */
         aceitarBtn.setVisible(false);
@@ -222,7 +210,7 @@ public class ControllerUI implements Initializable
 
 
     public void updateTable() {
-        condutoresTable.setItems(data.getUsersByParkID((Integer)idParqueCondutores.getValue()));
+        condutoresTable.setItems(data.getUsersByParkID((Integer) idParqueCondutores.getValue()));
     }
 
     /* CALL BACKS*/
@@ -235,24 +223,22 @@ public class ControllerUI implements Initializable
 
     class EditButtonPressed implements EventHandler<ActionEvent> {
         @Override
-        public void handle(ActionEvent actionEvent)
-        {
+        public void handle(ActionEvent actionEvent) {
             condutoresTable.setEditable(true);
 
             System.out.println("Row: " + (condutoresTable.getSelectionModel().selectedItemProperty().get()));
 
             System.out.println("EditButtonPressed");
 
-            Button btn = (Button)actionEvent.getSource();
-            System.out.println("User ID: " + btn.getId()) ;
+            Button btn = (Button) actionEvent.getSource();
+            System.out.println("User ID: " + btn.getId());
         }
     }
 
     class RemoveButtonPressed implements EventHandler<ActionEvent> {
 
         @Override
-        public void handle(ActionEvent actionEvent)
-        {
+        public void handle(ActionEvent actionEvent) {
             System.out.println("RemoveButtonPressed");
             System.out.println(actionEvent.getSource());
         }
@@ -263,18 +249,16 @@ public class ControllerUI implements Initializable
         public void handle(ActionEvent actionEvent) {
             if (actionEvent.getSource().equals(aceitarBtn)) {
                 System.out.println("Aceitar Button Pressed.");
-            }
-            else if (actionEvent.getSource().equals(rejeitarBtn)) {
+            } else if (actionEvent.getSource().equals(rejeitarBtn)) {
                 System.out.println("Rejeitar Button Pressed.");
-            }
-            else if (actionEvent.getSource().equals(gravarBtn)) {
+            } else if (actionEvent.getSource().equals(gravarBtn)) {
                 System.out.println("Gravar Button Pressed.");
-                for (Cell c :
-                        editingCells) {
+                for (Cell c : editingCells) {
                     c.commitEdit(c.getText());
+                    c.cancelEdit();
                 }
-            }
-            else if (actionEvent.getSource().equals(sairBtn)) {
+                gravarBtn.setVisible(false);
+            } else if (actionEvent.getSource().equals(sairBtn)) {
                 System.out.println("Sair Button Pressed.");
                 Platform.exit();
             }
@@ -284,21 +268,15 @@ public class ControllerUI implements Initializable
     class TabSelectionChanged implements EventHandler<Event> {
 
         @Override
-        public void handle(Event event)
-        {
-            if (condutoresTab.isSelected())
-            {
+        public void handle(Event event) {
+            if (condutoresTab.isSelected()) {
                 System.out.println("Condutores Tab Selected.");
                 setupCondutoresTabLayout();
                 updateParkComboBox();
-            }
-            else if (pedidosTab.isSelected())
-            {
+            } else if (pedidosTab.isSelected()) {
                 System.out.println("Pedidos Tab Selected.");
                 setupPedidosTabLayout();
-            }
-            else if (estatisticasTab.isSelected())
-            {
+            } else if (estatisticasTab.isSelected()) {
                 System.out.println("Estatísticas Tab Selected.");
                 setupEstatisticasTabLayout();
             }
@@ -321,6 +299,7 @@ public class ControllerUI implements Initializable
                 setText(null);
                 setGraphic(textField);
                 textField.selectAll();
+                gravarBtn.setVisible(true);
             }
         }
 

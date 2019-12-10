@@ -13,14 +13,9 @@ import java.util.ArrayList;
  */
 public class DBConnection {
 
-    private final String DB_NAME = "smartparking";
-    private final String USER = "root";
-    private final String PASS = "123456";
     private Connection connection; //Objeto para a ligação com a base de dados
     private Statement statement; //String SQL com o script pretendido
     private ResultSet resultSet; //Resultado vindo do script da String SQL
-    private String sql; //String que contêm o script desejado
-
 
     /**
      * Construtor da Classe
@@ -31,15 +26,19 @@ public class DBConnection {
     public DBConnection(String ip, String port) {
         try {
             System.out.println("Connecting to Database (" + ip + ":" + port + ")");
+
             String DB_NAME = "smartparking";
+            String USER = "root";
+            String PASS = "123456";
             connection = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + DB_NAME
-                            + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT",
-                    USER, PASS);
+                    + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false" +
+                    "&serverTimezone=GMT", USER, PASS);
+
             System.out.println("Connection Established!");
 
             statement = connection.createStatement();
         } catch (SQLException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
     }
 
@@ -48,16 +47,18 @@ public class DBConnection {
      *
      * @return ArrayList<Park>
      */
-    public ArrayList<Park> getParkList() { //Buscar a informação de todos os parques para uma lista
+    public ArrayList<Park> getParkList() {
         ArrayList<Park> parks = new ArrayList<>();
+
         try {
-            sql = "SELECT * FROM Park";
+            String sql = "SELECT * FROM Park";
             resultSet = statement.executeQuery(sql);
+
             while (resultSet.next()) { //Enquanto houver dados
                 parks.add(new Park(resultSet.getInt(1), resultSet.getString(2)));
             }
         } catch (SQLException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
         return parks;
     }
@@ -67,19 +68,21 @@ public class DBConnection {
      *
      * @return ArrayList<User>
      */
-    public ArrayList<User> getUserList() { //Buscar a informação de todos os utilizadores
+    public ArrayList<User> getUserList() {
         ArrayList<User> users = new ArrayList<>();
+
         try {
-            sql = "SELECT * FROM User";
+            String sql = "SELECT * FROM User";
             resultSet = statement.executeQuery(sql);
+
             while (resultSet.next()) { //Enquanto houver dados
-                users.add(new User(resultSet.getString(2),
+                users.add(new User(resultSet.getInt(1), resultSet.getString(2),
                         resultSet.getString(3), resultSet.getDate(4),
                         resultSet.getDate(5), resultSet.getString(6),
                         resultSet.getInt(7), resultSet.getInt(8)));
             }
         } catch (SQLException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
         return users;
     }
@@ -89,17 +92,19 @@ public class DBConnection {
      *
      * @return ArrayList<Request>
      */
-    public ArrayList<Request> getRequestList() { //Buscar a informação de todos os pedidos
+    public ArrayList<Request> getRequestList() {
         ArrayList<Request> requests = new ArrayList<>();
+
         try {
-            sql = "SELECT * FROM Request";
+            String sql = "SELECT * FROM Request";
             resultSet = statement.executeQuery(sql);
+
             while (resultSet.next()) { //Enquanto houver dados
                 requests.add(new Request(resultSet.getInt(1), resultSet.getDate(2),
                         resultSet.getInt(3), resultSet.getInt(4)));
             }
         } catch (SQLException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
         return requests;
     }
@@ -107,11 +112,12 @@ public class DBConnection {
     /**
      * Adicionar utilizador
      *
-     * @param users é classe que encapsula a informação a registar na BD
+     * @param users é classe que encapsula a informação do Utilizador
      */
-    public void addUser(User users) { //Adicionar utilizador
-        sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, idParkingSpace, idPark)"
-                + " VALUES(?,?,?,?,?," + "idParkingSpace = " + users.getIdParkingSpace() +"idPark ="  + users.getIdPark() + ")";
+    public void addUser(User users) {
+        String sql = "INSERT INTO User(name, licensePlate, entryDate, departureDate, email, idParkingSpace, idPark)"
+                + " VALUES(?,?,?,?,?," + "idParkingSpace = " + users.getIdParkingSpace() + "idPark ="
+                + users.getIdPark() + ")";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -124,35 +130,49 @@ public class DBConnection {
 
             stmt.executeUpdate();
             stmt.close();
-        } catch (SQLException u) {
-
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
         }
     }
 
-    public void removeUser(User user) { //Remover por utilizador
-        sql = "DELETE FROM User WHERE idUser = ? AND licensePlate= ?";
+    /**
+     * Remover utilizador
+     *
+     * @param user é classe que encapsula a informação do Utilizador
+     */
+    public void removeUser(User user) {
+        PreparedStatement stmt;
 
         try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
+            String sql = "DELETE FROM Request WHERE idUser = ?";
+            stmt = connection.prepareStatement(sql);
+
+            stmt.setInt(1, user.getIdUser());
+            stmt.executeUpdate();
+
+            sql = "DELETE FROM User WHERE idUser = ? AND licensePlate= ?";
+            stmt = connection.prepareStatement(sql);
 
             stmt.setInt(1, user.getIdUser());
             stmt.setString(2, user.getLicensePlate());
-
-            stmt.executeUpdate(); // executa a remoçao
-            stmt.close();
+            stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Modificar os dados do utilizador
+     *
+     * @param user é classe que encapsula a informação do Utilizador
+     */
     public void modifyUser(User user) {
-        sql = "UPDATE User SET name = ?, licensePlate = ?, entryDate = ?, departureDate = ?, email = ?, " +
-                "idParkingSpace = " + user.getIdParkingSpace()  + "WHERE IdUser = " + user.getIdUser() + ")";
+        String sql = "UPDATE User SET name = ?, licensePlate = ?, entryDate = ?, departureDate = ?, email = ?, " +
+                "idParkingSpace = " + user.getIdParkingSpace() + "WHERE IdUser = " + user.getIdUser() + ")";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
 
-            //correspondente ao parametro que se pretende alterar
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getLicensePlate());
             stmt.setDate(3, user.getEntryDate());
@@ -160,51 +180,68 @@ public class DBConnection {
             stmt.setString(5, user.getEmail());
 
 
-
-            stmt.executeUpdate(); // executa a modificaçao
+            stmt.executeUpdate();
             stmt.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void modifyRequest(Request request) { // modificar o estado do pedido
-        sql = "UPDATE Request SET state = ? WHERE idRequest = ?";
+    /**
+     * Alterar o estado do pedido
+     *
+     * @param request é classe que encapsula a informação do Pedido
+     */
+    public void modifyRequest(Request request) {
+        String sql = "UPDATE Request SET state = ? WHERE idRequest = ?";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
 
-            stmt.setInt(1, request.getState()); //correspondente ao parametro que se pretende alterar
-            stmt.setInt(2, request.getIdRequest()); //correspondente ao parametro que se pretende alterar
+            stmt.setInt(1, request.getState());
+            stmt.setInt(2, request.getIdRequest());
 
-            stmt.executeUpdate(); // executa a modificaçao
+            stmt.executeUpdate();
             stmt.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Buscar a lista de os ids de todos os lugares de estacionamento livres de um determinado parque
+     *
+     * @param park é classe que encapsula a informação do Parque
+     * @return a lista com os ids dos lugares de estacionamento
+     */
     public ArrayList<Integer> getFreeParkingSpaces(Park park) {
         ArrayList<Integer> free = new ArrayList<>();
 
         try {
-            sql = "SELECT IdParkingSpace FROM ParkingSpace WHERE IdPark = " + park.getIdPark() + " AND Reserved = " + false;
+            String sql = "SELECT IdParkingSpace FROM ParkingSpace WHERE IdPark = " + park.getIdPark()
+                    + " AND Reserved = " + false;
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) { //Enquanto houver dados
                 free.add(resultSet.getInt(1));
             }
         } catch (SQLException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
         return free;
     }
 
+    /**
+     * Buscar a lista de todos os lugares de estacionamento livres de um determinado parque
+     *
+     * @param park é classe que encapsula a informação do Parque
+     * @return a lista com os lugares de estacionamento
+     */
     public ArrayList<ParkingSpace> getParkingSpaces(Park park) {
         ArrayList<ParkingSpace> ps = new ArrayList<>();
 
         try {
-            sql = "SELECT * FROM ParkingSpace WHERE IdPark = " + park.getIdPark();
+            String sql = "SELECT * FROM ParkingSpace WHERE IdPark = " + park.getIdPark();
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) { //Enquanto houver dados
@@ -212,27 +249,34 @@ public class DBConnection {
                         resultSet.getInt(3)));
             }
         } catch (SQLException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
         return ps;
     }
 
+    /**
+     * Adicionar o lugar de estacionamento a um determinado utilizador
+     *
+     * @param user         é classe que encapsula a informação do Utilizador
+     * @param parkingSpace é classe que encapsula a informação do Lugar de Estacionamento
+     */
     public void addUserParkingSpace(User user, ParkingSpace parkingSpace) {
         try {
-            sql = "SELECT IdPark FROM ParkingSpace WHERE IdParkingSpace = " + parkingSpace.getIdParkingSpace();
+            String sql = "SELECT IdPark FROM ParkingSpace WHERE IdParkingSpace = " + parkingSpace.getIdParkingSpace();
             resultSet = statement.executeQuery(sql);
 
             if (resultSet.next()) {
-                sql = "UPDATE ParkingSpace SET Reserved = " + true + " WHERE IdParkingSpace = " + parkingSpace.getIdParkingSpace();
-                statement.executeQuery(sql);
+                sql = "UPDATE ParkingSpace SET Reserved = " + true + " WHERE IdParkingSpace = "
+                        + parkingSpace.getIdParkingSpace();
+                statement.executeUpdate(sql);
 
-                sql = "UPDATE Users SET IdParkingSpace = " + parkingSpace.getIdParkingSpace() + ", IdPark = "
+                sql = "UPDATE User SET IdParkingSpace = " + parkingSpace.getIdParkingSpace() + ", IdPark = "
                         + user.getIdPark() + " WHERE IdUser = " + user.getIdUser()
-                        + " AND LicensePlate = " + user.getLicensePlate();
-                statement.executeQuery(sql);
+                        + " AND LicensePlate = '" + user.getLicensePlate() + "'";
+                statement.executeUpdate(sql);
             }
         } catch (SQLException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
     }
 }
