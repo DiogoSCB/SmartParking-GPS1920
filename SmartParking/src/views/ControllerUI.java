@@ -88,7 +88,7 @@ public class ControllerUI implements Initializable {
         estatisticasTab.setOnSelectionChanged(new TabSelectionChanged());
         aceitarBtn.setOnAction(new ButtonPressed());
         rejeitarBtn.setOnAction(new ButtonPressed());
-        gravarBtn.setOnAction(new ButtonPressed());
+        //gravarBtn.setOnAction(new ButtonPressed());
         sairBtn.setOnAction(new ButtonPressed());
 
         /* Others */
@@ -151,12 +151,12 @@ public class ControllerUI implements Initializable {
                 editButton.setOnAction(evt -> {
                     if (editingCells.size() > 1) return;
 
-                    for (int i = 0; i < 8; ++i) {
-                        Cell c = ((Cell) getTableView().queryAccessibleAttribute(AccessibleAttribute.CELL_AT_ROW_COLUMN, getTableRow().getIndex(), i));
+                    for (int i = 0; i < 7; ++i) {
+                        Cell c = ((Cell) getTableView().queryAccessibleAttribute(AccessibleAttribute.CELL_AT_ROW_COLUMN,
+                                getTableRow().getIndex(), i));
                         c.startEdit();
                         editingCells.add(c);
                     }
-
                 });
             }
 
@@ -221,29 +221,6 @@ public class ControllerUI implements Initializable {
         }
     }
 
-    class EditButtonPressed implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            condutoresTable.setEditable(true);
-
-            System.out.println("Row: " + (condutoresTable.getSelectionModel().selectedItemProperty().get()));
-
-            System.out.println("EditButtonPressed");
-
-            Button btn = (Button) actionEvent.getSource();
-            System.out.println("User ID: " + btn.getId());
-        }
-    }
-
-    class RemoveButtonPressed implements EventHandler<ActionEvent> {
-
-        @Override
-        public void handle(ActionEvent actionEvent) {
-            System.out.println("RemoveButtonPressed");
-            System.out.println(actionEvent.getSource());
-        }
-    }
-
     class ButtonPressed implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent actionEvent) {
@@ -253,15 +230,32 @@ public class ControllerUI implements Initializable {
                 System.out.println("Rejeitar Button Pressed.");
             } else if (actionEvent.getSource().equals(gravarBtn)) {
                 System.out.println("Gravar Button Pressed.");
-                for (Cell c : editingCells) {
-                    c.commitEdit(c.getText());
-                    c.cancelEdit();
-                }
-                gravarBtn.setVisible(false);
             } else if (actionEvent.getSource().equals(sairBtn)) {
                 System.out.println("Sair Button Pressed.");
                 Platform.exit();
             }
+        }
+    }
+
+    class GravarButtonPressed implements EventHandler<ActionEvent> {
+
+        EditingCell editingCell;
+
+        public GravarButtonPressed(EditingCell editingCell) {
+            this.editingCell = editingCell;
+        }
+
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            editingCell.commitEdit(editingCell.getTextField().getText());
+            editingCell.updateItem(editingCell.getTextField().getText(), editingCell.getTextField().getText().isEmpty());
+            for (Cell c : editingCells) {
+                c.updateSelected(c.getText().isEmpty());
+                c.commitEdit(c.getText());
+            }
+            editingCells.clear();
+            //data.modifyUser(editingCell.getTableRow().getItem());
+            gravarBtn.setVisible(false);
         }
     }
 
@@ -287,8 +281,8 @@ public class ControllerUI implements Initializable {
 
         private TextField textField;
 
-        public EditingCell() {
-
+        public TextField getTextField() {
+            return textField;
         }
 
         @Override
@@ -300,13 +294,14 @@ public class ControllerUI implements Initializable {
                 setGraphic(textField);
                 textField.selectAll();
                 gravarBtn.setVisible(true);
+                gravarBtn.setOnAction(new GravarButtonPressed(this));
             }
         }
 
         @Override
         public void cancelEdit() {
             super.cancelEdit();
-
+            System.out.println("Cancel Edit");
             setText((String) getItem());
             setGraphic(null);
         }
@@ -336,14 +331,6 @@ public class ControllerUI implements Initializable {
         private void createTextField() {
             textField = new TextField(getString());
             textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            textField.setOnAction((e) -> commitEdit(textField.getText()));
-            textField.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-                if (!newValue) {
-                    System.out.println("Commiting " + textField.getText());
-                    commitEdit(textField.getText());
-                    // TODO data.modifyUser()
-                }
-            });
         }
 
         private String getString() {

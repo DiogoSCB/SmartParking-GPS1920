@@ -62,4 +62,7 @@ public class Data implements Constants {
         dbConnection.removeUser(user);
     }
 
+    public void modifyUser(User user) {
+        dbConnection.modifyUser(user);
+    }
 }
