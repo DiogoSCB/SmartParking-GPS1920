@@ -120,20 +120,19 @@
         <VBox.margin>
             <Insets/>
         </VBox.margin>
-        <Button fx:id="aceitarBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Aceitar"
-                visible="false">
+        <Button fx:id="aceitarBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Aceitar">
             <font>
                 <Font size="20.0"/>
             </font>
         </Button>
         <Button fx:id="rejeitarBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0"
-                mnemonicParsing="false" text="Rejeitar" textAlignment="CENTER" visible="false">
+                mnemonicParsing="false" text="Rejeitar" textAlignment="CENTER">
             <font>
                 <Font size="20.0"/>
             </font>
         </Button>
         <Button fx:id="gravarBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0"
-                mnemonicParsing="false" text="Gravar" textAlignment="CENTER" visible="false">
+                mnemonicParsing="false" text="Gravar" textAlignment="CENTER">
             <font>
                 <Font size="20.0"/>
             </font>

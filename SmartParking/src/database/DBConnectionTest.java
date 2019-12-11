@@ -71,7 +71,7 @@ class DBConnectionTest {
 
     @org.junit.jupiter.api.Test
     void modifyUser() {
-        dbConnection.modifyUser(new User("Carlos", "12II88", null, null, "carlinho@gmail.com", 2, 2));
+        dbConnection.modifyUser(new User(22,"Carlos", "12II88", null, null, "carlinho@gmail.com", null, 2));
     }
 
     @org.junit.jupiter.api.Test

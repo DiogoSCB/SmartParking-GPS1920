@@ -41,6 +41,9 @@ public class User {
         this.idUser = idUser;
     }
 
+    public void setIdParkingSpace(Integer idParkingSpace) {
+        this.idParkingSpace = idParkingSpace;
+    }
 
     public Integer getIdUser() {
         return idUser;

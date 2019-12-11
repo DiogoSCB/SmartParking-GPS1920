@@ -168,7 +168,7 @@ public class DBConnection {
      */
     public void modifyUser(User user) {
         String sql = "UPDATE User SET name = ?, licensePlate = ?, entryDate = ?, departureDate = ?, email = ?, " +
-                "idParkingSpace = " + user.getIdParkingSpace() + "WHERE IdUser = " + user.getIdUser() + ")";
+                "idParkingSpace = " + user.getIdParkingSpace() + " WHERE IdUser = ?";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -178,6 +178,7 @@ public class DBConnection {
             stmt.setDate(3, user.getEntryDate());
             stmt.setDate(4, user.getDepartureDate());
             stmt.setString(5, user.getEmail());
+            stmt.setInt(6, user.getIdUser());
 
 
             stmt.executeUpdate();

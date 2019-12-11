@@ -71,15 +71,19 @@ public class ControllerUI implements Initializable {
     /* Testing */
     private ArrayList<Cell> editingCells;
 
+    private ArrayList<EditingCell> editingTableCells;
+
     public ControllerUI(Data data) {
         this.data = data;
         editingCells = new ArrayList<>();
+        editingTableCells = new ArrayList<>();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeColumns();
         updateParkComboBox();
+        setupCondutoresTabLayout();
 
         /* Setup Listeners */
         idParqueCondutores.setOnAction(new NewParkSelectedCallBack());
@@ -88,7 +92,7 @@ public class ControllerUI implements Initializable {
         estatisticasTab.setOnSelectionChanged(new TabSelectionChanged());
         aceitarBtn.setOnAction(new ButtonPressed());
         rejeitarBtn.setOnAction(new ButtonPressed());
-        //gravarBtn.setOnAction(new ButtonPressed());
+        gravarBtn.setOnAction(new GravarButtonPressed());
         sairBtn.setOnAction(new ButtonPressed());
 
         /* Others */
@@ -183,14 +187,11 @@ public class ControllerUI implements Initializable {
 
 
     void setupCondutoresTabLayout() {
-
-        condutoresTable.setItems(null);
-        condutoresTable.setPlaceholder(new Label("Selecione o ID do Parque."));
-
         /* Show/hide corresponding buttons */
         aceitarBtn.setVisible(false);
         rejeitarBtn.setVisible(false);
         gravarBtn.setVisible(true);
+        gravarBtn.setDisable(true);
     }
 
     void setupPedidosTabLayout() {
@@ -207,7 +208,6 @@ public class ControllerUI implements Initializable {
         gravarBtn.setVisible(false);
         sairBtn.setVisible(true);
     }
-
 
     public void updateTable() {
         condutoresTable.setItems(data.getUsersByParkID((Integer) idParqueCondutores.getValue()));
@@ -239,23 +239,19 @@ public class ControllerUI implements Initializable {
 
     class GravarButtonPressed implements EventHandler<ActionEvent> {
 
-        EditingCell editingCell;
-
-        public GravarButtonPressed(EditingCell editingCell) {
-            this.editingCell = editingCell;
-        }
-
         @Override
         public void handle(ActionEvent actionEvent) {
-            editingCell.commitEdit(editingCell.getTextField().getText());
-            editingCell.updateItem(editingCell.getTextField().getText(), editingCell.getTextField().getText().isEmpty());
-            for (Cell c : editingCells) {
-                c.updateSelected(c.getText().isEmpty());
-                c.commitEdit(c.getText());
+            for (EditingCell editingCell : editingTableCells) {
+                editingCell.commitEdit(editingCell.getTextField().getText());
+                editingCell.updateItem(editingCell.getTextField().getText(), editingCell.getTextField().getText().isEmpty());
+                editingCell.
             }
+            if (!editingTableCells.isEmpty())
+                //data.modifyUser(editingTableCells.get(1).getTableRow().getItem());
+            System.out.println(editingTableCells.get(1).getTableRow().getItem().getName());
             editingCells.clear();
-            //data.modifyUser(editingCell.getTableRow().getItem());
-            gravarBtn.setVisible(false);
+            editingTableCells.clear();
+            gravarBtn.setDisable(true);
         }
     }
 
@@ -293,8 +289,8 @@ public class ControllerUI implements Initializable {
                 setText(null);
                 setGraphic(textField);
                 textField.selectAll();
-                gravarBtn.setVisible(true);
-                gravarBtn.setOnAction(new GravarButtonPressed(this));
+                gravarBtn.setDisable(false);
+                editingTableCells.add(this);
             }
         }
 

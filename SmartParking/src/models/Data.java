@@ -63,6 +63,10 @@ public class Data implements Constants {
     }
 
     public void modifyUser(User user) {
+        if (user.getIdParkingSpace().equals(0))
+            user.setIdParkingSpace(null);
         dbConnection.modifyUser(user);
+
     }
+
 }
