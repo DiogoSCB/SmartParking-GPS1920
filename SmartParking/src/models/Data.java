@@ -29,8 +29,7 @@ public class Data implements Constants {
         }
     }
 
-    public ArrayList<Integer> getParkIdAsIntegers()
-    {
+    public ArrayList<Integer> getParkIdAsIntegers() {
         ArrayList<Integer> parksIDS = new ArrayList<>();
         for (Park p : parks.keySet())
             parksIDS.add(p.getIdPark());
@@ -50,7 +49,7 @@ public class Data implements Constants {
     public ObservableList<User> getUsersByParkID(int parkID) {
         ArrayList<User> usersByParkID = new ArrayList<>();
 
-        for (User u :users)
+        for (User u : users)
             if (u.getIdPark() == parkID)
                 usersByParkID.add(u);
 
@@ -62,11 +61,46 @@ public class Data implements Constants {
         dbConnection.removeUser(user);
     }
 
-    public void modifyUser(User user) {
-        if (user.getIdParkingSpace().equals(0))
-            user.setIdParkingSpace(null);
-        dbConnection.modifyUser(user);
-
+    public void modifyUser(Integer id, String name, String licensePlate, String email) {
+        for (User u : users) {
+            if (u.getIdUser().equals(id)) {
+                u.setName(name);
+                u.setLicensePlate(licensePlate);
+                u.setEmail(email);
+                if (u.getIdParkingSpace().equals(0))
+                    u.setIdParkingSpace(null);
+                dbConnection.modifyUser(u);
+            }
+        }
     }
 
+    public boolean validateLicensePlate(String licensePlate) {
+        if (licensePlate.isBlank() || licensePlate.isEmpty()) return false;
+        if (licensePlate.length() != 6) return false;
+        if (licensePlate.contains(" ")) return false;
+
+        CharSequence first = licensePlate.substring(0, 2);
+        if (!Character.isDigit(first.charAt(0)) || !Character.isDigit(first.charAt(1))) return false;
+
+        CharSequence second = licensePlate.substring(2, 4);
+        if (!Character.isAlphabetic(second.charAt(0)) || !Character.isAlphabetic(second.charAt(1))) return false;
+
+        CharSequence third = licensePlate.substring(4, 6);
+        return Character.isDigit(third.charAt(0)) || Character.isDigit(third.charAt(1));
+    }
+
+    public boolean validateNome(String name) {
+        if (name.isBlank() || name.isEmpty()) return false;
+
+        for (char c : name.toCharArray()) {
+            if (Character.isDigit(c)) //se tem número
+                return false;
+        }
+        return name.length() >= 3 && name.length() <= 40;
+    }
+
+    public boolean validateEmail(String email) {
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"; //formato manhoso
+        return email.matches(regex);
+    }
 }

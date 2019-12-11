@@ -241,14 +241,23 @@ public class ControllerUI implements Initializable {
 
         @Override
         public void handle(ActionEvent actionEvent) {
-            for (EditingCell editingCell : editingTableCells) {
-                editingCell.commitEdit(editingCell.getTextField().getText());
-                editingCell.updateItem(editingCell.getTextField().getText(), editingCell.getTextField().getText().isEmpty());
-                editingCell.
+            if (!data.validateNome(editingTableCells.get(0).getTextField().getText())
+                    || !data.validateLicensePlate(editingTableCells.get(1).getTextField().getText())
+                    || !data.validateEmail(editingTableCells.get(2).getTextField().getText())) {
+                for (EditingCell editingCell : editingTableCells) {
+                    editingCell.cancelEdit();
+                }
+            } else {
+                for (EditingCell editingCell : editingTableCells) {
+                    editingCell.commitEdit(editingCell.getTextField().getText());
+                    editingCell.updateItem(editingCell.getTextField().getText(), editingCell.getTextField().getText().isEmpty());
+                }
+                if (!editingTableCells.isEmpty())
+                    data.modifyUser(editingTableCells.get(0).getTableRow().getItem().getIdUser(),
+                            editingTableCells.get(0).getTextField().getText(),
+                            editingTableCells.get(1).getTextField().getText(),
+                            editingTableCells.get(2).getTextField().getText());
             }
-            if (!editingTableCells.isEmpty())
-                //data.modifyUser(editingTableCells.get(1).getTableRow().getItem());
-            System.out.println(editingTableCells.get(1).getTableRow().getItem().getName());
             editingCells.clear();
             editingTableCells.clear();
             gravarBtn.setDisable(true);
@@ -297,7 +306,6 @@ public class ControllerUI implements Initializable {
         @Override
         public void cancelEdit() {
             super.cancelEdit();
-            System.out.println("Cancel Edit");
             setText((String) getItem());
             setGraphic(null);
         }
