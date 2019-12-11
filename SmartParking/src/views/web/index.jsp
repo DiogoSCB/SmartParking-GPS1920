@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="css/style.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-  <script src="${pageContext.request.contextPath}/web/js/form-validation.js" type="text/javascript"></script>
+  <script src="${pageContext.request.contextPath}/js/form-validation.js" type="text/javascript"></script>
   <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/additional-methods.js"></script>
 </head>
 <jsp:directive.include file = "connection.jsp" />
