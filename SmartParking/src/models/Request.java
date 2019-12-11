@@ -22,7 +22,9 @@ public class Request {
         this.idRequest = idRequest;
     }
 
-
+    public void setState(int state) {
+        this.state = state;
+    }
 
     public Integer getIdRequest() {
         return idRequest;

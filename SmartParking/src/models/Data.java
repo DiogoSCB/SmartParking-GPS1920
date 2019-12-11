@@ -1,6 +1,7 @@
 package models;
 
 import database.DBConnection;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -43,9 +44,18 @@ public class Data implements Constants {
         return parksIDS;
     }
 
-    public ObservableList<Request> getRequests() {
+    public ObservableList<RequestRow> getRequestsByParkID(int id) {
         requests = dbConnection.getRequestList();
-        return FXCollections.observableArrayList(requests);
+        users = dbConnection.getUserList();
+
+        ArrayList<RequestRow> requestRows = new ArrayList<>();
+        for (Request r: requests) {
+            User u = getUserByID(r.getIdUser());
+            if (u.getIdPark() == id)
+                requestRows.add(new RequestRow(r, u));
+        }
+
+        return FXCollections.observableArrayList(requestRows);
     }
 
     public ObservableList<User> getUsers() {
@@ -73,6 +83,13 @@ public class Data implements Constants {
 
 
         return FXCollections.observableArrayList(freeSpaces);
+    }
+
+    private User getUserByID(int id) {
+        for (User u: users)
+            if (u.getIdUser() == id)
+                return u;
+        return null;
     }
 
     public void removeUser(User user) {
@@ -115,6 +132,11 @@ public class Data implements Constants {
                 } else dbConnection.modifyUser(u);
             }
         }
+    }
+
+    public void modifyRequest(Request request, int state) {
+        request.setState(state);
+        dbConnection.\\quest(request);
     }
 
     public boolean validateLicensePlate(String licensePlate) {

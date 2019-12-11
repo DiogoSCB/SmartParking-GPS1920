@@ -14,9 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-import models.Data;
-import models.Request;
-import models.User;
+import models.*;
 
 import java.net.URL;
 import java.sql.Date;
@@ -42,16 +40,14 @@ public class ControllerUI implements Initializable {
     private Tab condutoresTab;
     @FXML
     private Tab pedidosTab;
-    @FXML
-    private Tab estatisticasTab;
 
     /* Tables */
     @FXML
     private TableView<User> condutoresTable;
     @FXML
-    private TableView<Request> pedidosTable;
+    private TableView<RequestRow> pedidosTable;
 
-    // Columns
+    // Columns condutoresTable
     @FXML
     private TableColumn<User, Integer> columnIDCondutor;
     @FXML
@@ -69,13 +65,26 @@ public class ControllerUI implements Initializable {
     @FXML
     private TableColumn<User, Void> columnOpcoes;
 
+    // Columns pedidosTable
+    @FXML
+    private TableColumn<RequestRow, Integer> columnIDPedidos;
+    @FXML
+    private TableColumn<RequestRow, String> columnNomePedidos;
+    @FXML
+    private TableColumn<RequestRow, String> columnMatriculaPedidos;
+    @FXML
+    private TableColumn<RequestRow, Date> columnDataPedidos;
+    @FXML
+    private TableColumn<RequestRow, String> columnEstadoPedidos;
+    @FXML
+    private TableColumn<RequestRow, String> columnEmailPedidos;
+
+
     /* ComboBoxes */
     @FXML
     private ComboBox idParqueCondutores;
     @FXML
     private ComboBox idParquePedidos;
-    @FXML
-    private ComboBox idParqueEstatisticas;
 
     /* Testing */
     private ArrayList<Cell> editingCells;
@@ -97,16 +106,15 @@ public class ControllerUI implements Initializable {
 
         /* Setup Listeners */
         idParqueCondutores.setOnAction(new NewParkSelectedCallBack());
+        idParquePedidos.setOnAction(new NewParkSelectedCallBack());
         condutoresTab.setOnSelectionChanged(new TabSelectionChanged());
         pedidosTab.setOnSelectionChanged(new TabSelectionChanged());
-        estatisticasTab.setOnSelectionChanged(new TabSelectionChanged());
+
+        /* Buttons */
         aceitarBtn.setOnAction(new ButtonPressed());
         rejeitarBtn.setOnAction(new ButtonPressed());
         gravarBtn.setOnAction(new GravarButtonPressed());
         sairBtn.setOnAction(new ButtonPressed());
-
-        /* Others */
-
 
 
         /* Setup editable columns */
@@ -120,9 +128,28 @@ public class ControllerUI implements Initializable {
         columnOpcoes.setEditable(true);
 
         condutoresTable.getSelectionModel().setCellSelectionEnabled(true);
+
+        pedidosTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+
+                RequestRow requestRow = pedidosTable.getSelectionModel().getSelectedItem();
+                Request request = requestRow.getRequest();
+
+                if (request.getState() != Constants.pending) {
+                    aceitarBtn.setDisable(true);
+                    rejeitarBtn.setDisable(true);
+                    return;
+                }
+
+                aceitarBtn.setDisable(false);
+                rejeitarBtn.setDisable(false);
+            }
+        });
     }
 
     public void initializeColumns() {
+
+        /* Table Condutores*/
 
         Callback<TableColumn<User, String>, TableCell<User, String>> cellFactory = tableColumn -> new EditingCell();
         Callback<TableColumn<User, Integer>, TableCell<User, Integer>> cellFactoryDrop = tableColumn -> new EditingCellDrop();
@@ -182,6 +209,14 @@ public class ControllerUI implements Initializable {
             }
         });
 
+        /* Table Pedidos*/
+        columnIDPedidos.setCellValueFactory(new PropertyValueFactory<>("idRequest"));
+        columnNomePedidos.setCellValueFactory(new PropertyValueFactory<>("nomeRequest"));
+        columnMatriculaPedidos.setCellValueFactory(new PropertyValueFactory<>("matriculaRequest"));
+        columnDataPedidos.setCellValueFactory(new PropertyValueFactory<>("dataRequest"));
+        columnEstadoPedidos.setCellValueFactory(new PropertyValueFactory<>("estadoRequest"));
+        columnEmailPedidos.setCellValueFactory(new PropertyValueFactory<>("emailRequest"));
+
     }
 
     public void removeUser(User user) {
@@ -196,7 +231,6 @@ public class ControllerUI implements Initializable {
         updateTable();
     }
 
-
     void setupCondutoresTabLayout() {
         /* Show/hide corresponding buttons */
         aceitarBtn.setVisible(false);
@@ -209,15 +243,9 @@ public class ControllerUI implements Initializable {
         /* Show/hide corresponding buttons */
         gravarBtn.setVisible(false);
         aceitarBtn.setVisible(true);
+        aceitarBtn.setDisable(true);
         rejeitarBtn.setVisible(true);
-    }
-
-    void setupEstatisticasTabLayout() {
-        /* Show/hide corresponding buttons */
-        aceitarBtn.setVisible(false);
-        rejeitarBtn.setVisible(false);
-        gravarBtn.setVisible(false);
-        sairBtn.setVisible(true);
+        rejeitarBtn.setDisable(true);
     }
 
     public void updateCondutoresTable() {
@@ -225,8 +253,7 @@ public class ControllerUI implements Initializable {
     }
 
     public void updatePedidosTable() {
-        System.out.println(data.getRequests().get(0).getRequestDate());
-        // pedidosTable.setItems(data.getRequests());
+        pedidosTable.setItems(data.getRequestsByParkID((Integer)idParquePedidos.getValue()));
     }
 
     public void updateTable() {
@@ -236,11 +263,35 @@ public class ControllerUI implements Initializable {
             updateCondutoresTable();
     }
 
+    private void acceptRequest() {
+
+        RequestRow requestRow = pedidosTable.getSelectionModel().getSelectedItem();
+        Request request = requestRow.getRequest();
+
+        data.modifyRequest(request, Constants.accept);
+
+        aceitarBtn.setDisable(true);
+        rejeitarBtn.setDisable(true);
+
+        updateTable();
+    }
+
+    private void refuseRequest() {
+        RequestRow requestRow = pedidosTable.getSelectionModel().getSelectedItem();
+        Request request = requestRow.getRequest();
+
+        data.modifyRequest(request, Constants.refuse);
+
+        aceitarBtn.setDisable(true);
+        rejeitarBtn.setDisable(true);
+
+        updateTable();
+    }
+
     /* CALL BACKS*/
     class NewParkSelectedCallBack implements EventHandler<ActionEvent> {
         public void handle(ActionEvent actionEvent) {
-            if (idParqueCondutores.getValue() != null)
-                updateCondutoresTable();
+            updateTable();
         }
     }
 
@@ -249,8 +300,10 @@ public class ControllerUI implements Initializable {
         public void handle(ActionEvent actionEvent) {
             if (actionEvent.getSource().equals(aceitarBtn)) {
                 System.out.println("Aceitar Button Pressed.");
+                acceptRequest();
             } else if (actionEvent.getSource().equals(rejeitarBtn)) {
                 System.out.println("Rejeitar Button Pressed.");
+                refuseRequest();
             } else if (actionEvent.getSource().equals(gravarBtn)) {
                 System.out.println("Gravar Button Pressed.");
             } else if (actionEvent.getSource().equals(sairBtn)) {
@@ -302,10 +355,7 @@ public class ControllerUI implements Initializable {
             } else if (pedidosTab.isSelected()) {
                 System.out.println("Pedidos Tab Selected.");
                 setupPedidosTabLayout();
-                updateParkComboBox();
-            } else if (estatisticasTab.isSelected()) {
-                System.out.println("Estatísticas Tab Selected.");
-                setupEstatisticasTabLayout();
+                updateParkComboBox(idParquePedidos);
             }
         }
     }

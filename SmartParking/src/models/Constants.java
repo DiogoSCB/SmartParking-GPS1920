@@ -14,4 +14,9 @@ public interface Constants
     // Database settings
     String ip = "localhost";
     String port = "3306";
+
+    // Misc
+    int accept = 1;
+    int pending = 0;
+    int refuse = -1;
 }
