@@ -1,6 +1,7 @@
 //05/12/2019 validações em regex funcionais para browsers Opera e Firefox
 //07/12/2019 validação em regex do nome e 2º campo da matricula melhorado (estava a aceitar 1 número)
 //08/12/2019 tentativa de colocar botão "Submeter" a aparecer apenas quando todos os campos são válidos
+//11/12/2019 adicionada possibilidade de inserção de caracteres a pedido de colega de grupo
 
 
 $(function() {
@@ -18,15 +19,15 @@ $(function() {
         },		
         matricula2: {
           required: true,
-		  pattern: /^[a-zA-Z]+$/
+	  pattern: /^[a-zA-Z]+$/
         },	
         matricula3: {
           required: true,
           digits: true
         },
         nome: {
-			required: true,
-			pattern: /^[a-zA-Z]+$/
+	  required: true,
+	  pattern: /^[a-zA-Z _]+$/
 		},
         email: {
           required: true,
