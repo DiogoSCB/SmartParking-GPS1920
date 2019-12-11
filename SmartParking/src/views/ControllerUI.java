@@ -1,6 +1,8 @@
 package views;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -19,6 +21,7 @@ import models.User;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class ControllerUI implements Initializable {
@@ -89,7 +92,7 @@ public class ControllerUI implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeColumns();
-        updateParkComboBox(idParqueCondutores);
+        updateParkComboBox();
         setupCondutoresTabLayout();
 
         /* Setup Listeners */
@@ -186,10 +189,10 @@ public class ControllerUI implements Initializable {
         updateCondutoresTable();
     }
 
-    void updateParkComboBox(ComboBox comboBox) {
-        comboBox.getItems().clear();
-        comboBox.getItems().addAll(data.getParkIdAsIntegers());
-        comboBox.getSelectionModel().selectFirst();
+    void updateParkComboBox() {
+        idParqueCondutores.getItems().clear();
+        idParqueCondutores.getItems().addAll(data.getParkIdAsIntegers());
+        idParqueCondutores.getSelectionModel().selectFirst();
         updateTable();
     }
 
@@ -218,7 +221,7 @@ public class ControllerUI implements Initializable {
     }
 
     public void updateCondutoresTable() {
-        condutoresTable.setItems(data.getUsersByParkID((Integer)idParqueCondutores.getValue()));
+        condutoresTable.setItems(data.getUsersByParkID((Integer) idParqueCondutores.getValue()));
     }
 
     public void updatePedidosTable() {
@@ -267,18 +270,19 @@ public class ControllerUI implements Initializable {
                 for (EditingCell editingCell : editingTableCells) {
                     editingCell.cancelEdit();
                 }
+                editingCellDrop.cancelEdit();
             } else {
                 for (EditingCell editingCell : editingTableCells) {
                     editingCell.commitEdit(editingCell.getTextField().getText());
                     editingCell.updateItem(editingCell.getTextField().getText(), editingCell.getTextField().getText().isEmpty());
                 }
-                editingCellDrop.commitEdit(editingCellDrop.getItem());
-                editingCellDrop.updateItem(editingCellDrop.getItem(), editingCellDrop.getItem() != null);
+                editingCellDrop.commitEdit(editingCellDrop.getComboBox().getValue());
+                editingCellDrop.updateItem(editingCellDrop.getComboBox().getValue(), editingCellDrop.getComboBox().getValue() != null);
                 if (!editingTableCells.isEmpty())
                     data.modifyUser(editingTableCells.get(0).getTableRow().getItem().getIdUser(),
                             editingTableCells.get(0).getTextField().getText(),
                             editingTableCells.get(1).getTextField().getText(),
-                            editingTableCells.get(2).getTextField().getText(), editingCellDrop.getItem());
+                            editingTableCells.get(2).getTextField().getText(), editingCellDrop.getComboBox().getValue());
             }
             editingCells.clear();
             editingTableCells.clear();
@@ -294,11 +298,11 @@ public class ControllerUI implements Initializable {
             if (condutoresTab.isSelected()) {
                 System.out.println("Condutores Tab Selected.");
                 setupCondutoresTabLayout();
-                updateParkComboBox(idParqueCondutores);
+                updateParkComboBox();
             } else if (pedidosTab.isSelected()) {
                 System.out.println("Pedidos Tab Selected.");
                 setupPedidosTabLayout();
-                updateParkComboBox(idParquePedidos);
+                updateParkComboBox();
             } else if (estatisticasTab.isSelected()) {
                 System.out.println("Estatísticas Tab Selected.");
                 setupEstatisticasTabLayout();
@@ -343,10 +347,6 @@ public class ControllerUI implements Initializable {
                 setGraphic(null);
             } else {
                 if (isEditing()) {
-                    if (textField != null) {
-                        textField.setText(getString());
-//                        setGraphic(null);
-                    }
                     setText(null);
                     setGraphic(textField);
                 } else {
@@ -375,11 +375,19 @@ public class ControllerUI implements Initializable {
 
         @Override
         public void startEdit() {
+            ObservableList<Integer> idPS = null;
+
             if (!isEmpty()) {
                 super.startEdit();
-                createTextField();
+                createComboBox();
+                idPS = data.getParkingFreeSpacesById((Integer) idParqueCondutores.getValue());
+                idPS.add(Integer.parseInt(getString()));
+                Collections.sort(idPS);
+                comboBox.setItems(idPS);
+                if (Integer.parseInt(getString()) == 0)
+                    comboBox.getSelectionModel().selectFirst();
+                else comboBox.getSelectionModel().select(idPS.indexOf(Integer.parseInt(getString())));
                 setText(null);
-                comboBox.setItems(data.getParkingFreeSpacesById((Integer)idParqueCondutores.getValue()));
                 setGraphic(comboBox);
                 editingCellDrop = this;
                 gravarBtn.setDisable(false);
@@ -402,21 +410,16 @@ public class ControllerUI implements Initializable {
                 setGraphic(null);
             } else {
                 if (isEditing()) {
-                    if (comboBox != null) {
-                        comboBox.setValue(0);
-                        comboBox.setItems(data.getParkingFreeSpacesById((Integer)idParqueCondutores.getValue()));
-//                        setGraphic(null);
-                    }
                     setText(null);
                     setGraphic(comboBox);
                 } else {
-                    setText(getString());
+                    setText(item.toString());
                     setGraphic(null);
                 }
             }
         }
 
-        private void createTextField() {
+        private void createComboBox() {
             comboBox = new ComboBox<>();
         }
 

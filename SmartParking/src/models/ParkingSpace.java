@@ -5,24 +5,24 @@ import java.sql.Date;
 public class ParkingSpace {
 
     private Integer idParkingSpace;
-    private int reserved;
+    private boolean reserved;
     private Integer idPark;
 
-
-    public ParkingSpace(Integer idParkingSpace, int reserved, Integer idPark) {
+    public ParkingSpace(Integer idParkingSpace, boolean reserved, Integer idPark) {
         this.idParkingSpace = idParkingSpace;
         this.reserved = reserved;
         this.idPark = idPark;
     }
 
-
-
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
+    }
 
     public Integer getIdParkingSpace() {
         return idParkingSpace;
     }
 
-    public int getReserved() {
+    public boolean isReserved() {
         return reserved;
     }
 

@@ -246,7 +246,7 @@ public class DBConnection {
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) { //Enquanto houver dados
-                ps.add(new ParkingSpace(resultSet.getInt(1), resultSet.getInt(2),
+                ps.add(new ParkingSpace(resultSet.getInt(1), resultSet.getBoolean(2),
                         resultSet.getInt(3)));
             }
         } catch (SQLException e) {
@@ -261,7 +261,7 @@ public class DBConnection {
      * @param user         é classe que encapsula a informação do Utilizador
      * @param parkingSpace é classe que encapsula a informação do Lugar de Estacionamento
      */
-    public void addUserParkingSpace(User user, ParkingSpace parkingSpace) {
+    public void addUserParkingSpace(User user, ParkingSpace parkingSpace, Integer idParkingSpaceOld) {
         try {
             String sql = "SELECT IdPark FROM ParkingSpace WHERE IdParkingSpace = " + parkingSpace.getIdParkingSpace();
             resultSet = statement.executeQuery(sql);
@@ -269,6 +269,10 @@ public class DBConnection {
             if (resultSet.next()) {
                 sql = "UPDATE ParkingSpace SET Reserved = " + true + " WHERE IdParkingSpace = "
                         + parkingSpace.getIdParkingSpace();
+                statement.executeUpdate(sql);
+
+                sql = "UPDATE ParkingSpace SET Reserved = " + false + " WHERE IdParkingSpace = "
+                        + idParkingSpaceOld;
                 statement.executeUpdate(sql);
 
                 sql = "UPDATE User SET IdParkingSpace = " + parkingSpace.getIdParkingSpace() + ", IdPark = "

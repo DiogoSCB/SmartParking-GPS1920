@@ -67,7 +67,7 @@ public class Data implements Constants {
     public ObservableList<Integer> getParkingFreeSpacesById(int id) {
 
         ArrayList<Integer> freeSpaces = new ArrayList<>();
-        for (Park p: parks.keySet())
+        for (Park p : parks.keySet())
             if (p.getIdPark() == id)
                 freeSpaces = dbConnection.getFreeParkingSpaces(p);
 
@@ -80,22 +80,42 @@ public class Data implements Constants {
         dbConnection.removeUser(user);
     }
 
-    public void modifyUser(Integer id, String name, String licensePlate, String email, Integer idParkingSpace) {
+    public ParkingSpace getParkingSpace(Integer idPark, Integer idPS) {
+        for (Park p : parks.keySet())
+            if (p.getIdPark().equals(idPark))
+                for (ParkingSpace ps : parks.get(p))
+                    if (ps.getIdParkingSpace().equals(idPS)) {
+                        return ps;
+                    }
+        return null;
+    }
+
+    public void setReserved(Integer idPark, Integer idPSOld, Integer idPSNew) {
+        for (Park p : parks.keySet())
+            if (p.getIdPark().equals(idPark))
+                for (ParkingSpace ps : parks.get(p)) {
+                    if (ps.getIdParkingSpace().equals(idPSNew))
+                        ps.setReserved(true);
+                    if (ps.getIdParkingSpace().equals(idPSOld))
+                        ps.setReserved(false);
+                }
+    }
+
+    public void modifyUser(Integer idUser, String name, String licensePlate, String email, Integer idParkingSpace) {
         for (User u : users) {
-            if (u.getIdUser().equals(id)) {
+            if (u.getIdUser().equals(idUser)) {
                 u.setName(name);
                 u.setLicensePlate(licensePlate);
                 u.setEmail(email);
-                if (u.getIdParkingSpace().equals(0))
-                    u.setIdParkingSpace(null);
-                else
+                if (!u.getIdParkingSpace().equals(idParkingSpace)) {
+                    Integer old = u.getIdParkingSpace();
                     u.setIdParkingSpace(idParkingSpace);
-                dbConnection.modifyUser(u);
+                    setReserved(u.getIdPark(), u.getIdParkingSpace(), old);
+                    dbConnection.addUserParkingSpace(u, getParkingSpace(u.getIdPark(), u.getIdParkingSpace()), old);
+                } else dbConnection.modifyUser(u);
             }
         }
     }
-
-
 
     public boolean validateLicensePlate(String licensePlate) {
         if (licensePlate.isBlank() || licensePlate.isEmpty()) return false;
