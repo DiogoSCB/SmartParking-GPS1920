@@ -44,14 +44,15 @@ public class Data implements Constants {
         return parksIDS;
     }
 
-    public ObservableList<RequestRow> getRequests() {
+    public ObservableList<RequestRow> getRequestsByParkID(int id) {
         requests = dbConnection.getRequestList();
         users = dbConnection.getUserList();
 
         ArrayList<RequestRow> requestRows = new ArrayList<>();
         for (Request r: requests) {
             User u = getUserByID(r.getIdUser());
-            requestRows.add(new RequestRow(r, u));
+            if (u.getIdPark() == id)
+                requestRows.add(new RequestRow(r, u));
         }
 
         return FXCollections.observableArrayList(requestRows);

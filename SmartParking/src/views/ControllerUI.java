@@ -37,8 +37,6 @@ public class ControllerUI implements Initializable {
     private Tab condutoresTab;
     @FXML
     private Tab pedidosTab;
-    @FXML
-    private Tab estatisticasTab;
 
     /* Tables */
     @FXML
@@ -84,8 +82,6 @@ public class ControllerUI implements Initializable {
     private ComboBox idParqueCondutores;
     @FXML
     private ComboBox idParquePedidos;
-    @FXML
-    private ComboBox idParqueEstatisticas;
 
     /* Testing */
     private ArrayList<Cell> editingCells;
@@ -107,9 +103,11 @@ public class ControllerUI implements Initializable {
 
         /* Setup Listeners */
         idParqueCondutores.setOnAction(new NewParkSelectedCallBack());
+        idParquePedidos.setOnAction(new NewParkSelectedCallBack());
         condutoresTab.setOnSelectionChanged(new TabSelectionChanged());
         pedidosTab.setOnSelectionChanged(new TabSelectionChanged());
-        estatisticasTab.setOnSelectionChanged(new TabSelectionChanged());
+
+        /* Buttons */
         aceitarBtn.setOnAction(new ButtonPressed());
         rejeitarBtn.setOnAction(new ButtonPressed());
         gravarBtn.setOnAction(new GravarButtonPressed());
@@ -247,20 +245,12 @@ public class ControllerUI implements Initializable {
         rejeitarBtn.setDisable(true);
     }
 
-    void setupEstatisticasTabLayout() {
-        /* Show/hide corresponding buttons */
-        aceitarBtn.setVisible(false);
-        rejeitarBtn.setVisible(false);
-        gravarBtn.setVisible(false);
-        sairBtn.setVisible(true);
-    }
-
     public void updateCondutoresTable() {
         condutoresTable.setItems(data.getUsersByParkID((Integer)idParqueCondutores.getValue()));
     }
 
     public void updatePedidosTable() {
-        pedidosTable.setItems(data.getRequests());
+        pedidosTable.setItems(data.getRequestsByParkID((Integer)idParquePedidos.getValue()));
     }
 
     public void updateTable() {
@@ -298,8 +288,7 @@ public class ControllerUI implements Initializable {
     /* CALL BACKS*/
     class NewParkSelectedCallBack implements EventHandler<ActionEvent> {
         public void handle(ActionEvent actionEvent) {
-            if (idParqueCondutores.getValue() != null)
-                updateCondutoresTable();
+            updateTable();
         }
     }
 
@@ -363,9 +352,6 @@ public class ControllerUI implements Initializable {
                 System.out.println("Pedidos Tab Selected.");
                 setupPedidosTabLayout();
                 updateParkComboBox(idParquePedidos);
-            } else if (estatisticasTab.isSelected()) {
-                System.out.println("Estatísticas Tab Selected.");
-                setupEstatisticasTabLayout();
             }
         }
     }
