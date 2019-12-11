@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Data implements Constants {
 
-    private Map<Park, List<ParkingSpace>> parks;
+    private Map<Park, ArrayList<ParkingSpace>> parks;
     private ArrayList<Request> requests;
     private ArrayList<User> users;
     private DBConnection dbConnection;
@@ -56,12 +56,23 @@ public class Data implements Constants {
         return FXCollections.observableArrayList(usersByParkID);
     }
 
+    public ObservableList<Integer> getParkingFreeSpacesById(int id) {
+
+        ArrayList<Integer> freeSpaces = new ArrayList<>();
+        for (Park p: parks.keySet())
+            if (p.getIdPark() == id)
+                freeSpaces = dbConnection.getFreeParkingSpaces(p);
+
+
+        return FXCollections.observableArrayList(freeSpaces);
+    }
+
     public void removeUser(User user) {
         users.remove(user);
         dbConnection.removeUser(user);
     }
 
-    public void modifyUser(Integer id, String name, String licensePlate, String email) {
+    public void modifyUser(Integer id, String name, String licensePlate, String email, Integer idParkingSpace) {
         for (User u : users) {
             if (u.getIdUser().equals(id)) {
                 u.setName(name);
@@ -69,10 +80,14 @@ public class Data implements Constants {
                 u.setEmail(email);
                 if (u.getIdParkingSpace().equals(0))
                     u.setIdParkingSpace(null);
+                else
+                    u.setIdParkingSpace(idParkingSpace);
                 dbConnection.modifyUser(u);
             }
         }
     }
+
+
 
     public boolean validateLicensePlate(String licensePlate) {
         if (licensePlate.isBlank() || licensePlate.isEmpty()) return false;
