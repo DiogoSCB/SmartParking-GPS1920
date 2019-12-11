@@ -41,13 +41,13 @@
           <tbody>
             <tr>
               <td class="licensePlate">
-                <input type="text" name="licensePlate1" id="licensePlate1" placeholder="00" maxlength="2"/>
+                <input type="text" name="licensePlate1" id="licensePlate1" placeholder="00" minlength="2" maxlength="2"/>
               </td>
               <td class="licensePlate">
-                  <input type="text" name="licensePlate2" id="licensePlate2" placeholder="AA" maxlength="2"/>
+                  <input type="text" name="licensePlate2" id="licensePlate2" placeholder="AA" minlength="2" maxlength="2"/>
               </td>
               <td class="licensePlate">
-                  <input type="text" name="licensePlate3" id="licensePlate3" placeholder="00" maxlength="2"/>
+                  <input type="text" name="licensePlate3" id="licensePlate3" placeholder="00" minlength="2" maxlength="2"/>
               </td>
             </tr>
           </tbody>
