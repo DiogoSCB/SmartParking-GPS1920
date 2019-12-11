@@ -218,7 +218,7 @@ public class ControllerUI implements Initializable {
     }
 
     public void updateCondutoresTable() {
-        condutoresTable.setItems(data.getUsersByParkID((Integer) idParqueCondutores.getValue()));
+        condutoresTable.setItems(data.getUsersByParkID((Integer)idParqueCondutores.getValue()));
     }
 
     public void updatePedidosTable() {
@@ -283,6 +283,7 @@ public class ControllerUI implements Initializable {
             editingCells.clear();
             editingTableCells.clear();
             gravarBtn.setDisable(true);
+            updateTable();
         }
     }
 

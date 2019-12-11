@@ -21,6 +21,10 @@ public class Data implements Constants {
     private void importAllData() {
         requests = dbConnection.getRequestList();
         users = dbConnection.getUserList();
+        importParks();
+    }
+
+    private void importParks() {
         parks = new HashMap<>();
 
         for (Park p : dbConnection.getParkList()) {
@@ -30,6 +34,7 @@ public class Data implements Constants {
     }
 
     public ArrayList<Integer> getParkIdAsIntegers() {
+        importParks();
         ArrayList<Integer> parksIDS = new ArrayList<>();
         for (Park p : parks.keySet())
             parksIDS.add(p.getIdPark());
@@ -39,14 +44,17 @@ public class Data implements Constants {
     }
 
     public ObservableList<Request> getRequests() {
+        requests = dbConnection.getRequestList();
         return FXCollections.observableArrayList(requests);
     }
 
     public ObservableList<User> getUsers() {
+        users = dbConnection.getUserList();
         return FXCollections.observableArrayList(users);
     }
 
     public ObservableList<User> getUsersByParkID(int parkID) {
+        users = dbConnection.getUserList();
         ArrayList<User> usersByParkID = new ArrayList<>();
 
         for (User u : users)
