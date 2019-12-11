@@ -1,6 +1,7 @@
 package models;
 
 import database.DBConnection;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -43,9 +44,17 @@ public class Data implements Constants {
         return parksIDS;
     }
 
-    public ObservableList<Request> getRequests() {
+    public ObservableList<RequestRow> getRequests() {
         requests = dbConnection.getRequestList();
-        return FXCollections.observableArrayList(requests);
+        users = dbConnection.getUserList();
+
+        ArrayList<RequestRow> requestRows = new ArrayList<>();
+        for (Request r: requests) {
+            User u = getUserByID(r.getIdUser());
+            requestRows.add(new RequestRow(r, u));
+        }
+
+        return FXCollections.observableArrayList(requestRows);
     }
 
     public ObservableList<User> getUsers() {
@@ -75,9 +84,21 @@ public class Data implements Constants {
         return FXCollections.observableArrayList(freeSpaces);
     }
 
+    private User getUserByID(int id) {
+        for (User u: users)
+            if (u.getIdUser() == id)
+                return u;
+        return null;
+    }
+
     public void removeUser(User user) {
         users.remove(user);
         dbConnection.removeUser(user);
+    }
+
+    public void modifyRequest(Request request, int state) {
+        request.setState(state);
+        dbConnection.modifyRequest(request);
     }
 
     public void modifyUser(Integer id, String name, String licensePlate, String email, Integer idParkingSpace) {
@@ -94,8 +115,6 @@ public class Data implements Constants {
             }
         }
     }
-
-
 
     public boolean validateLicensePlate(String licensePlate) {
         if (licensePlate.isBlank() || licensePlate.isEmpty()) return false;
