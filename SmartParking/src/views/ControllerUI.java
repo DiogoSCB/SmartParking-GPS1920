@@ -101,7 +101,7 @@ public class ControllerUI implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeColumns();
-        updateParkComboBox();
+        updateParkComboBox(idParqueCondutores);
         setupCondutoresTabLayout();
 
         /* Setup Listeners */
@@ -224,10 +224,10 @@ public class ControllerUI implements Initializable {
         updateCondutoresTable();
     }
 
-    void updateParkComboBox() {
-        idParqueCondutores.getItems().clear();
-        idParqueCondutores.getItems().addAll(data.getParkIdAsIntegers());
-        idParqueCondutores.getSelectionModel().selectFirst();
+    void updateParkComboBox(ComboBox comboBox) {
+        comboBox.getItems().clear();
+        comboBox.getItems().addAll(data.getParkIdAsIntegers());
+        comboBox.getSelectionModel().selectFirst();
         updateTable();
     }
 
@@ -351,11 +351,13 @@ public class ControllerUI implements Initializable {
             if (condutoresTab.isSelected()) {
                 System.out.println("Condutores Tab Selected.");
                 setupCondutoresTabLayout();
-                updateParkComboBox();
+                if (idParqueCondutores.getItems().isEmpty())
+                    updateParkComboBox(idParqueCondutores);
             } else if (pedidosTab.isSelected()) {
                 System.out.println("Pedidos Tab Selected.");
                 setupPedidosTabLayout();
-                updateParkComboBox(idParquePedidos);
+                if (idParquePedidos.getItems().isEmpty())
+                    updateParkComboBox(idParquePedidos);
             }
         }
     }

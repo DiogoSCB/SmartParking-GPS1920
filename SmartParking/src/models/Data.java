@@ -136,7 +136,7 @@ public class Data implements Constants {
 
     public void modifyRequest(Request request, int state) {
         request.setState(state);
-        dbConnection.\\quest(request);
+        dbConnection.modifyRequest(request);
     }
 
     public boolean validateLicensePlate(String licensePlate) {
