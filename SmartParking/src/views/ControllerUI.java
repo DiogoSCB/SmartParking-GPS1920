@@ -250,10 +250,12 @@ public class ControllerUI implements Initializable {
 
     public void updateCondutoresTable() {
         condutoresTable.setItems(data.getUsersByParkID((Integer) idParqueCondutores.getValue()));
+        condutoresTable.refresh();
     }
 
     public void updatePedidosTable() {
-        pedidosTable.setItems(data.getRequestsByParkID((Integer)idParquePedidos.getValue()));
+        pedidosTable.setItems(data.getRequestsByParkID((Integer) idParquePedidos.getValue()));
+        pedidosTable.refresh();
     }
 
     public void updateTable() {
