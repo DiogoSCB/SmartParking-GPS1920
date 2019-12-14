@@ -226,7 +226,7 @@ public class ControllerUI implements Initializable {
 
     void updateParkComboBox(ComboBox comboBox) {
         comboBox.getItems().clear();
-        comboBox.getItems().addAll(data.getParkIdAsIntegers());
+        comboBox.getItems().addAll(data.getParkNames());
         comboBox.getSelectionModel().selectFirst();
         updateTable();
     }
@@ -249,12 +249,12 @@ public class ControllerUI implements Initializable {
     }
 
     public void updateCondutoresTable() {
-        condutoresTable.setItems(data.getUsersByParkID((Integer) idParqueCondutores.getValue()));
+        condutoresTable.setItems(data.getUserByParkName((String) idParqueCondutores.getValue()));
         condutoresTable.refresh();
     }
 
     public void updatePedidosTable() {
-        pedidosTable.setItems(data.getRequestsByParkID((Integer) idParquePedidos.getValue()));
+        pedidosTable.setItems(data.getRequestByParkName((String)idParquePedidos.getValue()));
         pedidosTable.refresh();
     }
 

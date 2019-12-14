@@ -34,24 +34,25 @@ public class Data implements Constants {
         }
     }
 
-    public ArrayList<Integer> getParkIdAsIntegers() {
+    public ArrayList<String> getParkNames() {
         importParks();
-        ArrayList<Integer> parksIDS = new ArrayList<>();
-        for (Park p : parks.keySet())
-            parksIDS.add(p.getIdPark());
+        ArrayList<String> parkNames = new ArrayList<>();
 
-        Collections.sort(parksIDS);
-        return parksIDS;
+        for (Park p: parks.keySet())
+            parkNames.add(p.getNamePark());
+
+        Collections.sort(parkNames);
+        return parkNames;
     }
 
-    public ObservableList<RequestRow> getRequestsByParkID(int id) {
+    public ObservableList<RequestRow> getRequestByParkName(String name) {
         requests = dbConnection.getRequestList();
         users = dbConnection.getUserList();
 
         ArrayList<RequestRow> requestRows = new ArrayList<>();
         for (Request r: requests) {
             User u = getUserByID(r.getIdUser());
-            if (u.getIdPark() == id)
+            if (u.getName().equals(name))
                 requestRows.add(new RequestRow(r, u));
         }
 
@@ -72,6 +73,25 @@ public class Data implements Constants {
                 usersByParkID.add(u);
 
         return FXCollections.observableArrayList(usersByParkID);
+    }
+
+    public ObservableList<User> getUserByParkName(String name) {
+        users = dbConnection.getUserList();
+        ArrayList<User> usersByParkName = new ArrayList<>();
+
+        for (User u : users)
+            if (getParkByID(u.getIdPark()).getNamePark().equals(name))
+                usersByParkName.add(u);
+
+        return FXCollections.observableArrayList(usersByParkName);
+    }
+
+    public Park getParkByID(int id) {
+        for (Park p : parks.keySet())
+            if (p.getIdPark() == id)
+                return p;
+
+        return null;
     }
 
     public ObservableList<Integer> getParkingFreeSpacesById(int id) {
