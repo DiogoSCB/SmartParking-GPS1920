@@ -94,11 +94,11 @@ public class Data implements Constants {
         return null;
     }
 
-    public ObservableList<Integer> getParkingFreeSpacesById(int id) {
+    public ObservableList<Integer> getParkingFreeSpacesByName(String name) {
 
         ArrayList<Integer> freeSpaces = new ArrayList<>();
         for (Park p : parks.keySet())
-            if (p.getIdPark() == id)
+            if (p.getNamePark().equals(name))
                 freeSpaces = dbConnection.getFreeParkingSpaces(p);
 
 

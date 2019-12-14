@@ -434,7 +434,7 @@ public class ControllerUI implements Initializable {
             if (!isEmpty()) {
                 super.startEdit();
                 createComboBox();
-                idPS = data.getParkingFreeSpacesById((Integer) idParqueCondutores.getValue());
+                idPS = data.getParkingFreeSpacesByName((String)idParqueCondutores.getValue());
                 idPS.add(Integer.parseInt(getString()));
                 Collections.sort(idPS);
                 comboBox.setItems(idPS);
