@@ -100,7 +100,7 @@ public class ControllerUI implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeColumns();
-        updateParkComboBox();
+        updateParkComboBox(idParqueCondutores);
         setupCondutoresTabLayout();
 
         /* Setup Listeners */
@@ -223,10 +223,10 @@ public class ControllerUI implements Initializable {
         updateCondutoresTable();
     }
 
-    private void updateParkComboBox() {
-        idParqueCondutores.getItems().clear();
-        idParqueCondutores.getItems().addAll(data.getParkIdAsIntegers());
-        idParqueCondutores.getSelectionModel().selectFirst();
+    void updateParkComboBox(ComboBox comboBox) {
+        comboBox.getItems().clear();
+        comboBox.getItems().addAll(data.getParkNames());
+        comboBox.getSelectionModel().selectFirst();
         updateTable();
     }
 
@@ -247,12 +247,14 @@ public class ControllerUI implements Initializable {
         rejeitarBtn.setDisable(true);
     }
 
-    private  void updateCondutoresTable() {
-        condutoresTable.setItems(data.getUsersByParkID((Integer) idParqueCondutores.getValue()));
+    public void updateCondutoresTable() {
+        condutoresTable.setItems(data.getUserByParkName((String) idParqueCondutores.getValue()));
+        condutoresTable.refresh();
     }
 
-    private  void updatePedidosTable() {
-        pedidosTable.setItems(data.getRequestsByParkID((Integer)idParquePedidos.getValue()));
+    public void updatePedidosTable() {
+        pedidosTable.setItems(data.getRequestByParkName((String)idParquePedidos.getValue()));
+        pedidosTable.refresh();
     }
 
     private  void updateTable() {
@@ -343,10 +345,12 @@ public class ControllerUI implements Initializable {
         public void handle(Event event) {
             if (condutoresTab.isSelected()) {
                 setupCondutoresTabLayout();
-                updateParkComboBox();
+                if (idParqueCondutores.getItems().isEmpty())
+                    updateParkComboBox(idParqueCondutores);
             } else if (pedidosTab.isSelected()) {
                 setupPedidosTabLayout();
-                updateParkComboBox();
+                if (idParquePedidos.getItems().isEmpty())
+                    updateParkComboBox(idParquePedidos);
             }
         }
     }
@@ -421,7 +425,7 @@ public class ControllerUI implements Initializable {
             if (!isEmpty()) {
                 super.startEdit();
                 createComboBox();
-                idPS = data.getParkingFreeSpacesById((Integer) idParqueCondutores.getValue());
+                idPS = data.getParkingFreeSpacesByName((String)idParqueCondutores.getValue());
                 idPS.add(Integer.parseInt(getString()));
                 Collections.sort(idPS);
                 comboBox.setItems(idPS);
