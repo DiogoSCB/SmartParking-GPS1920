@@ -267,6 +267,7 @@ public class ControllerUI implements Initializable {
     /* CALL BACKS*/
     class NewParkSelectedCallBack implements EventHandler<ActionEvent> {
         public void handle(ActionEvent actionEvent) {
+            cleanEdits();
             updateTable();
         }
     }
@@ -339,17 +340,20 @@ public class ControllerUI implements Initializable {
 
     }
 
+    private void cleanEdits() {
+        for (EditingCell editingCell : editingTableCells)
+            editingCell.cancelEdit();
+        editingTableCells.clear();
+        for (Cell cell : editingCells)
+            cell.cancelEdit();
+        editingCells.clear();
+    }
+
     class TabSelectionChanged implements EventHandler<Event> {
 
         @Override
         public void handle(Event event) {
-            for (EditingCell editingCell : editingTableCells)
-                editingCell.cancelEdit();
-            editingTableCells.clear();
-            for (Cell cell : editingCells)
-                cell.cancelEdit();
-            editingCells.clear();
-
+            cleanEdits();
             if (condutoresTab.isSelected()) {
                 setupCondutoresTabLayout();
                 if (idParqueCondutores.getItems().isEmpty())
