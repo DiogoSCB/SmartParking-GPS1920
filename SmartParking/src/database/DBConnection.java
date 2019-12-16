@@ -8,6 +8,8 @@ import models.User;
 import java.sql.*;
 import java.util.ArrayList;
 
+import static models.Constants.*;
+
 /**
  * @author Diogo Santos e Carolina Rosa
  */
@@ -20,26 +22,17 @@ public class DBConnection {
     /**
      * Construtor da Classe
      *
-     * @param ip   é o ip do servidor da base de dados
+     * @param ip   é o IP do servidor da base de dados
      * @param port é o porto do servidor da base de dados
      */
-    public DBConnection(String ip, String port) {
-        try {
-            System.out.println("Connecting to Database (" + ip + ":" + port + ")");
+    public DBConnection(String ip, String port) throws SQLException{
+        System.out.println("Connecting to Database (" + ip + ":" + port + ")");
 
-            String DB_NAME = "smartparking";
-            String USER = "root";
-            String PASS = "123456";
-            connection = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + DB_NAME
-                    + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false" +
-                    "&serverTimezone=GMT", USER, PASS);
-
-            System.out.println("Connection Established!");
-
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+        connection = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + DB_NAME
+                + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false" +
+                "&serverTimezone=GMT", USER, PASS);
+        System.out.println("Connection Established!");
+        statement = connection.createStatement();
     }
 
     /**

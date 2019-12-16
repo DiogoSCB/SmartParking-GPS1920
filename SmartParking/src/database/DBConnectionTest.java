@@ -4,14 +4,13 @@ import models.Park;
 import models.ParkingSpace;
 import models.Request;
 import models.User;
-import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static models.Constants.ip;
-import static models.Constants.port;
+import static models.Constants.IP;
+import static models.Constants.PORT;
 
 class DBConnectionTest {
 
@@ -19,7 +18,13 @@ class DBConnectionTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        dbConnection = new DBConnection(ip, port);
+        try
+        {
+            dbConnection = new DBConnection(IP, PORT);
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @org.junit.jupiter.api.Test

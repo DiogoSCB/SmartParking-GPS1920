@@ -3,20 +3,23 @@ package models;
 public interface Constants
 {
     // FXML settings
-    String fxmlFileName = "ui.fxml";
+    String FXML_FILE_NAME = "ui.fxml";
 
     // Window settings
-    String windowName = "Smart Parking 0.1";
+    String WINDOW_NAME = "Smart Parking 0.1";
 
-    int windowWidth = 1024;
-    int windowHeight = 768;
+    int WINDOW_WIDTH = 1024;
+    int WINDOW_HEIGHT = 768;
 
     // Database settings
-    String ip = "localhost";
-    String port = "3306";
+    String IP = "localhost";
+    String PORT = "3306";
+    String DB_NAME = "smartparking";
+    String USER = "root";
+    String PASS = "123456";
 
     // Misc
-    int accept = 1;
-    int pending = 0;
-    int refuse = -1;
+    int ACCEPT = 1;
+    int PENDING = 0;
+    int REFUSE = -1;
 }

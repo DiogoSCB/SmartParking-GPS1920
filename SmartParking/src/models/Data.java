@@ -1,10 +1,10 @@
 package models;
 
 import database.DBConnection;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class Data implements Constants {
@@ -14,8 +14,8 @@ public class Data implements Constants {
     private ArrayList<User> users;
     private DBConnection dbConnection;
 
-    public Data() {
-        dbConnection = new DBConnection(ip, port);
+    public Data() throws SQLException {
+        dbConnection = new DBConnection(IP, PORT);
         importAllData();
     }
 
@@ -51,6 +51,7 @@ public class Data implements Constants {
         ArrayList<RequestRow> requestRows = new ArrayList<>();
         for (Request r: requests) {
             User u = getUserByID(r.getIdUser());
+            if (u == null) break;
             if (u.getIdPark() == id)
                 requestRows.add(new RequestRow(r, u));
         }
@@ -97,25 +98,32 @@ public class Data implements Constants {
         dbConnection.removeUser(user);
     }
 
-    public ParkingSpace getParkingSpace(Integer idPark, Integer idPS) {
-        for (Park p : parks.keySet())
-            if (p.getIdPark().equals(idPark))
-                for (ParkingSpace ps : parks.get(p))
+    private ParkingSpace getParkingSpace(Integer idPark, Integer idPS) {
+        for (Map.Entry<Park, ArrayList<ParkingSpace>> entry : parks.entrySet()) {
+            if (entry.getKey().getIdPark().equals(idPark))
+                for (ParkingSpace ps : entry.getValue()) {
                     if (ps.getIdParkingSpace().equals(idPS)) {
                         return ps;
                     }
+                }
+        }
         return null;
     }
 
-    public void setReserved(Integer idPark, Integer idPSOld, Integer idPSNew) {
-        for (Park p : parks.keySet())
-            if (p.getIdPark().equals(idPark))
-                for (ParkingSpace ps : parks.get(p)) {
-                    if (ps.getIdParkingSpace().equals(idPSNew))
+    private void setReserved(Integer idPark, Integer idPSOld, Integer idPSNew) {
+
+        for (Map.Entry<Park, ArrayList<ParkingSpace>> entry: parks.entrySet()) {
+            if (entry.getKey().getIdPark().equals(idPark)) {
+                for (ParkingSpace ps : entry.getValue()) {
+                    if (ps.getIdParkingSpace().equals(idPSNew)) {
                         ps.setReserved(true);
-                    if (ps.getIdParkingSpace().equals(idPSOld))
+                    }
+                    if (ps.getIdParkingSpace().equals(idPSOld)) {
                         ps.setReserved(false);
+                    }
                 }
+            }
+        }
     }
 
     public void modifyUser(Integer idUser, String name, String licensePlate, String email, Integer idParkingSpace) {
@@ -136,7 +144,7 @@ public class Data implements Constants {
 
     public void modifyRequest(Request request, int state) {
         request.setState(state);
-        dbConnection.\\quest(request);
+        //dbConnection.\\quest(request);
     }
 
     public boolean validateLicensePlate(String licensePlate) {
