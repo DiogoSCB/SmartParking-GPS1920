@@ -47,8 +47,9 @@ public class RequestRow {
                 return "Pendente";
             case 1:
                 return "Aceite";
+            default:
+                return "";
         }
-        return null;
     }
 
     public String getEmailRequest() {

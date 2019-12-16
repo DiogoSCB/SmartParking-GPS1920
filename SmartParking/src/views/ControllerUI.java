@@ -343,6 +343,13 @@ public class ControllerUI implements Initializable {
 
         @Override
         public void handle(Event event) {
+            for (EditingCell editingCell : editingTableCells)
+                editingCell.cancelEdit();
+            editingTableCells.clear();
+            for (Cell cell : editingCells)
+                cell.cancelEdit();
+            editingCells.clear();
+
             if (condutoresTab.isSelected()) {
                 setupCondutoresTabLayout();
                 if (idParqueCondutores.getItems().isEmpty())

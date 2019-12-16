@@ -1,6 +1,5 @@
 package models;
 
-import java.sql.Date;
 
 public class ParkingSpace {
 

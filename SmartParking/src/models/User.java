@@ -41,7 +41,7 @@ public class User {
         this.idUser = idUser;
     }
 
-    public void setIdParkingSpace(Integer idParkingSpace) {
+    void setIdParkingSpace(Integer idParkingSpace) {
         this.idParkingSpace = idParkingSpace;
     }
 
@@ -77,15 +77,15 @@ public class User {
         return idPark;
     }
 
-    public void setEmail(String email) {
+    void setEmail(String email) {
         this.email = email;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public void setLicensePlate(String licensePlate) {
+    void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
 }
