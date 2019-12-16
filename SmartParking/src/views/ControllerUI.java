@@ -223,7 +223,7 @@ public class ControllerUI implements Initializable {
         updateCondutoresTable();
     }
 
-    void updateParkComboBox(ComboBox comboBox) {
+    private void updateParkComboBox(ComboBox comboBox) {
         comboBox.getItems().clear();
         comboBox.getItems().addAll(data.getParkNames());
         comboBox.getSelectionModel().selectFirst();
@@ -247,17 +247,17 @@ public class ControllerUI implements Initializable {
         rejeitarBtn.setDisable(true);
     }
 
-    public void updateCondutoresTable() {
+    private void updateCondutoresTable() {
         condutoresTable.setItems(data.getUserByParkName((String) idParqueCondutores.getValue()));
         condutoresTable.refresh();
     }
 
-    public void updatePedidosTable() {
+    private void updatePedidosTable() {
         pedidosTable.setItems(data.getRequestByParkName((String)idParquePedidos.getValue()));
         pedidosTable.refresh();
     }
 
-    private  void updateTable() {
+    private void updateTable() {
         if (pedidosTab.isSelected())
             updatePedidosTable();
         else if (condutoresTab.isSelected())
@@ -359,7 +359,7 @@ public class ControllerUI implements Initializable {
 
         private TextField textField;
 
-        public TextField getTextField() {
+        TextField getTextField() {
             return textField;
         }
 
@@ -414,7 +414,7 @@ public class ControllerUI implements Initializable {
     class EditingCellDrop extends TableCell<User, Integer> {
         private ComboBox<Integer> comboBox;
 
-        public ComboBox<Integer> getComboBox() {
+        ComboBox<Integer> getComboBox() {
             return comboBox;
         }
 
