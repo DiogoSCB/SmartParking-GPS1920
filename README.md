@@ -1,5 +1,10 @@
 # SmartParking-GPS1920
 
+### Estrutura das pastas
+1. SmartParking - Projeto InteliJ com a aplicação do administrador e website.
+2. Database - Ficheiros da base de dados mysql.
+3. TP G33 - Todos os documentos elaborados durante o desenvolvimento do projeto. Exportado do Google Drive.
+
 ### Como configurar o projeto.
 
 1. Abrir o InteliJ e selecionar `File` -> `New` -> `Project from Version Control` -> `Git`.
@@ -20,7 +25,7 @@
 7. Ainda em `Project`selecionar o `Project compiler output' como sendo a pasta 'out' do projeto (SmartParking/out).
 
 #### JAVAFX 13
-1. Visitar a página de download do JavaFX [aqui](https://gluonhq.com/products/javafx/) 
+1. Visitar a página de download do JavaFX [aqui](https://gluonhq.com/products/javafx/)
 2. Fazer scroll até à secção `Latest Release` e selecionar o JavaFX Windows SDK. (macOS/Linux selecionar (...) SDK).
 3. Descompactar a pasta para uma diretoria à vossa escolha.
 4. Selecionar `File` -> `Project Structure` -> No lado esquerdo selecionar `Libraries` -> Clicar no simbolo `+` e escolher Java.

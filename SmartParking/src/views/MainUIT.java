@@ -3,18 +3,27 @@ package views;
 import database.DBConnection;
 import models.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static models.Constants.ip;
-import static models.Constants.port;
-
+import static models.Constants.IP;
+import static models.Constants.PORT;
 
 
 public class MainUIT {
 
-    DBConnection db = new DBConnection(ip,port);
-    ArrayList<User> users = db.getUserList();
+    DBConnection db;
+
+    {
+        try {
+            db = new DBConnection(IP,PORT);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ArrayList<User> users = db != null ? db.getUserList() : new ArrayList<User>();
     //ArrayList<User> users = new ArrayList<>();
     public int comparador(String s ){
         for(User u : this.users){

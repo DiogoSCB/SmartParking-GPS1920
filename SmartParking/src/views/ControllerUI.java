@@ -240,6 +240,7 @@ public class ControllerUI implements Initializable {
 
     private void setupPedidosTabLayout() {
         /* Show/hide corresponding buttons */
+        data.importAllData();
         gravarBtn.setVisible(false);
         aceitarBtn.setVisible(true);
         aceitarBtn.setDisable(true);
@@ -253,7 +254,7 @@ public class ControllerUI implements Initializable {
     }
 
     private void updatePedidosTable() {
-        pedidosTable.setItems(data.getRequestByParkName((String)idParquePedidos.getValue()));
+        pedidosTable.setItems(data.getRequestByParkName((String) idParquePedidos.getValue()));
         pedidosTable.refresh();
     }
 
@@ -436,7 +437,7 @@ public class ControllerUI implements Initializable {
             if (!isEmpty()) {
                 super.startEdit();
                 createComboBox();
-                idPS = data.getParkingFreeSpacesByName((String)idParqueCondutores.getValue());
+                idPS = data.getParkingFreeSpacesByName((String) idParqueCondutores.getValue());
                 idPS.add(Integer.parseInt(getString()));
                 Collections.sort(idPS);
                 comboBox.setItems(idPS);

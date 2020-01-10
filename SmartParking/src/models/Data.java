@@ -19,7 +19,7 @@ public class Data implements Constants {
         importAllData();
     }
 
-    private void importAllData() {
+    public void importAllData() {
         requests = dbConnection.getRequestList();
         users = dbConnection.getUserList();
         importParks();
@@ -45,18 +45,26 @@ public class Data implements Constants {
         return parkNames;
     }
 
-    public ObservableList<RequestRow> getRequestByParkName(String name) {
-        requests = dbConnection.getRequestList();
-        users = dbConnection.getUserList();
+    public ObservableList<RequestRow> getRequestByParkName(String park) {
+        importAllData();
 
         ArrayList<RequestRow> requestRows = new ArrayList<>();
         for (Request r: requests) {
             User u = getUserByID(r.getIdUser());
-            if (u.getName().equals(name))
+            Park p = getParkByName(park);
+            if (u.getIdPark().equals(p.getIdPark()))
                 requestRows.add(new RequestRow(r, u));
         }
 
         return FXCollections.observableArrayList(requestRows);
+    }
+
+    private Park getParkByName(String park) {
+        for (Park p: parks.keySet())
+            if (p.getNamePark().equals(park))
+                return p;
+
+        return null;
     }
 
     public ObservableList<User> getUsers() {
@@ -76,7 +84,7 @@ public class Data implements Constants {
     }
 
     public ObservableList<User> getUserByParkName(String name) {
-        users = dbConnection.getUserList();
+        importAllData();
         ArrayList<User> usersByParkName = new ArrayList<>();
 
         for (User u : users)
